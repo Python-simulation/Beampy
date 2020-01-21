@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+beampy/__pycache__/
+
+# git
+.git
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Sphinx documentation
+# docs/hmtl/ # want them on git
+
+# image thumbs
+beampy/icons/Thumbs.db
+docs/interface/Thumbs.db
+docs/results/Thumbs.db

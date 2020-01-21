@@ -1,0 +1,7 @@
+include README.rst
+include MANIFEST.in
+include setup.py
+
+recursive-include docs *
+recursive-include beampy/parameters *
+recursive-include beampy/icons *
