@@ -12,6 +12,10 @@ from beampy import __version__ as beampy_version
 with open("README.rst", "r") as fh:
     long_description = fh.read()
 
+with open("docs/requirements.txt", "r") as fh:
+    install_requires = fh.read()
+
+
 setuptools.setup(
     name='beampy',
     version=beampy_version,
@@ -36,9 +40,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.7',
-    install_requires=[
-            "numpy>=1.16",
-            "PyQt5>=5.13",
-            "matplotlib>=3.1",
-        ],
+    install_requires=[install_requires],
 )
