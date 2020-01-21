@@ -22,10 +22,10 @@ setuptools.setup(
     allowing to propagate beams in differents guides using the
     Beam Propagation Method (BPM)""",
     long_description=long_description,
-    url="https://github.com/marcelrsoub/BeamPy",
+    url="https://github.com/Python-simulation/Beampy",
     project_urls={
         'Documentation': 'https://beampy.readthedocs.io',
-        'Source Code': 'https://github.com/marcelrsoub/BeamPy'
+        'Source Code': 'https://github.com/Python-simulation/Beampy'
     },
     packages=setuptools.find_packages(),
     classifiers=[

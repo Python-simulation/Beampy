@@ -35,7 +35,7 @@ The online documentation can be found at
 `<https://beampy.readthedocs.io/>`_.
 
 The source code of the whole project can be found at
-`<https://github.com/marcelrsoub/BeamPy/>`_.
+`<https://github.com/Python-simulation/Beampy/>`_.
 
 The PyPI repository can be found at `<https://pypi.org/project/beampy/>`_.
 

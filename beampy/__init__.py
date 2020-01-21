@@ -16,24 +16,20 @@ Modules include:
         defines the :class:`beampy.interface.setupUi` class.
         And also define the unused :class:`retranslateUi`
 
-This software was mainly developed by Jonathan Peltier and, the interface was
-firstly developed by Marcel Soubkovsky.
+This project was done by Jonathan Peltier and Marcel Soubkovsky during a master
+university course from the PAIP master of the université de Lorraine,
+under the directive of Pr. Nicolas Fressengeas.
 
-This project was part of a university course, under the direction of Pr.
-Nicolas Fressengeas.
-
-At first, the objective was to translate BPM codes - used in the LMOPS
-laboratory - done in MatLab into Python codes.
-Then, an interface were added to make the programs more accessible to people
-whom don't know python or don't have a sufficient coding baggage.
-Finaly, more options were added to completed the programs.
+The bpm codes are mainly based on a compilation of MatLab codes initialy
+developed by Régis Grasser during his PhD thesis,
+and later modified at the LMOPS laboratory.
 """
 from beampy.user_interface import (open_app, open_doc)  # was accessible with
 # user_interface but it's best to have those functions right in the beampy
 # module
 from beampy import examples
 
-__version__ = "0.1.0"
+__version__ = "0.0.1"
 
 
 def help():
