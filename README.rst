@@ -1,3 +1,7 @@
+.. image:: https://readthedocs.org/projects/beampy/badge/?version=latest
+   :target: https://beampy.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
 Welcome to Beampy's documentation!
 ==================================
 
