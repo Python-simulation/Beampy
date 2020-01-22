@@ -327,6 +327,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
             # Check if offset in µm or in guide number
             if self.offset_check[i] and self.peaks.shape[0] != 0:
+
+                # Reduce light # if > guides #
+                if (self.topology == 'array'
+                        and self.offset_light_peak[i] > self.nbr_p):
+                    self.offset_light_peak[i] = self.nbr_p - 1
+                elif (self.topology == 'curved'
+                        and self.offset_light_peak[i] > 3):
+                    self.offset_light_peak[i] = 3 - 1
+
                 offset_light = self.peaks[self.offset_light_peak[i], 0]
 
             else:

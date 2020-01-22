@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Source codes &mdash; beampy 0.0.1 documentation</title>
+  <title>Source codes &mdash; beampy 0.0.1.1 documentation</title>
   
 
   
@@ -2725,6 +2725,15 @@
 
             <span class="c1"># Check if offset in µm or in guide number</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_check</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+
+                <span class="c1"># Reduce light # if &gt; guides #</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">==</span> <span class="s1">&#39;array&#39;</span>
+                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">==</span> <span class="s1">&#39;curved&#39;</span>
+                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span>
+
                 <span class="n">offset_light</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">]</span>
 
             <span class="k">else</span><span class="p">:</span>

@@ -29,7 +29,7 @@ from beampy.user_interface import (open_app, open_doc)  # was accessible with
 # module
 from beampy import examples
 
-__version__ = "0.0.1"
+__version__ = "0.0.1.1"
 
 
 def help():

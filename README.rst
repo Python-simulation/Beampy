@@ -17,7 +17,9 @@ under the directive of Pr. Nicolas Fressengeas.
 
 The bpm codes are mainly based on a compilation of MatLab codes initialy
 developed by Régis Grasser during his PhD thesis [#thesis]_,
-and later modified at the LMOPS laboratory [#lmops]_.
+and later modified at the FEMTO-ST institute of the Université de
+Bourgogne-Franche-Comté and at the LMOPS laboratory [#lmops]_ of the
+Université de Lorraine.
 
 References
 ----------
