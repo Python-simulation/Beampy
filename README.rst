@@ -54,7 +54,10 @@ This package can be download in a python environment using pip install::
     pip install beampy
 
 Or by downloading the github folder and setting beampy as a PYTHONPATH.
-If so, make sure to download Qt5, matplotlib and numpy.
+If so, make sure to download Qt5, matplotlib and numpy by using this command
+in the docs folder::
+
+    pip install -r requirements.txt
 
 
 Starting the software
