@@ -40,6 +40,5 @@ setuptools.setup(
             "numpy>=1.16",
             "PyQt5>=5.13",
             "matplotlib>=3.1",
-            "sphinx>=2.2.1",
         ],
 )

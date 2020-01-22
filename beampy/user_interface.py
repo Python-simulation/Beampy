@@ -279,6 +279,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.doubleSpinBox_offset_light.setEnabled(True)
             self.checkBox_offset_light.setChecked(False)
             self.checkBox_offset_light.setDisabled(True)
+            self.offset_check *= 0
             self.checkBox_lost.setDisabled(True)
             self.checkBox_lost.setChecked(False)
             self.frame_lost.setDisabled(True)
@@ -291,11 +292,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.checkBox_check_power.setEnabled(True)
 
 #        Define new min/max for light and looses, based on selected guides
-        self.doubleSpinBox_offset_light.setMinimum(min(self.x))
-        self.doubleSpinBox_offset_light.setMaximum(max(self.x))
         self.doubleSpinBox_offset_light.setSingleStep(1.0)
         self.doubleSpinBox_width_lost.setMaximum(self.length_x-self.dist_x)
         self.doubleSpinBox_lobe_size.setMaximum(self.length_x-self.dist_x)
+        # If want to use min/max for offset: multiple beams will have issue if
+        # the windows size change (min/max will only be for the displayed beam)
+#        self.doubleSpinBox_offset_light.setMinimum(self.x[0])
+#        self.doubleSpinBox_offset_light.setMaximum(self.x[-1])
 
         self.calculate_guide_done = True
         t_guide_end = time.process_time()
@@ -325,16 +328,17 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         for i in range(nbr_light):
 
-            # Check if offset in µm or in guide number
+            # Check if offset relative to guide number or else in µm
             if self.offset_check[i] and self.peaks.shape[0] != 0:
 
                 # Reduce light # if > guides #
-                if (self.topology == 'array'
-                        and self.offset_light_peak[i] > self.nbr_p):
-                    self.offset_light_peak[i] = self.nbr_p - 1
-                elif (self.topology == 'curved'
-                        and self.offset_light_peak[i] > 3):
-                    self.offset_light_peak[i] = 3 - 1
+                peaks_i = self.offset_light_peak[i]
+                peaks_max = self.spinBox_offset_light_peak.maximum()
+
+                if peaks_i > peaks_max:
+                    print("beam", i+1, "has a non-existing guide position")
+                    print("Change position from", peaks_i, "to", peaks_max)
+                    self.offset_light_peak[i] = peaks_max
 
                 offset_light = self.peaks[self.offset_light_peak[i], 0]
 

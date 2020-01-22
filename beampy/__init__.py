@@ -1,4 +1,4 @@
-"""Beampy is a module based on Beam Propagation Method, a numerical method
+﻿"""Beampy is a module based on Beam Propagation Method, a numerical method
 used to compute light propagation into a refractive index.
 The light propagation is done by the :mod:`beampy.bpm` module, shown and
 piloted by the :mod:`beampy.user_interface` module.
@@ -29,7 +29,7 @@ from beampy.user_interface import (open_app, open_doc)  # was accessible with
 # module
 from beampy import examples
 
-__version__ = "0.0.1.1"
+__version__ = "0.0.1.2"
 
 
 def help():

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Source codes &mdash; beampy 0.0.1.1 documentation</title>
+  <title>Source codes &mdash; beampy 0.0.1.2 documentation</title>
   
 
   
@@ -2677,6 +2677,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">doubleSpinBox_offset_light</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkBox_offset_light</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkBox_offset_light</span><span class="o">.</span><span class="n">setDisabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">offset_check</span> <span class="o">*=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkBox_lost</span><span class="o">.</span><span class="n">setDisabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">checkBox_lost</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">frame_lost</span><span class="o">.</span><span class="n">setDisabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -2689,11 +2690,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">checkBox_check_power</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1">#        Define new min/max for light and looses, based on selected guides</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">doubleSpinBox_offset_light</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">doubleSpinBox_offset_light</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">doubleSpinBox_offset_light</span><span class="o">.</span><span class="n">setSingleStep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">doubleSpinBox_width_lost</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_x</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">doubleSpinBox_lobe_size</span><span class="o">.</span><span class="n">setMaximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_x</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)</span>
+        <span class="c1"># If want to use min/max for offset: multiple beams will have issue if</span>
+        <span class="c1"># the windows size change (min/max will only be for the displayed beam)</span>
+<span class="c1">#        self.doubleSpinBox_offset_light.setMinimum(self.x[0])</span>
+<span class="c1">#        self.doubleSpinBox_offset_light.setMaximum(self.x[-1])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">calculate_guide_done</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">t_guide_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
@@ -2723,16 +2726,17 @@
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_light</span><span class="p">):</span>
 
-            <span class="c1"># Check if offset in µm or in guide number</span>
+            <span class="c1"># Check if offset relative to guide number or else in µm</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_check</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
 
                 <span class="c1"># Reduce light # if &gt; guides #</span>
-                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">==</span> <span class="s1">&#39;array&#39;</span>
-                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span> <span class="o">-</span> <span class="mi">1</span>
-                <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">==</span> <span class="s1">&#39;curved&#39;</span>
-                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">peaks_i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">peaks_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spinBox_offset_light_peak</span><span class="o">.</span><span class="n">maximum</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">peaks_i</span> <span class="o">&gt;</span> <span class="n">peaks_max</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;beam&quot;</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;has a non-existing guide position&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Change position from&quot;</span><span class="p">,</span> <span class="n">peaks_i</span><span class="p">,</span> <span class="s2">&quot;to&quot;</span><span class="p">,</span> <span class="n">peaks_max</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">peaks_max</span>
 
                 <span class="n">offset_light</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_light_peak</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">0</span><span class="p">]</span>
 
