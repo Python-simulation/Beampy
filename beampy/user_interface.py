@@ -126,8 +126,20 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         :meth:`.open_file_name`, :meth:`.save_quick`, :meth:`.save_file_name`,
         :func:`.open_doc`.
         """
+        folder = __file__  # Module name
+        # Replaces characters only when called from outer files
+        folder = folder.replace("\\", "/")
+        folder = folder.split("/")
+        folder = folder[:-1]  # Remove the file name
+        folder2 = str()
+
+        for line in folder:
+            folder2 = folder2+"/"+line
+
+        folder = folder2[1:]+"/"
+
         icon = QIcon()
-        icon.addFile('icons/beampy-logo.png', QSize(256, 256))
+        icon.addFile(folder+'icons/beampy-logo.png', QSize(256, 256))
         self.setWindowIcon(icon)
 
         menubar = self.menuBar()
@@ -138,28 +150,28 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         action.triggered.connect(self.open_file_name)
         action.setShortcut('Ctrl+O')
         icon = QIcon()
-        icon.addFile('icons/document-open.png', QSize(22, 22))
+        icon.addFile(folder+'icons/document-open.png', QSize(22, 22))
         action.setIcon(icon)
 
         action = file.addAction('Save')
         action.triggered.connect(self.save_quick)
         action.setShortcut('Ctrl+S')
         icon = QIcon()
-        icon.addFile('icons/document-save.png', QSize(22, 22))
+        icon.addFile(folder+'icons/document-save.png', QSize(22, 22))
         action.setIcon(icon)
 
         action = file.addAction('Save as')
         action.triggered.connect(self.save_file_name)
         action.setShortcut('Ctrl+Shift+S')
         icon = QIcon()
-        icon.addFile('icons/document-save-as.png', QSize(22, 22))
+        icon.addFile(folder+'icons/document-save-as.png', QSize(22, 22))
         action.setIcon(icon)
 
         action = file.addAction('Exit')  # Clean exit for spyder
         action.setShortcut('Ctrl+Q')
         action.triggered.connect(QApplication.quit)
         icon = QIcon()
-        icon.addFile('icons/application-exit.png', QSize(22, 22))
+        icon.addFile(folder+'icons/application-exit.png', QSize(22, 22))
         action.setIcon(icon)
 
         file = menubar.addMenu('Help')
@@ -167,7 +179,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         action = file.addAction('Documentation')
         action.triggered.connect(open_doc)
         icon = QIcon()
-        icon.addFile('icons/help-about.png', QSize(22, 22))
+        icon.addFile(folder+'icons/help-about.png', QSize(22, 22))
         action.setIcon(icon)
 
     def calculate_guide(self, topology='array'):
