@@ -10,7 +10,9 @@ under the directive of Pr. Nicolas Fressengeas.
 
 The bpm codes are mainly based on a compilation of MatLab codes initialy
 developed by Régis Grasser during his PhD thesis[2],
-and later modified at the LMOPS laboratory[3].
+and later modified at the FEMTO-ST institute of the Université de
+Franche-Comté and at the LMOPS laboratory [3] of the
+Université de Lorraine.
 
 [1] K. Okamoto, in Fundamentals of Optical Waveguides,
 2nd ed., edited by K. Okamoto (Academic, Burlington, 2006), pp. 329–397.

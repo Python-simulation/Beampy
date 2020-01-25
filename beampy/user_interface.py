@@ -477,6 +477,22 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         if pow_index < 0:
             pow_index_guide -= 1  # Display the -2 guide for the -1 beam
 
+        x_min = self.x[0]
+        x_max = self.x[-1]
+
+        if (self.topology == 'array'  # If array of guides
+                and self.nbr_p != 0 and self.p != 0  # If guides exists
+                and self.peaks[0, 0] >= self.x[0]  # If guides in the windows
+                and self.peaks[-1, -1] <= self.x[-1]):
+            x_min = self.offset_guide - self.nbr_p*self.p
+            x_max = self.offset_guide + self.nbr_p*self.p
+
+        if (self.topology == 'curved'  # If curved guides
+                and self.peaks[0, 0] >= self.x[0]  # If guides in the windows
+                and self.peaks[-1, -1] <= self.x[-1]):
+            x_min = self.peaks[0, 0] - self.width
+            x_max = self.peaks[-1, -1] + self.width
+
         if tab == 'guide':
             fig = Figure()
             fig.set_tight_layout(True)  # Prevent axes to be cut when resizing
@@ -485,16 +501,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             ax1.set_xlabel('x (µm)')
             ax1.set_ylabel('z (mm)')
 
-            if self.nbr_p != 0 and self.p != 0 and self.topology != 'curved':
-                x_min = self.offset_guide - self.nbr_p*self.p
-                if x_min < self.x[0]:
-                    x_min = self.x[0]
-
-                x_max = self.offset_guide + self.nbr_p*self.p
-                if x_max > self.x[-1]:
-                    x_max = self.x[-1]
-
-                ax1.set_xlim(x_min, x_max)
+            ax1.set_xlim(x_min, x_max)
 
             # note that a colormesh pixel is based on 4 points
             ax1.pcolormesh(self.xv,
@@ -524,16 +531,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 poly = Polygon(verts, facecolor='0.9', edgecolor='0.5')
                 ax2.add_patch(poly)
 
-                if self.p != 0 and self.topology != 'curved':
-                    x_min = self.offset_guide - self.nbr_p*self.p
-                    if x_min < self.x[0]:
-                        x_min = self.x[0]
-
-                    x_max = self.offset_guide + self.nbr_p*self.p
-                    if x_max > self.x[-1]:
-                        x_max = self.x[-1]
-
-                    ax2.set_xlim(x_min, x_max)
+            ax2.set_xlim(x_min, x_max)
 
             ax2.set_ylim(0,
                          max(self.dn[0, :])*1.1 + 1E-20)
@@ -572,16 +570,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 poly = Polygon(verts, facecolor='0.9', edgecolor='0.5')
                 ax1.add_patch(poly)
 
-                if self.p != 0 and self.topology != 'curved':
-                    x_min = self.offset_guide - self.nbr_p*self.p
-                    if x_min < self.x[0]:
-                        x_min = self.x[0]
-
-                    x_max = self.offset_guide + self.nbr_p*self.p
-                    if x_max > self.x[-1]:
-                        x_max = self.x[-1]
-
-                    ax1.set_xlim(x_min, x_max)
+            ax1.set_xlim(x_min, x_max)
 
             ax1.set_ylim(0,
                          max(1.1*self.dn[pow_index_guide, :]) + 1E-20)
@@ -621,18 +610,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 ax1.set_xlabel('x (µm)')
                 ax1.set_ylabel('z (mm)')
 
-                if (self.nbr_p != 0 and self.p != 0
-                        and self.topology != 'curved'):
-
-                    x_min = self.offset_guide - self.nbr_p*self.p
-                    if x_min < self.x[0]:
-                        x_min = self.x[0]
-
-                    x_max = self.offset_guide + self.nbr_p*self.p
-                    if x_max > self.x[-1]:
-                        x_max = self.x[-1]
-
-                    ax1.set_xlim(x_min, x_max)
+                ax2.set_xlim(x_min, x_max)
 
                 ax1.pcolormesh(self.xv,
                                self.zv,

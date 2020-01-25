@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Source codes &mdash; beampy 0.0.1.2 documentation</title>
+  <title>Source codes &mdash; beampy 0.0.1.3 documentation</title>
   
 
   
@@ -174,7 +174,9 @@
 
 <span class="sd">The bpm codes are mainly based on a compilation of MatLab codes initialy</span>
 <span class="sd">developed by Régis Grasser during his PhD thesis[2],</span>
-<span class="sd">and later modified at the LMOPS laboratory[3].</span>
+<span class="sd">and later modified at the FEMTO-ST institute of the Université de</span>
+<span class="sd">Franche-Comté and at the LMOPS laboratory [3] of the</span>
+<span class="sd">Université de Lorraine.</span>
 
 <span class="sd">[1] K. Okamoto, in Fundamentals of Optical Waveguides,</span>
 <span class="sd">2nd ed., edited by K. Okamoto (Academic, Burlington, 2006), pp. 329–397.</span>
@@ -2875,6 +2877,22 @@
         <span class="k">if</span> <span class="n">pow_index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">pow_index_guide</span> <span class="o">-=</span> <span class="mi">1</span>  <span class="c1"># Display the -2 guide for the -1 beam</span>
 
+        <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">==</span> <span class="s1">&#39;array&#39;</span>  <span class="c1"># If array of guides</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span>  <span class="c1"># If guides exists</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># If guides in the windows</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
+            <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">==</span> <span class="s1">&#39;curved&#39;</span>  <span class="c1"># If curved guides</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># If guides in the windows</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+            <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+
         <span class="k">if</span> <span class="n">tab</span> <span class="o">==</span> <span class="s1">&#39;guide&#39;</span><span class="p">:</span>
             <span class="n">fig</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">()</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">set_tight_layout</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Prevent axes to be cut when resizing</span>
@@ -2883,16 +2901,7 @@
             <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x (µm)&#39;</span><span class="p">)</span>
             <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;z (mm)&#39;</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">!=</span> <span class="s1">&#39;curved&#39;</span><span class="p">:</span>
-                <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                <span class="k">if</span> <span class="n">x_min</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                    <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-                <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                    <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-                <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
 
             <span class="c1"># note that a colormesh pixel is based on 4 points</span>
             <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xv</span><span class="p">,</span>
@@ -2922,16 +2931,7 @@
                 <span class="n">poly</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;0.9&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
                 <span class="n">ax2</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">!=</span> <span class="s1">&#39;curved&#39;</span><span class="p">:</span>
-                    <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                    <span class="k">if</span> <span class="n">x_min</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                        <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-                    <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                    <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                        <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-                    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+            <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
 
             <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
                          <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dn</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span><span class="o">*</span><span class="mf">1.1</span> <span class="o">+</span> <span class="mf">1E-20</span><span class="p">)</span>
@@ -2970,16 +2970,7 @@
                 <span class="n">poly</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;0.9&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
                 <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">!=</span> <span class="s1">&#39;curved&#39;</span><span class="p">:</span>
-                    <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                    <span class="k">if</span> <span class="n">x_min</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                        <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-                    <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                    <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                        <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-                    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
 
             <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
                          <span class="nb">max</span><span class="p">(</span><span class="mf">1.1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dn</span><span class="p">[</span><span class="n">pow_index_guide</span><span class="p">,</span> <span class="p">:])</span> <span class="o">+</span> <span class="mf">1E-20</span><span class="p">)</span>
@@ -3019,18 +3010,7 @@
                 <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x (µm)&#39;</span><span class="p">)</span>
                 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;z (mm)&#39;</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span>
-                        <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">topology</span> <span class="o">!=</span> <span class="s1">&#39;curved&#39;</span><span class="p">):</span>
-
-                    <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                    <span class="k">if</span> <span class="n">x_min</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                        <span class="n">x_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-                    <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_guide</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_p</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span>
-                    <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                        <span class="n">x_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-                    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+                <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
 
                 <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xv</span><span class="p">,</span>
                                <span class="bp">self</span><span class="o">.</span><span class="n">zv</span><span class="p">,</span>

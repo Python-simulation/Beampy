@@ -24,6 +24,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # sphinx-build -b html . html
 # sphinx-build -M latexpdf . latexpdf
 
+# When uploading the online version, wipe the project cache at readthedocs
+# before or will fail compiling pip
 # -- Project information -----------------------------------------------------
 
 project = 'beampy'

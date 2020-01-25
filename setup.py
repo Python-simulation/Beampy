@@ -9,7 +9,7 @@ from beampy import __version__ as beampy_version
 # Then use this command to upload to pypi:
 # twine upload dist/*
 
-with open("README.rst", "r") as fh:
+with open("README.rst", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
@@ -22,12 +22,14 @@ setuptools.setup(
     allowing to propagate beams in differents guides using the
     Beam Propagation Method (BPM)""",
     long_description=long_description,
+    long_description_content_type='text/x-rst',
     url="https://github.com/Python-simulation/Beampy",
     project_urls={
         'Documentation': 'https://beampy.readthedocs.io',
         'Source Code': 'https://github.com/Python-simulation/Beampy'
     },
     packages=setuptools.find_packages(),
+	include_package_data=True,
     classifiers=[
         "Intended Audience :: Science/Research",
         "Programming Language :: Python",
@@ -40,6 +42,5 @@ setuptools.setup(
             "numpy>=1.16",
             "PyQt5>=5.13",
             "matplotlib>=3.1",
-            "sphinx>=2.2.1",
         ],
 )
