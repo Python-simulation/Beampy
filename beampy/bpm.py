@@ -571,7 +571,6 @@ class Bpm():
             except ValueError:
                 break
 
-        print("This guide can propagate up to the modes", i-1)
         return [field, h, gamma, beta]
 
     def check_modes(self, lo):
@@ -1184,7 +1183,8 @@ class Bpm():
 
             # Display condition: if i+1 is a multiple of pas: i+1 % pas = 0
             # = False, so must use if not to have True
-            if not (self.i + 1) % self.pas:
+            # last condition to have last point if not a multiple of pas
+            if not (self.i + 1) % self.pas or self.i+1 == self.nbr_z-1:
                 index += 1
                 self.progress_pow[index, :] = np.array([self.current_power])
 

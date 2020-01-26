@@ -56,7 +56,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.mode = np.array([], dtype=int)
         self.offset_light_peak = np.array([], dtype=int)
         self.airy_check = []
-        self.airy_zero = []
+        self.airy_zero = np.array([], dtype=int)
         self.lobe_size = []
         self.previous_beam = 0
 
@@ -304,7 +304,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.checkBox_check_power.setEnabled(True)
 
 #        Define new min/max for light and looses, based on selected guides
-        self.doubleSpinBox_offset_light.setSingleStep(1.0)
         self.doubleSpinBox_width_lost.setMaximum(self.length_x-self.dist_x)
         self.doubleSpinBox_lobe_size.setMaximum(self.length_x-self.dist_x)
         # If want to use min/max for offset: multiple beams will have issue if
@@ -337,6 +336,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # different wavelength or angle
         nbr_light = self.comboBox_light.count()  # Number of beams
         field = np.zeros((nbr_light, self.nbr_x))
+
+        if sum(self.all_modes_check) > 0:  # Display only once the max mode
+            self.check_modes_display()
 
         for i in range(nbr_light):
 
@@ -377,7 +379,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         self.mode[i], self.lo, offset_light=offset_light)[0]
 
                 except ValueError as ex:  # Say that no mode exist
-                    print(ex)
+                    print(ex, "for the beam", i)
                     continue  # Go to the next field
 
             elif self.airy_check[i]:
@@ -545,8 +547,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
             ax2.set_xlim(x_min, x_max)
 
-            ax2.set_ylim(0,
-                         max(self.dn[0, :])*1.1 + 1E-20)
+            if max(self.dn[0, :]) > max(self.dn[-1, :]):
+                ax2.set_ylim(0,
+                             max(self.dn[0, :])*1.1 + 1E-20)
+            else:
+                ax2.set_ylim(0,
+                             max(self.dn[-1, :])*1.1 + 1E-20)
 
             ax2.plot(self.x, self.dn[pow_index_guide], 'k')
 
