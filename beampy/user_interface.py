@@ -653,18 +653,23 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     ax1.set_xlabel('z (mm)')
                     ax1.set_ylabel('Radiant flux (u.a)')
 
-                    x_beg = np.zeros((self.nbr_p, self.nbr_z), dtype=int)
-                    x_end = np.zeros((self.nbr_p, self.nbr_z), dtype=int)
-                    P = np.zeros((self.nbr_p, self.nbr_z_disp+1))
                     style = list(lines.lineStyles.keys())[0:-3]
                     style = style + list(lines.lineMarkers.keys())[0:-16]
 
                     if self.topology == 'array':
+                        x_beg = np.zeros((self.nbr_p, self.nbr_z), dtype=int)
+                        x_end = np.zeros((self.nbr_p, self.nbr_z), dtype=int)
+                        P = np.zeros((self.nbr_p, self.nbr_z_disp+1))
+
                         for n in range(self.nbr_p):
                             [x_beg[n, :],
                              x_end[n, :]] = self.bpm.guide_position(n, self.p)
 
                     elif self.topology == 'curved':
+                        x_beg = np.zeros((3, self.nbr_z), dtype=int)
+                        x_end = np.zeros((3, self.nbr_z), dtype=int)
+                        P = np.zeros((3, self.nbr_z_disp+1))
+
                         # Choose precision at the end for right guide if can
                         # and choose safety when guides overlapse
                         if self.peaks[2, -1] <= self.x[-1]:
