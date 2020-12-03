@@ -43,12 +43,8 @@ class Bpm():
 
     Parameters
     ----------
-    width : float
-        Guide width defined as the diameter (µm) at 1/e^2 intensity.
     no : float
         Refractive index of the cladding.
-    delta_no : float
-        Difference of refractive index between the core and the cladding.
     length_z : float
         Size of the compute window over z (µm).
     dist_z : float
@@ -61,7 +57,7 @@ class Bpm():
         Step over x (µm)
     """
 
-    def __init__(self, width, no, delta_no,
+    def __init__(self, no,
                  length_z, dist_z, nbr_z_disp,
                  length_x, dist_x):
         """
@@ -72,12 +68,8 @@ class Bpm():
 
         Parameters
         ----------
-        width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
         no : float
             Refractive index of the cladding
-        delta_no : float
-            Difference of refractive index between the core and the cladding.
         length_z : float
             Size of the compute window over z (µm).
         dist_z : float
@@ -89,18 +81,12 @@ class Bpm():
         dist_x : float
             Step over x (µm).
         """
-        self.width = width
         self.no = no
-        self.delta_no = delta_no
         self.length_z = length_z
         self.dist_z = dist_z
         self.nbr_z_disp = nbr_z_disp
         self.dist_x = dist_x
         self.length_x = length_x
-
-        if delta_no > no/10:
-            print("Careful: index variation is too high:")
-            print(delta_no, ">", no, "/ 10")
 
     def create_x_z(self):
         """
@@ -160,20 +146,25 @@ class Bpm():
 
     # Guides #
 
-    def squared_guide(self):
+    def squared_guide(self, width):
         """
         A lambda function than returns a centered rectangular shape.
 
         return 1 if :math:`x >= -width/2` and :math:`x <= width/2`
         else return 0.
 
+        Parameters
+        ----------
+        width : float
+            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+
         Notes
         -----
         This methods uses the width variable defined in :class:`Bpm`.
         """
-        return lambda t: (t >= -self.width/2) & (t <= self.width/2)
+        return lambda t: (t >= -width/2) & (t <= width/2)
 
-    def gauss_guide(self, gauss_pow):
+    def gauss_guide(self, width, gauss_pow=1):
         """
         A lambda function than return a centered super-Gaussian shape.
 
@@ -186,23 +177,22 @@ class Bpm():
 
         Parameters
         ----------
-        gauss_pow : int
+        width : float
+            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+        gauss_pow : int, optional
             Index of the super-gaussian guide with 1 being a regural gaussian
             guide and 4 being the conventionnal super-gaussian guide used to
-            describe realistic guides.
+            describe realistic waveguides.
             See on en.wikipedia.org/wiki/Gaussian_function
-            #Higher-order_Gaussian_or_super-Gaussian_function
-
-        Notes
-        -----
-        This methods uses the width variable defined in :class:`Bpm`.
+            #Higher-order_Gaussian_or_super-Gaussian_function.
+            1 by Default.
         """
-        if self.width == 0:
+        if width == 0:
             return lambda t: 0
-        w = self.width / 2  # want diameter at 1/e =width so 2*w=witdh
+        w = width / 2  # want diameter at 1/e =width so 2*w=width
         return lambda t: np.exp(-(t / w)**(2*gauss_pow))
 
-    def create_guides(self, shape, nbr_p, p, offset_guide=0):
+    def create_guides(self, shape, delta_no, nbr_p, p, offset_guide=0, z=0):
         """
         Create an array of guides over x using peaks positions and for a given
         shape.
@@ -213,6 +203,8 @@ class Bpm():
             :meth:`squared_guide`, :meth:`gauss_guide` or any lambda function
             that takes one argument and return the relative refractive index
             for the input position.
+        delta_no : float
+            Difference of refractive index between the core and the cladding.
         nbr_p : int
             Number of guides.
         p : float
@@ -230,10 +222,10 @@ class Bpm():
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
-        nbr_z, nbr_x, x, dist_x, delta_no.
+        nbr_z, nbr_x, x, dist_x.
         """
-        self.peaks = np.zeros((nbr_p, self.nbr_z))
-        self.dn = np.zeros((self.nbr_z, self.nbr_x))
+        peaks = np.zeros((nbr_p, self.nbr_z))
+        dn = np.zeros((self.nbr_z, self.nbr_x))
         dn_z = np.zeros(self.nbr_x)
 
         peaks_z = (p*np.linspace(-nbr_p/2, nbr_p/2-1, nbr_p)
@@ -246,14 +238,15 @@ class Bpm():
             dn_z += np.roll(dn_fix, int(round(peaks_z[i] / self.dist_x)))
 
         # only necessary because this program can have curved guides
+        # TODO: implement z start end
+        dn[:] = dn_z
         for i in range(self.nbr_z):
-            self.dn[i, :] = dn_z
-            self.peaks[:, i] = peaks_z
+            peaks[:, i] = peaks_z
 
-        self.dn = self.dn * self.delta_no  # give a value to the shape
-        return [self.peaks, self.dn]
+        dn = dn * delta_no  # give a value to the shape
+        return [peaks, dn]
 
-    def create_curved_guides(self, shape, curve, half_delay,
+    def create_curved_guides(self, shape, width, delta_no, curve, half_delay,
                              distance_factor, offset_guide=0):
         """
         Create two curved guides and one linear guide on the center (STIRAP).
@@ -270,6 +263,10 @@ class Bpm():
         ----------
         shape : method
             :meth:`square` or :meth:`gauss`
+        width : float
+            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+        delta_no : float
+            Difference of refractive index between the core and the cladding.
         curve : float
             curvature factor in :math:`10^{-8} µm^{-2}`.
         half_delay : float
@@ -295,7 +292,7 @@ class Bpm():
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
-        length_z, nbr_z, width, nbr_x, x, dist_x, delta_no.
+        length_z, nbr_z, width, nbr_x, x, dist_x.
         """
         # all points over z
         z = np.linspace(0, self.length_z, self.nbr_z)
@@ -303,27 +300,27 @@ class Bpm():
         # left curved guide
         sa = (- offset_guide
               + curve*(z - self.length_z/2 - half_delay)**2
-              + self.width*distance_factor)
+              + width*distance_factor)
 
         # right curved guide
         sb = (offset_guide
               + curve*(z - self.length_z/2 + half_delay)**2
-              + self.width*distance_factor)
+              + width*distance_factor)
 
-        self.peaks = np.array([-sa,
-                               np.array([offset_guide] * self.nbr_z),
-                               sb])
+        peaks = np.array([-sa,
+                          np.array([offset_guide] * self.nbr_z),
+                          sb])
 
-        self.dn = np.zeros((self.nbr_z, self.nbr_x))
+        dn = np.zeros((self.nbr_z, self.nbr_x))
         dn_fix = shape(self.x)   # guide shape center on 0
 
         for i in range(self.nbr_z):
-            self.dn[i, :] = np.roll(dn_fix, int(round(-sa[i] / self.dist_x))) \
+            dn[i, :] = np.roll(dn_fix, int(round(-sa[i] / self.dist_x))) \
                 + np.roll(dn_fix, int(round(offset_guide / self.dist_x))) \
                 + np.roll(dn_fix, int(round(sb[i] / self.dist_x)))
 
-        self.dn = self.dn * self.delta_no  # give a value to the shape
-        return [self.peaks, self.dn]
+        dn = dn * delta_no  # give a value to the shape
+        return [peaks, dn]
 
     # Light #
 
@@ -384,8 +381,7 @@ class Bpm():
         field = np.zeros(self.nbr_x)
 
         for j in range(self.nbr_x):
-            if (self.x[j] >= -fwhm/2
-                    and self.x[j] <= fwhm/2):
+            if self.x[j] >= -fwhm/2 and self.x[j] <= fwhm/2:
                 field[j] = 1
             else:
                 field[j] = 0
@@ -393,13 +389,17 @@ class Bpm():
         field = np.roll(field, int(round(offset_light / self.dist_x)))
         return field
 
-    def mode_determ(self, mode):
+    def mode_determ(self, width, delta_no, mode):
         """
         Solve the transcendental equation tan=sqrt that give the modes
         allowed in a squared guide.
 
         Parameters
         ----------
+        width : float
+            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+        delta_no : float
+            Difference of refractive index between the core and the cladding.
         mode : int
             Number of the searched mode.
 
@@ -420,16 +420,18 @@ class Bpm():
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
-        lo, width, no, delta_no, ko.
+        lo, no, ko.
         """
-        lim = self.lo/(2 * self.width * (self.no + self.delta_no)) - 1e-12
-        theta_c = acos(self.no / (self.no + self.delta_no))  # Critical angle
+        width = float(width)
+        delta_no = float(delta_no)
+        lim = self.lo/(2 * width * (self.no + delta_no)) - 1e-12
+        theta_c = acos(self.no / (self.no + delta_no))  # Critical angle
         solu = np.linspace(
             mode*lim + 0.000001,
             (mode + 1) * lim,
             round(1 + (lim - 0.000001)/0.000001))
         lhs = np.tan(
-            pi * self.width * (self.no + self.delta_no) / self.lo * solu
+            pi * width * (self.no + delta_no) / self.lo * solu
             - mode*pi/2)
         rhs = np.sqrt(
             0j  # to avoid sqrt error when complexe
@@ -445,19 +447,23 @@ class Bpm():
         sin_theta_m = solu[i_min]
         theta_m = asin(sin_theta_m)  # angle at which the mode propagate
 
-        beta_m = self.ko * (self.no + self.delta_no) * cos(theta_m)
-        h_m = sqrt((self.ko * (self.no + self.delta_no))**2 - beta_m**2)
+        beta_m = self.ko * (self.no + delta_no) * cos(theta_m)
+        h_m = sqrt((self.ko * (self.no + delta_no))**2 - beta_m**2)
         gamma_m = (self.no * self.ko
                    * np.sqrt((cos(theta_m) / cos(theta_c))**2 - 1))
 
         return [h_m, gamma_m, beta_m]
 
-    def mode_light(self, mode, lo, offset_light=0):
+    def mode_light(self, width, delta_no, mode, lo, offset_light=0):
         """
         Create light based on propagated mode inside a squared guide.
 
         Parameters
         ----------
+        width : float
+            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+        delta_no : float
+            Difference of refractive index between the core and the cladding.
         mode : int
             Number of the searched mode.
         lo : float
@@ -479,7 +485,7 @@ class Bpm():
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
-        nbr_x, width, x and the :meth`mode_determ` method.
+        nbr_x, x and the :meth`mode_determ` method.
 
         This method create the following variables in :class:`Bpm`:
         lo, ko.
@@ -488,50 +494,52 @@ class Bpm():
         self.ko = 2 * pi / self.lo  # linear wave vector in free space (1/µm)
         field = np.zeros(self.nbr_x)
 
-        [h_m, gamma_m, beta_m] = self.mode_determ(mode)
+        [h_m, gamma_m, beta_m] = self.mode_determ(width, delta_no, mode)
 
         if mode % 2 == 0:  # if even mode
 
-            b_b = cos(h_m * self.width / 2)  # Continuity value where x=width/2
+            b_b = cos(h_m * width / 2)  # Continuity value where x=width/2
 
             for j in range(self.nbr_x):  # Compute light based on h,gamma,beta
 
-                if abs(self.x[j]) <= self.width/2:  # in core
+                if abs(self.x[j]) <= width/2:  # in core
                     field[j] = cos(h_m * self.x[j])
 
                 else:  # in cladding
                     field[j] = b_b * exp(-gamma_m * (
                         abs(self.x[j])
-                        - self.width/2))
+                        - width/2))
         else:  # if odd mode
 
-            c_c = sin(h_m * self.width / 2)  # Continuity value where x=width/2
+            c_c = sin(h_m * width / 2)  # Continuity value where x=width/2
 
             for j in range(self.nbr_x):  # Compute light based on h,gamma,beta
 
-                if abs(self.x[j]) <= self.width/2:  # in core
+                if abs(self.x[j]) <= width/2:  # in core
                     field[j] = sin(h_m * self.x[j])
 
-                elif self.x[j] >= self.width/2:  # Right cladding
+                elif self.x[j] >= width/2:  # Right cladding
                     field[j] = c_c * exp(-gamma_m * (
                         self.x[j]
-                        - self.width/2))
+                        - width/2))
 
                 else:  # Left cladding
                     field[j] = -c_c * exp(gamma_m * (
                         self.x[j]
-                        + self.width/2))
+                        + width/2))
 
         field = np.roll(field, int(round(offset_light / self.dist_x)))
 
         return [field, h_m, gamma_m, beta_m]
 
-    def all_modes(self, lo, offset_light=0):
+    def all_modes(self, width, delta_no, lo, offset_light=0):
         """
         Compute all modes allowed by the guide and sum them into one field.
 
         Parameters
         ----------
+        width : float
+            Guide width defined as the diameter (µm) at 1/e^2 intensity.
         lo : float
             Wavelength of the beam in vaccum in µm.
         offset_light : float, optional
@@ -562,7 +570,7 @@ class Bpm():
         while True:
             try:
                 [field_i, h_m, gamma_m, beta_m] = self.mode_light(
-                    i, lo, offset_light)
+                    width, delta_no, i, lo, offset_light)
                 field = field + field_i
                 h = np.append(h, h_m)
                 gamma = np.append(gamma, gamma_m)
@@ -573,7 +581,7 @@ class Bpm():
 
         return [field, h, gamma, beta]
 
-    def check_modes(self, lo):
+    def check_modes(self, width, delta_no, lo):
         """
         Return the last possible mode number.
         Could be merged with :meth:`all_modes` but would increase the needed
@@ -581,6 +589,8 @@ class Bpm():
 
         Parameters
         ----------
+        width : float
+            Guide width defined as the diameter (µm) at 1/e^2 intensity.
         lo : float
             Wavelength of the beam in vaccum (µm).
 
@@ -597,7 +607,7 @@ class Bpm():
 
         while True:
             try:
-                self.mode_light(i, lo)
+                self.mode_light(width, delta_no, i, lo)
                 i += 1
             except ValueError:
                 print("This guide can propagate up to the modes", i-1)
@@ -688,7 +698,7 @@ class Bpm():
 
         return [field, airy_zero]
 
-    def init_field(self, field, theta_ext, irrad, lo):
+    def init_field(self, dn, field, theta_ext, irrad, lo):
         """
         Initialize phase, field and power variables.
 
@@ -767,7 +777,7 @@ class Bpm():
         self.phase_mat = fftshift(np.exp(-1j * self.dist_z / 2 * fr))
 
         # Refractive index modulation
-        self.nl_mat = self.ko * self.dist_z * self.dn
+        self.nl_mat = self.ko * self.dist_z * dn
 
         # Initial irradiance
         self.current_power = self.epnc * (
@@ -778,7 +788,7 @@ class Bpm():
 
         return [self.progress_pow]
 
-    def guide_position(self, guide, size):
+    def guide_position(self, peaks, guide, size):
         """
         Return the left and right position index over x of a given guide
         for each z.
@@ -805,11 +815,11 @@ class Bpm():
         x_beg = np.zeros(self.nbr_z, dtype=int)  # Note: don't use x_end=x_beg
         x_end = np.zeros(self.nbr_z, dtype=int)  # Because id would be ==
 
-        if self.peaks.shape[0] != 0:
+        if peaks.shape[0] != 0:
 
             for j in range(self.nbr_z):
 
-                pos_beg = (self.peaks[guide, j] - size/2)  # Left position
+                pos_beg = (peaks[guide, j] - size/2)  # Left position
 
                 # If the position is out of boundery, change interval to
                 # (-length_x/2, length_x)
@@ -824,7 +834,7 @@ class Bpm():
                 # Search the closest index value for this position
                 x_beg[j] = np.where(self.x >= pos_beg)[0][0]
 
-                pos_end = (self.peaks[guide, j] + size/2)
+                pos_end = (peaks[guide, j] + size/2)
 
                 if pos_end < self.x[0] or pos_end > self.x[-1]:
                     pos_end = pos_end % self.length_x
@@ -872,7 +882,7 @@ class Bpm():
         P /= np.trapz(self.progress_pow[0, ], axis=0)
         return P
 
-    def losses_position(self, guide_lost, width_lost):
+    def losses_position(self, peaks, guide_lost, width_lost):
         """
         Return the left and right position (x) index of a given area
         over z [x,z].
@@ -902,11 +912,11 @@ class Bpm():
         lost_end = np.zeros((self.nbr_z, self.nbr_lost), dtype=int)
         for j, n in enumerate(guide_lost):
             [lost_beg[:, j],
-             lost_end[:, j]] = self.guide_position(n, width_lost[j])
+             lost_end[:, j]] = self.guide_position(peaks, n, width_lost[j])
 
         return [lost_beg, lost_end]
 
-    def kerr_effect(self, chi3=1e-19, kerr_loop=1, variance_check=False,
+    def kerr_effect(self, dn, chi3=1e-19, kerr_loop=1, variance_check=False,
                     field_start=None, dn_start=None, phase_mat=None):
         """
         Kerr effect: refractive index modulation by the light intensity.
@@ -948,7 +958,7 @@ class Bpm():
         i, epnc, no, ko, dist_z and the :meth:`variance` method.
         """
         # Set the default value if none were given
-        dn_start = self.dn[self.i, :] if dn_start is None else dn_start
+        dn_start = dn[self.i, :] if dn_start is None else dn_start
         nl_mat = self.ko * self.dist_z * dn_start
         field_start = self.field if field_start is None else field_start
         phase_mat = self.phase_mat if phase_mat is None else phase_mat
@@ -1046,27 +1056,25 @@ class Bpm():
         This methods uses the following variables defined in :class:`Bpm`:
         nbr_lost, i, field, dist_z, nbr_x.
         """
+        # TODO: implement nbr_lost into the interface
         for n in range(self.nbr_lost):
 
             if lost_beg[self.i, n] <= lost_end[self.i, n]:  # Normal case
-
-                for j in range(lost_beg[self.i, n], lost_end[self.i, n]+1):
-                    self.field[j] *= exp(-alpha * self.dist_z)
+                a, b = lost_beg[self.i, n], lost_end[self.i, n]+1
+                self.field[a:b] *= exp(-alpha*self.dist_z)
 
             else:  # Take into account guide crossing the window edges
+                a, b = lost_beg[self.i, n], self.nbr_x
+                self.field[a:b] *= exp(-alpha*self.dist_z)
 
-                for j in range(lost_beg[self.i, n], self.nbr_x):
-                    self.field[j] *= exp(-alpha * self.dist_z)
-
-                for j in range(0, lost_end[self.i, n]+1):
-                    self.field[j] *= exp(-alpha * self.dist_z)
+                a, b = 0, lost_end[self.i, n]+1
+                self.field[a:b] *= exp(-alpha*self.dist_z)
 
         return self.field
 
-    def bpm_compute(self, chi3=1e-19, kerr=False, kerr_loop=1,
+    def bpm_compute(self, dn, chi3=1e-19, kerr=False, kerr_loop=1,
                     variance_check=False,
                     alpha=0, lost_beg=None, lost_end=None):
-
         """
         Compute BPM principle : free_propag over dz/2, index modulation,
         free_propag over dz/2.
@@ -1112,9 +1120,10 @@ class Bpm():
             self.field = self.absorption(alpha, lost_beg, lost_end)
 
         if kerr:
-            [self.dn[self.i, :], self.nl_mat[self.i, :],
+            [dn[self.i, :], self.nl_mat[self.i, :],
              self.field, self.current_power] = self.kerr_effect(
-                 chi3=chi3, kerr_loop=kerr_loop, variance_check=variance_check)
+                 dn, chi3=chi3, kerr_loop=kerr_loop,
+                 variance_check=variance_check)
         else:
             # Influence of the index modulation on the field
             self.field *= np.exp(1j * self.nl_mat[self.i, :])
@@ -1129,7 +1138,7 @@ class Bpm():
         # useless but act as a reminder for what the the method does
         return self.current_power
 
-    def main_compute(self, chi3=1e-19, kerr=False, kerr_loop=1,
+    def main_compute(self, dn, chi3=1e-19, kerr=False, kerr_loop=1,
                      variance_check=False,
                      alpha=0, lost_beg=None, lost_end=None):
         """
@@ -1177,6 +1186,7 @@ class Bpm():
             self.i = i
             # Compute non-linear and linear propagation for every z
             self.bpm_compute(
+                dn,
                 chi3=chi3, kerr=kerr, kerr_loop=kerr_loop,
                 variance_check=variance_check, alpha=alpha,
                 lost_beg=lost_beg, lost_end=lost_end)
@@ -1207,25 +1217,26 @@ def example_bpm():
     dist_x = 0.1
     length_x = 500
 
-    bpm = Bpm(width, no, delta_no,
+    bpm = Bpm(no,
               length_z, dist_z, nbr_z_disp,
               length_x, dist_x)
 
     [length_z, nbr_z, nbr_z_disp, length_x, nbr_x, x] = bpm.create_x_z()
 
-#    shape = bpm.squared_guide()
-    shape = bpm.gauss_guide(4)
+#    shape = bpm.squared_guide(width)
+    shape = bpm.gauss_guide(width, 4)
 
     nbr_p = 3
     p = 13
     offset_guide = 0
 
     [peaks, dn] = bpm.create_guides(
-        shape, nbr_p, p, offset_guide=offset_guide)
+        shape, delta_no, nbr_p, p, offset_guide=offset_guide)
 #    curve = 40 * 1E-8
 #    half_delay = 1000
 #    distance_factor = 1.2
-#    [peaks, dn] = bpm.create_curved_guides(shape, curve, half_delay,
+#    [peaks, dn] = bpm.create_curved_guides(shape, width, delta_no,
+#                                           curve, half_delay,
 #                                           distance_factor,
 #                                           offset_guide=offset_guide)
 
@@ -1254,17 +1265,19 @@ def example_bpm():
     #    field_i = bpm.squared_light(fwhm, offset_light=offset_light)
 
 #            [field_i, h, gamma, beta] = bpm.all_modes(
+#                width, delta_no
 #                lo, offset_light=offset_light)
 
 #        mode = 0
 #            [field_i, h, gamma, beta] = bpm.mode_light(
+#                width, delta_no,
 #                mode, lo, offset_light=offset_light)
 
         field[i] = field_i
 
     irrad = [1 * 1E13]*nbr_light
     theta_ext = 0
-    [progress_pow] = bpm.init_field(field, theta_ext, irrad, lo)
+    [progress_pow] = bpm.init_field(dn, field, theta_ext, irrad, lo)
 
     def _show_plot(pow_index):
         plt.figure()
@@ -1320,7 +1333,7 @@ def example_bpm():
         width_lost = np.array([width_lost])
         alpha = alpha/1000
         [lost_beg, lost_end] = bpm.losses_position(
-            guide_lost, width_lost)
+            peaks, guide_lost, width_lost)
     else:
         alpha = 0
         lost_beg = 0
@@ -1337,6 +1350,7 @@ def example_bpm():
 
     debut = time.process_time()
     [progress_pow] = bpm.main_compute(
+        dn,
         chi3=chi3, kerr=kerr, kerr_loop=kerr_loop,
         variance_check=variance_check, alpha=alpha,
         lost_beg=lost_beg, lost_end=lost_end)

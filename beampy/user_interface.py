@@ -45,6 +45,20 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.setupUi(self)  # Linked to Ui_MainWindow through interface.py
 
         # Prepare variables before assigning values to them
+        self.width = []
+        self.offset_guide = []
+        self.delta_no = []
+        self.shape_gauss_check = []
+        self.gauss_pow = np.array([], dtype=int)
+        self.shape_squared_check = []
+        self.nbr_p = np.array([], dtype=int)
+        self.p = []
+        self.curve = []
+        self.half_delay = []
+        self.distance_factor = []
+        self.tab_index = []
+        self.previous_guide = 0
+
         self.fwhm = []
         self.offset_light = []
         self.irrad = []
@@ -54,15 +68,17 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.mode_check = []
         self.all_modes_check = []
         self.mode = np.array([], dtype=int)
+        self.mode_guide_ref = np.array([], dtype=int)
         self.offset_light_peak = np.array([], dtype=int)
         self.airy_check = []
         self.airy_zero = np.array([], dtype=int)
         self.lobe_size = []
         self.previous_beam = 0
 
+        self.on_click_create_guide()  # Initialized variables with buttons
         self.on_click_create_light()  # Initialized variables with buttons
 
-        self.calculate_guide('array')  # Compute guide
+        self.calculate_guide()  # Compute guide
         self.calculate_light()  # Compute light
 
         self.addmpl('guide')  # Display guide
@@ -94,20 +110,24 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         """
         Connect the interface buttons to their corresponding functions:
 
-        :meth:`.on_click_array`, :meth:`.on_click_curved`,
+        :meth:`.on_click_guide`, :meth:`.on_click_curved`,
         :meth:`.on_click_light`, :meth:`.on_click_compute`,
         :meth:`.on_click_create_light`, :meth:`.on_click_delete_light`,
         :meth:`.save_light`, :meth:`.get_guide`,
         :meth:`.get_light`, :meth:`.get_compute`,
         :meth:`.show_estimate_time`, :meth:`.check_modes_display`.
         """
-        self.calculateButton_array.clicked.connect(self.on_click_array)
-        self.calculateButton_curved.clicked.connect(self.on_click_curved)
+        self.calculateButton_guide.clicked.connect(self.on_click_guide)
         self.calculateButton_light.clicked.connect(self.on_click_light)
         self.calculateButton_compute.clicked.connect(self.on_click_compute)
         self.pushButton_create_beam.clicked.connect(self.on_click_create_light)
         self.pushButton_delete_beam.clicked.connect(self.on_click_delete_light)
         self.pushButton_save_beam.clicked.connect(self.save_light)
+        self.pushButton_create_guide.clicked.connect(
+            self.on_click_create_guide)
+        self.pushButton_delete_guide.clicked.connect(
+            self.on_click_delete_guide)
+        self.pushButton_save_guide.clicked.connect(self.save_guide)
         self.pushButton_cancel_guide.clicked.connect(self.get_guide)
         self.pushButton_cancel_light.clicked.connect(self.get_light)
         self.pushButton_cancel_compute.clicked.connect(self.get_compute)
@@ -182,14 +202,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         icon.addFile(folder+'icons/help-about.png', QSize(22, 22))
         action.setIcon(icon)
 
-    def calculate_guide(self, topology='array'):
+    def calculate_guide(self):
         """
         Initialized the :class:`.Bpm` class and creates the guides.
-
-        Parameters
-        ----------
-        topology : str
-            'array' or 'curved'.
 
         Notes
         -----
@@ -204,13 +219,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         :meth:`.create_guides`, :meth:`.create_curved_guides`.
         """
         print("calculate guide")
-        self.topology = topology
         t_guide_start = time.process_time()
 
         self.save_guide()  # Get all guide values
 
         # Create the Bpm class (overwrite existing one)
-        self.bpm = Bpm(self.width, self.no, self.delta_no,
+        self.bpm = Bpm(self.no,
                        self.length_z, self.dist_z, self.nbr_z_disp,
                        self.length_x, self.dist_x)
 
@@ -233,61 +247,69 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             print("change the condition nbr_x * nbr_z in calculate_guide")
             raise RuntimeError("Too many points:", self.nbr_x*self.nbr_z)
 
-        # Waveguide shape choice
-        if self.shape_squared_check:
-            shape = self.bpm.squared_guide()  # Squared guides
-        elif self.shape_gauss_check:
-            shape = self.bpm.gauss_guide(self.gauss_pow)  # Gaussian guides
+        nbr_guide = self.comboBox_guide.count()  # Number of guide set
 
-        # Topology waveguides choice
-        if topology == 'array':
+        self.peaks = np.zeros((0, self.nbr_z))
+        self.dn = np.zeros((self.nbr_z, self.nbr_x))
 
-            leng_max = self.length_x - self.dist_x
+        for i in range(nbr_guide):
+            # Waveguide shape choice
+            if self.shape_squared_check[i]:  # Squared guides
+                shape = self.bpm.squared_guide(self.width[i])
+            elif self.shape_gauss_check[i]:  # Gaussian guides
+                shape = self.bpm.gauss_guide(self.width[i],
+                                             gauss_pow=self.gauss_pow[i])
 
-            if self.nbr_p*self.p > leng_max:
-                # give info about possible good values
-                print("nbr_p*p> length_x: ")
-                print(self.nbr_p*self.p, ">", leng_max)
+            # Topology waveguides choice
+            if self.tab_index[i] == 0:  # array of waveguides
+                length_max = self.length_x - self.dist_x
 
-                print("p_max=", round(leng_max/self.nbr_p, 3))
+                if self.nbr_p[i]*self.p[i] > length_max:
+                    # give info about possible good values
+                    print("nbr_p*p> length_x: ")
+                    print(self.nbr_p[i]*self.p[i], ">", length_max)
 
-                if int(leng_max / self.p) == leng_max / self.p:
-                    print("nbr_p_max=", int(leng_max / self.p)-1)
-                else:
-                    print("nbr_p_max=", int(leng_max / self.p))
+                    print("p_max=", round(length_max/self.nbr_p[i], 3))
 
-                self.nbr_p = 0
+                    if int(length_max / self.p[i]) == length_max / self.p[i]:
+                        print("nbr_p_max=", int(length_max / self.p[i])-1)
+                    else:
+                        print("nbr_p_max=", int(length_max / self.p[i]))
 
-            # choose guides position when even number
-#            condition_even_guide = 'center'  # default
-#            if self.nbr_p % 2 == 0:
-#                if condition_even_guide == 'left':
-#                    self.offset_guide -= self.p / 2
-#                elif condition_even_guide == 'right':
-#                    self.offset_guide += self.p / 2
+                    self.nbr_p[i] = 0
+                [peaks, dn] = self.bpm.create_guides(
+                    shape, self.delta_no[i], self.nbr_p[i], self.p[i],
+                    offset_guide=self.offset_guide[i])
 
-            [self.peaks, self.dn] = self.bpm.create_guides(
-                shape, self.nbr_p, self.p, offset_guide=self.offset_guide)
+            elif self.tab_index[i] == 1:  # curved waveguides
+                curve = self.curve[i] * 1E-8  # curvature factor
+                [peaks, dn] = self.bpm.create_curved_guides(
+                    shape, self.width[i], self.delta_no[i],
+                    curve, self.half_delay[i], self.distance_factor[i],
+                    offset_guide=self.offset_guide[i])
 
-        elif topology == 'curved':
-            curve = self.curve * 1E-8  # curvature factor
-            [self.peaks, self.dn] = self.bpm.create_curved_guides(
-                shape, curve, self.half_delay, self.distance_factor,
-                offset_guide=self.offset_guide)
+            if self.delta_no[i] > self.no/10:
+                print("Careful: index variation is too high for guide", i, ":")
+                print(self.delta_no[i], ">", self.no, "/ 10")
 
-        # Display guides
-        self.z_disp = np.linspace(0,
-                                  self.length_z / 1000,
-                                  self.nbr_z_disp + 1)
+            self.peaks = np.append(self.peaks, peaks, 0)
+            self.dn = np.add(self.dn, dn)
 
-        self.xv, self.zv = np.meshgrid(self.x, self.z_disp)
-        self.dn_disp = np.linspace(0,
-                                   self.nbr_z - 1,
-                                   self.nbr_z_disp + 1, dtype=int)
+            # Display guides
+            self.z_disp = np.linspace(0,
+                                      self.length_z/1000,
+                                      self.nbr_z_disp+1)
+
+            self.xv, self.zv = np.meshgrid(self.x, self.z_disp)
+            self.dn_disp = np.linspace(0,
+                                       self.nbr_z-1,
+                                       self.nbr_z_disp+1, dtype=int)
 
         # only display available settings
-        if self.nbr_p == 0 or self.p == 0:
+        # (don't propose offset from guide if no guide)
+        if 0 in self.nbr_p or 0 in self.p:
             self.spinBox_offset_light_peak.setDisabled(True)
+            self.spinBox_guide_nbr_ref.setDisabled(True)
             self.doubleSpinBox_offset_light.setEnabled(True)
             self.checkBox_offset_light.setChecked(False)
             self.checkBox_offset_light.setDisabled(True)
@@ -299,6 +321,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         else:
             self.checkBox_offset_light.setEnabled(True)
             self.spinBox_offset_light_peak.setMaximum(self.peaks.shape[0]-1)
+            self.spinBox_guide_nbr_ref.setMaximum(self.peaks.shape[0]-1)
             self.checkBox_lost.setEnabled(True)
             self.spinBox_guide_lost.setMaximum(self.peaks.shape[0]-1)
             self.checkBox_check_power.setEnabled(True)
@@ -337,7 +360,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         nbr_light = self.comboBox_light.count()  # Number of beams
         field = np.zeros((nbr_light, self.nbr_x))
 
-        if sum(self.all_modes_check) > 0:  # Display only once the max mode
+        if 1 in self.all_modes_check:  # Display only once the max mode
             self.check_modes_display()
 
         for i in range(nbr_light):
@@ -359,6 +382,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             else:
                 offset_light = self.offset_light[i]
 
+            guide_index = self.find_guide_number(self.mode_guide_ref[i])
+
             #  Compute lights
             if self.gaussian_check[i]:
                 field_i = self.bpm.gauss_light(
@@ -370,16 +395,18 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
             elif self.all_modes_check[i]:
                 field_i = self.bpm.all_modes(
+                    self.width[guide_index], self.delta_no[guide_index],
                     self.lo, offset_light=offset_light)[0]
 
             elif self.mode_check[i]:
 
                 try:
                     field_i = self.bpm.mode_light(
+                        self.width[guide_index], self.delta_no[guide_index],
                         self.mode[i], self.lo, offset_light=offset_light)[0]
 
                 except ValueError as ex:  # Say that no mode exist
-                    print(ex, "for the beam", i)
+                    print(ex, "for the beam", i+1)
                     continue  # Go to the next field
 
             elif self.airy_check[i]:
@@ -393,7 +420,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         irrad = self.irrad  # Irradiance or power (GW/cm^2)
         irrad = irrad * 1E13  # (W/m^2)
         [self.progress_pow] = self.bpm.init_field(
-            field, self.theta_ext, irrad, self.lo)
+            self.dn, field, self.theta_ext, irrad, self.lo)
 
         t_light_end = time.process_time()
         print('light time: ', t_light_end-t_light_start)
@@ -423,7 +450,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         if self.lost_check:
             alpha = self.alpha/1000
             [lost_beg, lost_end] = self.bpm.losses_position(
-                self.guide_lost, self.width_lost)
+                self.peaks, self.guide_lost, self.width_lost)
         else:
             alpha = 0
             lost_beg = 0
@@ -438,6 +465,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         print("Time estimate:", estimation)
 
         [self.progress_pow] = self.bpm.main_compute(
+            self.dn,
             chi3=chi3, kerr=kerr, kerr_loop=kerr_loop,
             variance_check=variance_check, alpha=alpha,
             lost_beg=lost_beg, lost_end=lost_end)
@@ -462,13 +490,50 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         self.estimate_time_display.display(estimation)
 
+    def find_guide_number(self, guide_number):
+        """
+        Return the waveguide group number for a given waveguide number.
+
+
+        Parameters
+        ----------
+        guide_number : int
+            Number of a waveguide
+
+        Returns
+        -------
+        guide_group_number : int
+            Number of the waveguide group
+        """
+        num_gd = -1
+        for j, n in enumerate(self.nbr_p):
+
+            if self.tab_index[j] == 0:
+
+                for _ in range(n):
+                    num_gd += 1
+                    if num_gd == guide_number:
+                        guide_group_number = j
+                        break
+            elif self.tab_index[j] == 1:
+                for _ in range(3):
+                    num_gd += 1
+                    if num_gd == guide_number:
+                        guide_group_number = j
+                        break
+        return guide_group_number
+
     def check_modes_display(self):
         """
         Display on the interface the last mode that can propagated into a
         squared guide.
         """
         lo = self.doubleSpinBox_lo.value()
-        mode_max = self.bpm.check_modes(lo)
+
+        guide_index = self.find_guide_number(
+            self.spinBox_guide_nbr_ref.value())
+        mode_max = self.bpm.check_modes(
+            self.width[guide_index], self.delta_no[guide_index], lo)
         self.mode_number.display(mode_max)
 
     def addmpl(self, tab='guide', pow_index=0):
@@ -493,19 +558,18 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         x_min = self.x[0]
         x_max = self.x[-1]
+        if (0 in self.tab_index  # If array of guides
+                and 0 not in self.nbr_p and 0 not in self.p  # If guides exists
+                and self.peaks.min() >= self.x[0]  # If guides in the windows
+                and self.peaks.max() <= self.x[-1]):
+            x_min = np.min(self.offset_guide - self.nbr_p*self.p)
+            x_max = np.max(self.offset_guide + self.nbr_p*self.p)
 
-        if (self.topology == 'array'  # If array of guides
-                and self.nbr_p != 0 and self.p != 0  # If guides exists
-                and self.peaks[0, 0] >= self.x[0]  # If guides in the windows
-                and self.peaks[-1, -1] <= self.x[-1]):
-            x_min = self.offset_guide - self.nbr_p*self.p
-            x_max = self.offset_guide + self.nbr_p*self.p
-
-        if (self.topology == 'curved'  # If curved guides
-                and self.peaks[0, 0] >= self.x[0]  # If guides in the windows
-                and self.peaks[-1, -1] <= self.x[-1]):
-            x_min = self.peaks[0, 0] - self.width
-            x_max = self.peaks[-1, -1] + self.width
+        if (1 in self.tab_index  # If curved guides
+                and self.peaks.min() >= self.x[0]  # If guides in the windows
+                and self.peaks.max() <= self.x[-1]):
+            x_min = self.peaks.min() - self.width.max()
+            x_max = self.peaks.max() + self.width.max()
 
         if tab == 'guide':
             fig = Figure()
@@ -538,7 +602,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             ax2.set_xlabel('x (µm)')
             ax2.set_ylabel(r'$\Delta_n$')
 
-            if self.nbr_p != 0:
+            if sum(self.nbr_p) > 0:
                 verts = [(self.x[0], 0),
                          *zip(self.x, self.dn[pow_index_guide, :]),
                          (self.x[-1], 0)]
@@ -581,7 +645,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             ax1.set_ylabel(r'$\Delta_n$')
             ax2.set_ylabel('Irradiance ($GW.cm^{-2}$)')
 
-            if self.nbr_p != 0:
+            if 0 not in self.nbr_p:
                 verts = [(self.x[0], 0),
                          *zip(self.x, self.dn[pow_index_guide, :]),
                          (self.x[-1], 0)]
@@ -643,7 +707,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
                 # Display guides power
                 if (self.checkBox_check_power.isChecked() and
-                        self.nbr_p != 0 and self.p != 0):
+                        0 not in self.nbr_p and 0 not in self.p):
                     t_power_start = time.process_time()
                     fig = Figure()
 #                    fig.set_tight_layout(True)
@@ -656,45 +720,52 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     style = list(lines.lineStyles.keys())[0:-3]
                     style = style + list(lines.lineMarkers.keys())[0:-16]
 
-                    if self.topology == 'array':
-                        x_beg = np.zeros((self.nbr_p, self.nbr_z), dtype=int)
-                        x_end = np.zeros((self.nbr_p, self.nbr_z), dtype=int)
-                        P = np.zeros((self.nbr_p, self.nbr_z_disp+1))
+                    x_beg = np.zeros((self.peaks.shape[0], self.nbr_z),
+                                     dtype=int)
+                    x_end = np.zeros((self.peaks.shape[0], self.nbr_z),
+                                     dtype=int)
+                    P = np.zeros((self.peaks.shape[0], self.nbr_z_disp+1))
 
-                        for n in range(self.nbr_p):
-                            [x_beg[n, :],
-                             x_end[n, :]] = self.bpm.guide_position(n, self.p)
+                    num_gd = 0
+                    for i, n in enumerate(self.nbr_p):
 
-                    elif self.topology == 'curved':
-                        x_beg = np.zeros((3, self.nbr_z), dtype=int)
-                        x_end = np.zeros((3, self.nbr_z), dtype=int)
-                        P = np.zeros((3, self.nbr_z_disp+1))
+                        if self.tab_index[i] == 0:
 
-                        # Choose precision at the end for right guide if can
-                        # and choose safety when guides overlapse
-                        if self.peaks[2, -1] <= self.x[-1]:
-                            # When further of each other (good for right end)
-                            p0 = self.peaks[2, -1] - self.peaks[1, -1]
+                            for _ in range(n):
+                                [x_beg[num_gd, :],
+                                 x_end[num_gd, :]] = self.bpm.guide_position(
+                                     self.peaks, num_gd, self.p[i])
+                                num_gd += 1
 
-                        else:
-                            # When closest to each other (good when close)
-                            p0 = self.width * self.distance_factor
+                        elif self.tab_index[i] == 1:
+                            # Choose precision at the end for right guide
+                            # and choose safety when guides overlapse
+                            if self.peaks[num_gd+2, -1] <= self.x[-1]:
+                                # accurate at end but may overlap before
+                                p0 = (self.peaks[num_gd+2, -1]
+                                      - self.peaks[num_gd+1, -1])
 
-                        for n in range(3):
-                            [x_beg[n, :],
-                             x_end[n, :]] = self.bpm.guide_position(n, p0)
+                            else:
+                                # accurate in middle but miss evanescente part
+                                p0 = self.width[i] * self.distance_factor[i]
 
-                    for n in range(self.peaks.shape[0]):
-                        P[n, :] = self.bpm.power_guide(x_beg[n, :],
-                                                       x_end[n, :])
+                            for j in range(3):
+                                [x_beg[num_gd, :],
+                                 x_end[num_gd, :]] = self.bpm.guide_position(
+                                      self.peaks, num_gd, p0)
+                                num_gd += 1
+
+                    for i in range(self.peaks.shape[0]):
+                        P[i, :] = self.bpm.power_guide(x_beg[i, :],
+                                                       x_end[i, :])
                         # plot each power with a different style (nbr_p < 29)
-                        if n < 29:
-                            ax1.plot(self.z_disp, P[n, :],
-                                     style[n], label='P'+str(n))
+                        if i < 29:
+                            ax1.plot(self.z_disp, P[i, :],
+                                     style[i], label='P'+str(i))
 
                         else:  # to have no error but same style
-                            ax1.plot(self.z_disp, P[n, :],
-                                     '', label='P'+str(n))
+                            ax1.plot(self.z_disp, P[i, :],
+                                     '', label='P'+str(i))
 
                     self.canvas_5 = FigureCanvas(fig)
                     self.verticalLayout_compute_plot.addWidget(self.canvas_5)
@@ -703,7 +774,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                                                        self.canvas_5,
                                                        coordinates=True)
                     self.verticalLayout_compute_plot.addWidget(self.toolbar_5)
-                    if self.nbr_p > 10:
+                    if self.peaks.shape[0] > 10:
                         ax1.legend(loc="upper right")  # Fast if many plot
                     else:
                         ax1.legend()  # Best if not too many plot
@@ -757,33 +828,39 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 self.plot_compute.removeWidget(self.toolbar_4)
                 self.toolbar_4.close()
 
-    def save_guide(self):
+    def save_guide(self, guide_selec=False):
         """
         Save the interface variables into the guides variables.
         """
+        # if more than one guide and if no guide selected manualy
+        if str(guide_selec) == 'False':
+            guide_selec = int(self.comboBox_guide.currentIndex())  # Choice
+
         self.length_z = self.doubleSpinBox_length_z.value()
         self.dist_z = self.doubleSpinBox_dist_z.value()
         self.nbr_z_disp = self.spinBox_nbr_z_disp.value()
         self.length_x = self.doubleSpinBox_length_x.value()
         self.dist_x = self.doubleSpinBox_dist_x.value()
-
-        self.width = self.doubleSpinBox_width.value()
-        self.offset_guide = self.doubleSpinBox_offset_guide.value()
         self.no = self.doubleSpinBox_n.value()
-        self.delta_no = self.doubleSpinBox_dn.value()
 
-        self.shape_gauss_check = float(self.radioButton_gaussian.isChecked())
-        self.gauss_pow = int(self.spinBox_gauss_pow.value())
-        self.shape_squared_check = float(self.radioButton_squared.isChecked())
+        self.width[guide_selec] = self.doubleSpinBox_width.value()
+        self.offset_guide[
+            guide_selec] = self.doubleSpinBox_offset_guide.value()
+        self.delta_no[guide_selec] = self.doubleSpinBox_dn.value()
+        self.shape_gauss_check[guide_selec] = float(
+            self.radioButton_gaussian.isChecked())
+        self.gauss_pow[guide_selec] = int(self.spinBox_gauss_pow.value())
+        self.shape_squared_check[guide_selec] = float(
+            self.radioButton_squared.isChecked())
+        self.nbr_p[guide_selec] = self.spinBox_nb_p.value()
+        self.p[guide_selec] = self.doubleSpinBox_p.value()
+        self.curve[guide_selec] = self.doubleSpinBox_curve.value()
+        self.half_delay[guide_selec] = self.doubleSpinBox_half_delay.value()
+        self.distance_factor[
+            guide_selec] = self.doubleSpinBox_distance_factor.value()
 
-        self.nbr_p = self.spinBox_nb_p.value()
-        self.p = self.doubleSpinBox_p.value()
-
-        self.curve = self.doubleSpinBox_curve.value()
-        self.half_delay = self.doubleSpinBox_half_delay.value()
-        self.distance_factor = self.doubleSpinBox_distance_factor.value()
-
-        self.tab_index = self.tabWidget_morphology_guide.currentIndex()
+        self.tab_index[
+            guide_selec] = self.tabWidget_morphology_guide.currentIndex()
 #        print("Guide variables saved")
 
     def get_guide(self):
@@ -795,24 +872,38 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.spinBox_nbr_z_disp.setValue(self.nbr_z_disp)
         self.doubleSpinBox_length_x.setValue(self.length_x)
         self.doubleSpinBox_dist_x.setValue(self.dist_x)
-
-        self.doubleSpinBox_width.setValue(self.width)
-        self.doubleSpinBox_offset_guide.setValue(self.offset_guide)
         self.doubleSpinBox_n.setValue(self.no)
-        self.doubleSpinBox_dn.setValue(self.delta_no)
 
-        self.radioButton_gaussian.setChecked(self.shape_gauss_check)
-        self.spinBox_gauss_pow.setValue(self.gauss_pow)
-        self.radioButton_squared.setChecked(self.shape_squared_check)
+        guide_selec = int(self.comboBox_guide.currentIndex())  # choice
 
-        self.spinBox_nb_p.setValue(self.nbr_p)
-        self.doubleSpinBox_p.setValue(self.p)
+        if self.previous_guide != guide_selec:
+            self.save_guide(self.previous_guide)
 
-        self.doubleSpinBox_curve.setValue(self.curve)
-        self.doubleSpinBox_half_delay.setValue(self.half_delay)
-        self.doubleSpinBox_distance_factor.setValue(self.distance_factor)
+        if self.comboBox_guide.count() >= 1:  # if more than one beams
+            guide_selec = int(self.comboBox_guide.currentIndex())  # choice
+        else:  # Not supposed to happen
+            raise ValueError("Can't have no guide variables")
 
-        self.tabWidget_morphology_guide.setCurrentIndex(self.tab_index)
+        self.doubleSpinBox_width.setValue(self.width[guide_selec])
+        self.doubleSpinBox_offset_guide.setValue(
+            self.offset_guide[guide_selec])
+        self.doubleSpinBox_dn.setValue(self.delta_no[guide_selec])
+        self.radioButton_gaussian.setChecked(
+            self.shape_gauss_check[guide_selec])
+        self.spinBox_gauss_pow.setValue(self.gauss_pow[guide_selec])
+        self.radioButton_squared.setChecked(
+            self.shape_squared_check[guide_selec])
+        self.spinBox_nb_p.setValue(self.nbr_p[guide_selec])
+        self.doubleSpinBox_p.setValue(self.p[guide_selec])
+        self.doubleSpinBox_curve.setValue(self.curve[guide_selec])
+        self.doubleSpinBox_half_delay.setValue(self.half_delay[guide_selec])
+        self.doubleSpinBox_distance_factor.setValue(
+            self.distance_factor[guide_selec])
+        self.tabWidget_morphology_guide.setCurrentIndex(
+            self.tab_index[guide_selec])
+        self.spinBox_gauss_pow.setEnabled(self.shape_gauss_check[guide_selec])
+
+        self.previous_guide = guide_selec  # Save the # of the current guide
 
     def save_light(self, beam_selec=False):
         """
@@ -835,6 +926,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.offset_light[beam_selec] = self.doubleSpinBox_offset_light.value()
         self.irrad[beam_selec] = self.doubleSpinBox_intensity_light.value()
         self.mode[beam_selec] = self.spinBox_mode.value()
+        self.mode_guide_ref[beam_selec] = self.spinBox_guide_nbr_ref.value()
         self.offset_check[beam_selec] = (
             self.checkBox_offset_light.isChecked())
         self.offset_light_peak[beam_selec] = (
@@ -873,6 +965,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.offset_light[beam_selec])
         self.doubleSpinBox_intensity_light.setValue(self.irrad[beam_selec])
         self.spinBox_mode.setValue(self.mode[beam_selec])
+        self.spinBox_guide_nbr_ref.setValue(self.mode_guide_ref[beam_selec])
         self.checkBox_offset_light.setChecked(self.offset_check[beam_selec])
         self.spinBox_offset_light_peak.setValue(
             self.offset_light_peak[beam_selec])
@@ -881,16 +974,19 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.radioButton_squared_light.setChecked(
             self.square_check[beam_selec])
         self.radioButton_mode.setChecked(self.mode_check[beam_selec])
-        self.radioButton_all_modes.setChecked(
-            self.all_modes_check[beam_selec])
+        self.radioButton_all_modes.setChecked(self.all_modes_check[beam_selec])
+        self.radioButton_airy.setChecked(self.airy_check[beam_selec])
+        self.spinBox_airy_zero.setValue(self.airy_zero[beam_selec])
+        self.doubleSpinBox_lobe_size.setValue(self.lobe_size[beam_selec])
         # if checkBox_offset_light checked then activate
         self.spinBox_offset_light_peak.setEnabled(
             self.offset_check[beam_selec])
         self.doubleSpinBox_offset_light.setDisabled(
             self.offset_check[beam_selec])
-        self.radioButton_airy.setChecked(self.airy_check[beam_selec])
-        self.spinBox_airy_zero.setValue(self.airy_zero[beam_selec])
-        self.doubleSpinBox_lobe_size.setValue(self.lobe_size[beam_selec])
+        self.spinBox_airy_zero.setEnabled(self.airy_check[beam_selec])
+        self.doubleSpinBox_lobe_size.setEnabled(self.airy_check[beam_selec])
+        self.spinBox_mode.setEnabled(self.mode_check[beam_selec])
+        self.spinBox_guide_nbr_ref.setEnabled(self.mode_check[beam_selec])
 
         self.previous_beam = beam_selec  # Save the number of the current beam
 
@@ -932,31 +1028,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.checkBox_check_power.setChecked(self.power_check)
 
     @pyqtSlot()
-    def on_click_array(self):
+    def on_click_guide(self):
         """
-        Compute and displayed a guide array.
+        Compute and displayed the waguides.
         """
 #        print('button click guide array')
         QApplication.setOverrideCursor(Qt.WaitCursor)
         self.rmmpl('guide')
         self.rmmpl('light')
-        self.calculate_guide('array')
-        self.calculate_light()
-        self.addmpl('guide')
-        self.addmpl('light')
-        QApplication.restoreOverrideCursor()
-        self.show_estimate_time()
-
-    @pyqtSlot()
-    def on_click_curved(self):
-        """
-        Compute and displayed curved guides.
-        """
-#        print('button click guide curved')
-        QApplication.setOverrideCursor(Qt.WaitCursor)
-        self.rmmpl('guide')
-        self.rmmpl('light')
-        self.calculate_guide('curved')
+        self.calculate_guide()
         self.calculate_light()
         self.addmpl('guide')
         self.addmpl('light')
@@ -991,7 +1071,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
             if not self.calculate_guide_done:
                 self.rmmpl('guide')
-                self.calculate_guide(self.topology)
+                self.calculate_guide()
                 self.addmpl('guide')
                 self.rmmpl(tab='light')
                 self.calculate_light()
@@ -1006,6 +1086,43 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         QApplication.restoreOverrideCursor()
 
     @pyqtSlot()
+    def on_click_create_guide(self):
+        """Create a new guide with the displayed variables.
+        """
+        width = self.doubleSpinBox_width.value()
+        offset_guide = self.doubleSpinBox_offset_guide.value()
+        delta_no = self.doubleSpinBox_dn.value()
+        shape_gauss_check = self.radioButton_gaussian.isChecked()
+        gauss_pow = int(self.spinBox_gauss_pow.value())
+        shape_squared_check = self.radioButton_squared.isChecked()
+        nbr_p = self.spinBox_nb_p.value()
+        p = self.doubleSpinBox_p.value()
+        curve = self.doubleSpinBox_curve.value()
+        half_delay = self.doubleSpinBox_half_delay.value()
+        distance_factor = self.doubleSpinBox_distance_factor.value()
+        tab_index = self.tabWidget_morphology_guide.currentIndex()
+
+        self.width = np.append(self.width, width)
+        self.offset_guide = np.append(self.offset_guide, offset_guide)
+        self.delta_no = np.append(self.delta_no, delta_no)
+        self.shape_gauss_check = np.append(self.shape_gauss_check,
+                                           shape_gauss_check)
+        self.gauss_pow = np.append(self.gauss_pow, gauss_pow)
+        self.shape_squared_check = np.append(self.shape_squared_check,
+                                             shape_squared_check)
+        self.nbr_p = np.append(self.nbr_p, nbr_p)
+        self.p = np.append(self.p, p)
+        self.curve = np.append(self.curve, curve)
+        self.half_delay = np.append(self.half_delay, half_delay)
+        self.distance_factor = np.append(self.distance_factor, distance_factor)
+        self.tab_index = np.append(self.tab_index, tab_index)
+
+        nbr_guide = self.comboBox_guide.count()  # how many item left
+        self.comboBox_guide.addItem("Guide "+str(nbr_guide+1))  # add new index
+        self.comboBox_guide.setCurrentIndex(nbr_guide)  # show new index
+        self.previous_beam = nbr_guide  # Change the current selected guide
+
+    @pyqtSlot()
     def on_click_create_light(self):
         """Create a new beam with the displayed variables.
         """
@@ -1018,6 +1135,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         mode_check = self.radioButton_mode.isChecked()
         all_modes_check = self.radioButton_all_modes.isChecked()
         mode = self.spinBox_mode.value()
+        mode_guide_ref = self.spinBox_guide_nbr_ref.value()
         offset_light_peak = self.spinBox_offset_light_peak.value()
         airy_check = self.radioButton_airy.isChecked()
         airy_zero = self.spinBox_airy_zero.value()
@@ -1027,6 +1145,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.offset_light = np.append(self.offset_light, offset_light)
         self.irrad = np.append(self.irrad, irrad)
         self.mode = np.append(self.mode, mode)
+        self.mode_guide_ref = np.append(self.mode_guide_ref, mode_guide_ref)
         self.offset_check = np.append(self.offset_check, offset_check)
         self.offset_light_peak = np.append(self.offset_light_peak,
                                            offset_light_peak)
@@ -1044,6 +1163,44 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.previous_beam = nbr_light  # Change the current selected beam
 
     @pyqtSlot()
+    def on_click_delete_guide(self):
+        """
+        Delete the current displayed guide and displayed the next one.
+        """
+        nbr_guide = self.comboBox_guide.count()
+
+        if nbr_guide > 1:  # Can't delete if remains only 1 guide
+            guide_selec = int(self.comboBox_guide.currentIndex())  # choice
+            self.width = np.delete(self.width, guide_selec)
+            self.offset_guide = np.delete(self.offset_guide, guide_selec)
+            self.delta_no = np.delete(self.delta_no, guide_selec)
+            self.shape_gauss_check = np.delete(self.shape_gauss_check,
+                                               guide_selec)
+            self.gauss_pow = np.delete(self.gauss_pow, guide_selec)
+            self.shape_squared_check = np.delete(self.shape_squared_check,
+                                                 guide_selec)
+            self.nbr_p = np.delete(self.nbr_p, guide_selec)
+            self.p = np.delete(self.p, guide_selec)
+            self.curve = np.delete(self.curve, guide_selec)
+            self.half_delay = np.delete(self.half_delay, guide_selec)
+            self.distance_factor = np.delete(self.distance_factor, guide_selec)
+
+            nbr_guide -= 1
+
+            self.comboBox_guide.clear()  # remove all beams number
+
+            for i in range(nbr_guide):  # create again with new number
+                self.comboBox_guide.addItem("Guide "+str(i+1))
+
+            # set same guide index if not the last else reduce the index by 1
+            if guide_selec == nbr_guide and guide_selec != 0:
+                guide_selec -= 1
+
+            self.comboBox_guide.setCurrentIndex(guide_selec)
+            self.previous_guide = guide_selec  # Change the selected guide
+            self.get_guide()  # Display values of the previous or next guide
+
+    @pyqtSlot()
     def on_click_delete_light(self):
         """
         Delete the current displayed beam and displayed the next one.
@@ -1056,6 +1213,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.offset_light = np.delete(self.offset_light, beam_selec)
             self.irrad = np.delete(self.irrad, beam_selec)
             self.mode = np.delete(self.mode, beam_selec)
+            self.mode_guide_ref = np.delete(self.mode_guide_ref, beam_selec)
             self.offset_check = np.delete(self.offset_check, beam_selec)
             self.offset_light_peak = np.delete(self.offset_light_peak,
                                                beam_selec)
@@ -1143,31 +1301,29 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.save_compute()
 
         # Guide variables
-#        if dico.get('length_z') is not None: # if want to continue without the
-#        variable and choose the displayed values instead
+#        if dico.get('length_z') is not None: # TODO: if want to continue
+#        without the variable and choose the displayed values instead
         self.length_z = float(dico['length_z'][0])
         self.dist_z = float(dico['dist_z'][0])
         self.nbr_z_disp = int(dico['nbr_z_disp'][0])
         self.length_x = float(dico['length_x'][0])
         self.dist_x = float(dico['dist_x'][0])
-
-        self.width = float(dico['width'][0])
-        self.offset_guide = float(dico['offset_guide'][0])
         self.no = float(dico['no'][0])
-        self.delta_no = float(dico['delta_no'][0])
 
-        self.shape_gauss_check = float(dico['shape_gauss_check'][0])
-        self.gauss_pow = int(dico['gauss_pow'][0])
-        self.shape_squared_check = float(dico['shape_squared_check'][0])
-
-        self.nbr_p = int(dico['nbr_p'][0])
-        self.p = float(dico['p'][0])
-
-        self.curve = float(dico['curve'][0])
-        self.half_delay = float(dico['half_delay'][0])
-        self.distance_factor = float(dico['distance_factor'][0])
-
-        self.tab_index = int(dico['tab_index'][0])
+        self.width = np.array(dico['width'], dtype=float)
+        self.offset_guide = np.array(dico['offset_guide'], dtype=float)
+        self.delta_no = np.array(dico['delta_no'], dtype=float)
+        self.shape_gauss_check = np.array(dico['shape_gauss_check'],
+                                          dtype=float)
+        self.gauss_pow = np.array(dico['gauss_pow'], dtype=int)
+        self.shape_squared_check = np.array(dico['shape_squared_check'],
+                                            dtype=float)
+        self.nbr_p = np.array(dico['nbr_p'], dtype=int)
+        self.p = np.array(dico['p'], dtype=float)
+        self.curve = np.array(dico['curve'], dtype=float)
+        self.half_delay = np.array(dico['half_delay'], dtype=float)
+        self.distance_factor = np.array(dico['distance_factor'], dtype=float)
+        self.tab_index = np.array(dico['tab_index'], dtype=float)
 
         # Light variables
         self.lo = float(dico['lo'][0])
@@ -1182,6 +1338,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.mode_check = np.array(dico['mode_check'], dtype=float)
         self.all_modes_check = np.array(dico['all_modes_check'], dtype=float)
         self.mode = np.array(dico['mode'], dtype=int)
+        self.mode_guide_ref = np.array(dico['mode_guide_ref'], dtype=int)
         self.offset_light_peak = np.array(
             dico['offset_light_peak'], dtype=int)
         self.airy_check = np.array(dico['airy_check'], dtype=float)
@@ -1199,29 +1356,27 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.variance_check = float(dico['variance_check'][0])
         self.power_check = float(dico['power_check'][0])
 
+        nbr_guide = len(self.width)
+        self.comboBox_guide.clear()  # Remove all guides number
+
         nbr_light = len(self.fwhm)
         self.comboBox_light.clear()  # Remove all beams number
+
+        for i in range(nbr_guide):  # Create again with new number
+            self.comboBox_guide.addItem("Guide "+str(i+1))
 
         for i in range(nbr_light):  # Create again with new number
             self.comboBox_light.addItem("Beam "+str(i+1))
 
+        self.previous_guide = 0  # Change the current selected guide
         self.previous_beam = 0  # Change the current selected beam
-
-        if self.tab_index == 0 and self.nbr_p != 0:  # Array of guides
-            self.spinBox_offset_light_peak.setMaximum(self.nbr_p-1)
-            self.spinBox_guide_lost.setMaximum(self.nbr_p-1)
-        elif self.tab_index == 1:  # Curved guides
-            self.spinBox_offset_light_peak.setMaximum(3-1)
-            self.spinBox_guide_lost.setMaximum(3-1)
 
         self.get_guide()  # Set guides boxes value
         self.get_light()  # Set lights boxes value
         self.get_compute()  # Set compute boxes value
 
-        if self.tab_index == 0:  # If openned file uses array
-            self.on_click_array()
-        elif self.tab_index == 1:  # If openned file uses curved guides
-            self.on_click_curved()
+        self.on_click_guide()
+
         print("file openned")
 
     @pyqtSlot()
@@ -1275,23 +1430,40 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         f.write('nbr_z_disp ' + str(self.nbr_z_disp) + '\n')
         f.write('length_x ' + str(self.length_x) + '\n')
         f.write('dist_x ' + str(self.dist_x) + '\n')
-
-        f.write('width ' + str(self.width) + '\n')
-        f.write('offset_guide ' + str(self.offset_guide) + '\n')
         f.write('no ' + str(self.no) + '\n')
-        f.write('delta_no ' + str(self.delta_no) + '\n')
 
-        f.write('shape_gauss_check ' + str(self.shape_gauss_check) + '\n')
-        f.write('gauss_pow ' + str(self.gauss_pow) + '\n')
-        f.write('shape_squared_check ' + str(self.shape_squared_check) + '\n')
-
-        f.write('nbr_p ' + str(self.nbr_p) + '\n')
-        f.write('p ' + str(self.p) + '\n')
-
-        f.write('curve ' + str(self.curve) + '\n')
-        f.write('half_delay ' + str(self.half_delay) + '\n')
-        f.write('distance_factor ' + str(self.distance_factor) + '\n')
-        f.write('tab_index ' + str(self.tab_index) + '\n')
+        f.write('width ' + str(self.width).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('offset_guide ' + str(
+            self.offset_guide).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('delta_no ' + str(
+            self.delta_no).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('shape_gauss_check ' + str(
+            self.shape_gauss_check).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('gauss_pow ' + str(
+            self.gauss_pow).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('shape_squared_check ' + str(
+            self.shape_squared_check).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('nbr_p ' + str(self.nbr_p).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('p ' + str(self.p).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('curve ' + str(self.curve).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('half_delay ' + str(
+            self.half_delay).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('distance_factor ' + str(
+            self.distance_factor).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('tab_index ' + str(
+            self.tab_index).replace("[", "").replace("]", "")
+                + '\n')
 
         # light variables
         f.write('lo ' + str(self.lo) + '\n')
@@ -1323,6 +1495,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 + '\n')
         f.write('mode '
                 + str(self.mode).replace("[", "").replace("]", "")
+                + '\n')
+        f.write('mode_guide_ref '
+                + str(self.mode_guide_ref).replace("[", "").replace("]", "")
                 + '\n')
         f.write('offset_light_peak '
                 + str(self.offset_light_peak).replace("[", "").replace("]", "")
