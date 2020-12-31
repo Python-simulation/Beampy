@@ -1,0 +1,1103 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>beampy.examples &mdash; beampy 1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release note" href="release_note.html" />
+    <link rel="prev" title="beampy.interface" href="code_interface.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> beampy
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="beampy.html">Beampy modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="codes.html">Source codes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="code_bpm.html">beampy.bpm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_user_interface.html">beampy.user_interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_interface.html">beampy.interface</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">beampy.examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release_note.html">Release note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">MIT License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">beampy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="codes.html">Source codes</a> &raquo;</li>
+        
+      <li>beampy.examples</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/code_example.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="beampy-examples">
+<span id="code-examples"></span><h1>beampy.examples<a class="headerlink" href="#beampy-examples" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">ceil</span><span class="p">,</span> <span class="n">radians</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">acos</span><span class="p">,</span> <span class="n">asin</span><span class="p">,</span> <span class="n">exp</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.fft</span> <span class="kn">import</span> <span class="n">fft</span><span class="p">,</span> <span class="n">ifft</span><span class="p">,</span> <span class="n">fftshift</span>
+
+<span class="kn">from</span> <span class="nn">beampy.bpm</span> <span class="kn">import</span> <span class="n">Bpm</span><span class="p">,</span> <span class="n">abs2</span>
+
+
+<span class="k">def</span> <span class="nf">gaussian_beam</span><span class="p">(</span><span class="n">fwhm</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Display a Gaussian beam at the given fwhm.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fwhm : float</span>
+<span class="sd">        Full width at half maximum (for intensity not amplitude) (µm).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">fwhm</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">bpm</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">fwhm</span><span class="p">,</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">fwhm</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Beam&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Width definition of a gaussian beam with FWHM=</span><span class="si">%s</span><span class="s2"> µm&quot;</span> <span class="o">%</span> <span class="n">fwhm</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;field&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;intensity&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1/2&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">fwhm</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+             <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;fwhm/2&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1/e&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)]</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1/$e^2$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">w</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+             <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$w_0$=</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">w</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;def_gauss_beam.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+
+<span class="k">def</span> <span class="nf">guides_x</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Display a Gaussian guide, two super-Gaussian guides and a flat-top guide</span>
+<span class="sd">    to illustrate the width definition.&quot;&quot;&quot;</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">bpm</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mf">9.1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;guide_x&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Different waveguides shape available&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">1</span><span class="p">)(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">)(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;super-Gaussian P=4&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">10</span><span class="p">)(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;super-Gaussian P=10&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bpm</span><span class="o">.</span><span class="n">squared_guide</span><span class="p">(</span><span class="n">width</span><span class="p">)(</span><span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Flat-top&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;width/2&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;1/e&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;def_gauss_guide.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+
+<span class="k">def</span> <span class="nf">guides_z</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Display an array of guides and the curved guides system.&quot;&quot;&quot;</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.55</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">z_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">xv</span><span class="p">,</span> <span class="n">zv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z_disp</span><span class="p">)</span>
+    <span class="n">dn_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Waveguide array&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Waveguides array example&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;z (mm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span> <span class="n">zv</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="n">dn_disp</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;waveguide_array.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+    <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_curved_guides</span><span class="p">(</span>
+            <span class="n">shape</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">40</span><span class="o">*</span><span class="mf">1e-8</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Curved wavewaveguides&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Curved waveguides example&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;z (mm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span> <span class="n">zv</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="n">dn_disp</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;waveguide_curved.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="o">/</span><span class="mi">2</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dn2</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+                            <span class="n">z</span><span class="o">=</span><span class="p">[</span><span class="n">length_z</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">length_z</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dn3</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span>
+                            <span class="n">z</span><span class="o">=</span><span class="p">[</span><span class="n">length_z</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">length_z</span><span class="o">/</span><span class="mi">4</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dn4</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">offset_guide</span><span class="o">=</span><span class="mi">40</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">dn2</span><span class="p">)</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">dn3</span><span class="p">)</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">dn4</span><span class="p">)</span>
+    <span class="n">z_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">xv</span><span class="p">,</span> <span class="n">zv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z_disp</span><span class="p">)</span>
+    <span class="n">dn_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Arbitrary waveguides example&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Arbitrary waveguides example with discontinuity&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;z (mm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span> <span class="n">zv</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="n">dn_disp</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;waveguide_arbitrary.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+
+<span class="k">def</span> <span class="nf">free_propag</span><span class="p">(</span><span class="n">dist_x</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">length_x</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">length_z</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">no</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">lo</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Show the free propagation of a beam and compare Beampy results with</span>
+<span class="sd">    the theorical values.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dist_x : float</span>
+<span class="sd">        Step over x (µm).</span>
+<span class="sd">    length_x : float</span>
+<span class="sd">        Size of the compute window over x (µm).</span>
+<span class="sd">    length_z : float</span>
+<span class="sd">        Size of the compute window over z (µm).</span>
+<span class="sd">    no : float</span>
+<span class="sd">        Refractive index of the cladding</span>
+<span class="sd">    lo : float</span>
+<span class="sd">        Wavelength of the beam in vaccum (µm).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dist_z</span> <span class="o">=</span> <span class="n">length_z</span>
+    <span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span>
+              <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span>
+              <span class="n">length_x</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">))</span>
+
+    <span class="n">fwhm</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm</span><span class="p">)</span>
+    <span class="n">irrad</span> <span class="o">=</span> <span class="mf">1E13</span>
+    <span class="n">theta_ext</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">init_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">theta_ext</span><span class="p">,</span> <span class="n">irrad</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">main_compute</span><span class="p">(</span><span class="n">dn</span><span class="p">)</span>
+
+    <span class="n">intensity</span> <span class="o">=</span> <span class="n">progress_pow</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">intensity</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">fwhm_final</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+
+    <span class="n">w0_final</span> <span class="o">=</span> <span class="n">fwhm_final</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Beampy: width w = </span><span class="si">%f</span><span class="s2"> µm&quot;</span> <span class="o">%</span> <span class="n">w0_final</span><span class="p">)</span>
+
+    <span class="n">w0</span> <span class="o">=</span> <span class="n">fwhm</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">z0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">no</span> <span class="o">*</span> <span class="n">w0</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">lo</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">w0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">length_z</span> <span class="o">/</span> <span class="n">z0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Theory: width w = </span><span class="si">%f</span><span class="s2"> µm&quot;</span> <span class="o">%</span> <span class="n">w</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">w0_final</span><span class="p">)</span><span class="o">/</span><span class="n">w</span><span class="o">*</span><span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Relative difference: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">diff</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Check the dist_x or length_x parameters&quot;</span><span class="p">)</span>
+
+    <span class="n">irrad_theo</span> <span class="o">=</span> <span class="n">irrad</span><span class="o">*</span><span class="n">w0</span><span class="o">/</span><span class="n">w</span>  <span class="c1"># in 2D: irrad*(w0/w)**2</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Beampy: irradiance I =&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">intensity</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Theory: irradiance I =&quot;</span><span class="p">,</span> <span class="n">irrad_theo</span><span class="p">)</span>
+
+    <span class="n">diff</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span> <span class="o">-</span> <span class="n">irrad_theo</span><span class="p">)</span><span class="o">/</span><span class="n">irrad_theo</span><span class="o">*</span><span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Relative difference: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">diff</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Check the dist_x or length_x parameters&quot;</span><span class="p">)</span>
+
+    <span class="n">fwhm_theo</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="n">profil_theo</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm_theo</span><span class="p">)</span>
+    <span class="n">intensity_theo</span> <span class="o">=</span> <span class="n">irrad_theo</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">profil_theo</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam profil after </span><span class="si">%.0f</span><span class="s2"> mm of free propagation&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">length_z</span><span class="o">/</span><span class="mf">1e3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;irradiance (W.m$^{-2}$)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">intensity_theo</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Theory&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Beampy&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;free_propagation.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+
+<span class="k">def</span> <span class="nf">multimodal_splitter</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Multimodal splitter 1x2. A single mode beam is split into two single</span>
+<span class="sd">    mode waveguide by the use of an intermediate multimodal waveguide.&quot;&quot;&quot;</span>
+    <span class="n">width1</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">length1</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">width1</span>
+
+    <span class="n">width2</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">length2</span> <span class="o">=</span> <span class="mi">5110</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">width2</span>
+
+    <span class="n">width3</span> <span class="o">=</span> <span class="n">width1</span>
+    <span class="n">length3</span> <span class="o">=</span> <span class="mi">4090</span>
+    <span class="n">p3</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="mi">26</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">]</span>
+    <span class="n">nbr_p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">no</span> <span class="o">=</span> <span class="mf">1.453</span>
+    <span class="n">wavelength</span> <span class="o">=</span> <span class="mf">1.55</span>
+    <span class="n">delta_no</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">length_z</span> <span class="o">=</span> <span class="n">length1</span><span class="o">+</span><span class="n">length2</span><span class="o">+</span><span class="n">length3</span>
+    <span class="n">dist_z</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">dist_x</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">length_x</span> <span class="o">=</span> <span class="mi">1300</span>
+
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span>
+              <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span>
+              <span class="n">length_x</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+
+    <span class="n">shape1</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape1</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">length1</span><span class="p">])</span>
+
+    <span class="n">shape2</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">squared_guide</span><span class="p">(</span><span class="n">width2</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">peaks2</span><span class="p">,</span> <span class="n">dn2</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span>
+            <span class="n">shape2</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="p">[</span><span class="n">length1</span><span class="p">,</span> <span class="n">length1</span><span class="o">+</span><span class="n">length2</span><span class="p">])</span>
+
+    <span class="n">shape3</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">peaks3</span><span class="p">,</span> <span class="n">dn3</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span>
+            <span class="n">shape3</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="p">[</span><span class="n">length1</span><span class="o">+</span><span class="n">length2</span><span class="p">,</span>
+                                        <span class="n">length1</span><span class="o">+</span><span class="n">length2</span><span class="o">+</span><span class="n">length3</span><span class="p">])</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">dn2</span><span class="p">)</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">dn3</span><span class="p">)</span>
+    <span class="n">peaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">peaks</span><span class="p">,</span> <span class="n">peaks2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">peaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">peaks</span><span class="p">,</span> <span class="n">peaks3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">z_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">xv</span><span class="p">,</span> <span class="n">zv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z_disp</span><span class="p">)</span>
+    <span class="n">dn_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Multimodal beam splitter 1x2&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Multimodal beam splitter 1x2&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;z (mm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span> <span class="n">zv</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="n">dn_disp</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;splitter_shape.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+    <span class="k">assert</span> <span class="n">bpm</span><span class="o">.</span><span class="n">check_modes</span><span class="p">(</span><span class="n">width1</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">all_modes</span><span class="p">(</span><span class="n">width1</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">init_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">main_compute</span><span class="p">(</span><span class="n">dn</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;beam profil at the end&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam profil at z=</span><span class="si">%.0f</span><span class="s2"> µm&quot;</span> <span class="o">%</span> <span class="n">length_z</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="n">p3</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Delta_n$&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;I (a.u)&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">verts</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+             <span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">real</span><span class="p">),</span>
+             <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)]</span>
+    <span class="n">poly</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;0.9&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">dn</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span><span class="o">*</span><span class="mf">1.1</span> <span class="o">+</span> <span class="mf">1E-20</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">progress_pow</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">progress_pow</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>  <span class="mf">1.1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;splitter_beam_end.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Propagation in the multimodal beam splitter 1x2&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam propagation in the beam splitter 1x2&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;z (mm)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span> <span class="n">zv</span><span class="p">,</span> <span class="n">progress_pow</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;splitter_propagation.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Power in waveguides&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Power in waveguides&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;z (mm)&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Power (a.u)&#39;</span><span class="p">)</span>
+
+    <span class="n">x_beg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">nbr_z</span><span class="p">]</span><span class="o">*</span><span class="n">peaks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">x_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="n">nbr_z</span><span class="p">]</span><span class="o">*</span><span class="n">peaks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">peaks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="n">num_gd</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nbr_p</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="p">[</span><span class="n">x_beg</span><span class="p">[</span><span class="n">num_gd</span><span class="p">,</span> <span class="p">:],</span>
+             <span class="n">x_end</span><span class="p">[</span><span class="n">num_gd</span><span class="p">,</span> <span class="p">:]]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">guide_position</span><span class="p">(</span><span class="n">peaks</span><span class="p">,</span> <span class="n">num_gd</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">num_gd</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># needed if no waveguide</span>
+            <span class="n">num_gd</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">peaks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">power_guide</span><span class="p">(</span><span class="n">x_beg</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">x_end</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z_disp</span><span class="p">,</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;P&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;splitter_power.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input power = </span><span class="si">%.2f</span><span class="s2"> </span><span class="se">\n</span><span class="s2">Output powers = </span><span class="si">%.2f</span><span class="s2"> and </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                                                  <span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                                                                  <span class="n">P</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Losses = </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">P</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">P</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+
+<span class="k">def</span> <span class="nf">benchmark_kerr</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Kerr benchmark by looking at the critical power at which a beam become</span>
+<span class="sd">    a soliton. Several test were done with this function and for now, it seems</span>
+<span class="sd">    that the critical power find by the simulations is about 85% of the</span>
+<span class="sd">    theorical value. Meaning a 15% error. Further tests are needed to</span>
+<span class="sd">    understand the observed differences.&quot;&quot;&quot;</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">no</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">wavelength</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">delta_no</span> <span class="o">=</span> <span class="mf">0.000</span>
+    <span class="n">length_z</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="n">dist_z</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">dist_x</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="n">length_x</span> <span class="o">=</span> <span class="mi">500</span>
+    <span class="n">nbr_p</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">fwhm</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="n">theta_ext</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="mf">2.44e-20</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.8962</span>  <span class="c1"># gaussian beam</span>
+
+    <span class="c1"># See Self-focusing on wiki</span>
+    <span class="n">P_c</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">wavelength</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">no</span><span class="o">*</span><span class="n">n2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;critical power = </span><span class="si">%.2e</span><span class="s2"> W&quot;</span> <span class="o">%</span> <span class="n">P_c</span><span class="p">)</span>
+
+<span class="c1">#    irrad = 5e3*1e13</span>
+<span class="c1">#    power = irrad * (fwhm*1e-6)**2 * pi / (4*np.log(2))</span>
+<span class="c1">#    print(&quot;power&quot;, power)</span>
+
+    <span class="c1"># See Gaussian_beam on wiki on beam power</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">fwhm</span><span class="o">*</span><span class="mf">1e-6</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">irrad_cri</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">P_c</span><span class="o">/</span><span class="p">(</span><span class="n">pi</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Critical irradiance </span><span class="si">%.2e</span><span class="s2"> W/m^2&quot;</span> <span class="o">%</span> <span class="n">irrad_cri</span><span class="p">)</span>
+
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span>
+              <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span>
+              <span class="n">length_x</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">sweep</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span>
+             <span class="mf">0.2</span><span class="o">*</span><span class="n">irrad_cri</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">irrad_cri</span><span class="p">,</span> <span class="mf">0.7</span><span class="o">*</span><span class="n">irrad_cri</span><span class="p">,</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">irrad_cri</span><span class="p">,</span>
+             <span class="mf">0.8</span><span class="o">*</span><span class="n">irrad_cri</span><span class="p">,</span> <span class="mf">0.85</span><span class="o">*</span><span class="n">irrad_cri</span><span class="p">,</span>  <span class="c1"># 0.85 seem correct</span>
+             <span class="mf">0.9</span><span class="o">*</span><span class="n">irrad_cri</span><span class="p">,</span> <span class="n">irrad_cri</span>
+             <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">irrad</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sweep</span><span class="p">):</span>
+        <span class="n">power</span> <span class="o">=</span> <span class="n">irrad</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">pi</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sweep</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">power= </span><span class="si">%.2e</span><span class="s2"> W&quot;</span> <span class="o">%</span> <span class="n">power</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">nbr_p</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm</span><span class="p">)</span>
+
+        <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">init_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">theta_ext</span><span class="p">,</span> <span class="n">irrad</span><span class="p">)</span>
+
+        <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">main_compute</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="n">n2</span><span class="p">,</span> <span class="n">kerr_loop</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                                          <span class="n">disp_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">x_pos</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">length_x</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">dist_x</span><span class="p">)</span>
+        <span class="n">z_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Benchmark kerr&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Central irradition for a theorical $P_c$ = </span><span class="si">%.2e</span><span class="s2"> W&quot;</span> <span class="o">%</span> <span class="n">P_c</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;z (µm)&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;I (a.u)&quot;</span><span class="p">)</span>
+<span class="c1">#        plt.ylim(-0.05, 2)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z_disp</span><span class="o">*</span><span class="mf">1e3</span><span class="p">,</span>
+                 <span class="n">progress_pow</span><span class="p">[:,</span> <span class="n">x_pos</span><span class="p">]</span><span class="o">/</span><span class="n">progress_pow</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_pos</span><span class="p">],</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Power=</span><span class="si">%.2e</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">power</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#        plt.savefig(&quot;kerr_irrad.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+<span class="c1">#        x_beg = np.array([None]*nbr_z)</span>
+<span class="c1">#        x_end = np.array([None]*nbr_z)</span>
+<span class="c1">#        P = np.zeros(nbr_z_disp+1)</span>
+<span class="c1">#        x_beg, x_end = bpm.guide_position(peaks, 0, p)</span>
+<span class="c1">#        P = bpm.power_guide(x_beg, x_end)</span>
+
+<span class="c1">#        plt.figure(&quot;Benchmark kerr2&quot;)</span>
+<span class="c1">#        plt.title(&quot;Power for a theorical critical power = %.2e&quot; % P_c)</span>
+<span class="c1">#        plt.xlabel(&quot;z (µm)&quot;)</span>
+<span class="c1">#        plt.ylabel(r&quot;Power (a.u)&quot;)</span>
+<span class="c1">#        plt.ylim(-0.05, 2)</span>
+<span class="c1">#        plt.plot(z_disp, P, label=&quot;Power=%.2e&quot; % power)</span>
+<span class="c1">#        plt.legend()</span>
+<span class="c1">#        plt.show()</span>
+
+<span class="c1">#        xv, zv = np.meshgrid(x, z_disp)</span>
+<span class="c1">#        plt.figure(&quot;check borders&quot;)</span>
+<span class="c1">#        plt.title(&quot;check if beam don&#39;t reach the borders&quot;)</span>
+<span class="c1">#        plt.pcolormesh(xv, zv, progress_pow, cmap=&#39;gray&#39;)</span>
+<span class="c1">#        plt.show()</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Benchmark beam profil&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam profil at z=</span><span class="si">%.0f</span><span class="s2"> µm&quot;</span> <span class="o">%</span> <span class="n">length_z</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;I/$I_0$&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">progress_pow</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">progress_pow</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Power=</span><span class="si">%.2e</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">power</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#        plt.savefig(&quot;kerr_power.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+
+
+<span class="k">def</span> <span class="nf">stability</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Show the possible BPM approximations for implementing a refractive</span>
+<span class="sd">    index variation&quot;&quot;&quot;</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">no</span> <span class="o">=</span> <span class="mf">2.14</span>
+    <span class="n">wavelength</span> <span class="o">=</span> <span class="mf">1.55</span>
+    <span class="n">delta_no</span> <span class="o">=</span> <span class="mf">0.0014</span>
+    <span class="n">length_z</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">dist_z</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">dist_x</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">length_x</span> <span class="o">=</span> <span class="mi">1000</span>
+
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span>
+              <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span>
+              <span class="n">length_x</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">squared_guide</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+
+    <span class="n">nbr_p</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">nbr_p</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="n">fwhm</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">lo</span> <span class="o">=</span> <span class="mf">1.5</span>
+
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm</span><span class="p">)</span>
+    <span class="n">irrad</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">theta_ext</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">init_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">theta_ext</span><span class="p">,</span> <span class="n">irrad</span><span class="p">)</span>
+
+    <span class="n">nbr_step</span> <span class="o">=</span> <span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span>
+
+    <span class="c1"># Need to overwrite those variables due to changes</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">asin</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta_ext</span><span class="p">))</span> <span class="o">/</span> <span class="n">no</span><span class="p">)</span>  <span class="c1"># angle in the guide</span>
+    <span class="n">nu_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist_x</span><span class="p">)</span>  <span class="c1"># max frequency due to sampling</span>
+    <span class="c1"># Spacial frequencies over x (1/µm)</span>
+    <span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">nu_max</span><span class="p">,</span>
+                     <span class="n">nu_max</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="n">nbr_x</span><span class="p">),</span>
+                     <span class="n">nbr_x</span><span class="p">)</span>
+    <span class="n">intermed</span> <span class="o">=</span> <span class="n">no</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">/</span> <span class="n">lo</span>
+    <span class="n">fr</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">nu</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">intermed</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="n">intermed</span><span class="o">**</span><span class="mi">2</span>
+        <span class="o">-</span> <span class="n">nu</span><span class="o">**</span><span class="mi">2</span>
+        <span class="o">+</span> <span class="mi">0</span><span class="n">j</span><span class="p">))</span>
+
+    <span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">dist_z</span> <span class="o">*</span> <span class="n">fr</span><span class="p">))</span>
+    <span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">dist_z</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fr</span><span class="p">))</span>
+    <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn</span>
+    <span class="c1"># End overwrite</span>
+
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_step</span><span class="p">):</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+        <span class="n">field</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">test1</span> <span class="o">=</span> <span class="n">field</span>
+
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_step</span><span class="p">):</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+        <span class="n">field</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+    <span class="n">test2</span> <span class="o">=</span> <span class="n">field</span>
+
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_step</span><span class="p">):</span>
+        <span class="n">field</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+    <span class="n">test3</span> <span class="o">=</span> <span class="n">field</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Power&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Power: Impact of the chosen algorithm on the free propagation&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="c1">#    plt.ylim(-1, 350)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">abs2</span><span class="p">(</span><span class="n">test1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dz+lens&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">abs2</span><span class="p">(</span><span class="n">test2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dz/2+lens+dz/2&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">abs2</span><span class="p">(</span><span class="n">test3</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;lens+dz&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s2">&quot;Phase&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Phase: Impact of the chosen algorithm on the free propagation&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">test1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dz+lens&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">test2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;dz/2+lens+dz/2&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">test3</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;lens+dz&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># Old results showing possibilities to reduce the computation times</span>
+<span class="c1">#    field = bpm.field</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    field *= np.exp(1j * bpm.nl_mat[0, :])</span>
+<span class="c1">#    field = ifft(bpm.phase_mat * fft(field))</span>
+<span class="c1">#    field *= np.exp(1j * bpm.nl_mat[0, :])</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    test4 = field</span>
+<span class="c1">#</span>
+<span class="c1">#    field = bpm.field</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    field *= np.exp(1j * bpm.nl_mat[0, :])</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    field *= np.exp(1j * bpm.nl_mat[0, :])</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    test5 = field</span>
+
+<span class="c1">#    plt.figure(&quot;Power 2&quot;)</span>
+<span class="c1">#    plt.title(&quot;Power: Same algorithme optimized&quot;)</span>
+<span class="c1">#    plt.xlim(-20, 20)</span>
+<span class="c1">#    plt.plot(x, abs2(test4), label=&#39;dz/2+lens+dz+lens+dz/2&#39;)</span>
+<span class="c1">#    plt.plot(x, abs2(test5), label=&#39;(dz/2+lens+dz/2)*2&#39;)</span>
+<span class="c1">#</span>
+<span class="c1">#    plt.legend()</span>
+<span class="c1">#    plt.show()</span>
+<span class="c1">#    plt.figure(&quot;Phase 2&quot;)</span>
+<span class="c1">#    plt.title(&quot;Phase: Same algorithme optimized&quot;)</span>
+<span class="c1">#    plt.xlim(-30, 30)</span>
+<span class="c1">#    plt.plot(x, np.angle(test4), label=&#39;dz/2+lens+dz+lens+dz/2&#39;)</span>
+<span class="c1">#    plt.plot(x, np.angle(test5), label=&#39;(dz/2+lens+dz/2)*2&#39;)</span>
+<span class="c1">#    plt.legend()</span>
+<span class="c1">#    plt.show()</span>
+<span class="c1">#</span>
+<span class="c1">#    field = bpm.field</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    field *= np.exp(1j * bpm.nl_mat[0, :])</span>
+<span class="c1">#    field = ifft(bpm.phase_mat * fft(field))</span>
+<span class="c1">#    test6 = field</span>
+<span class="c1">#</span>
+<span class="c1">#    field = bpm.field</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    field *= np.exp(1j * bpm.nl_mat[0, :])</span>
+<span class="c1">#    field = ifft(bpm.phase_mat_demi * fft(field))</span>
+<span class="c1">#    test7 = field</span>
+<span class="c1">#</span>
+<span class="c1">#    plt.figure(&quot;Power 3&quot;)</span>
+<span class="c1">#    plt.title(&quot;Power: Approximation if uses loop over lens+dz&quot;)</span>
+<span class="c1">#    plt.xlim(-20, 20)</span>
+<span class="c1">#    plt.plot(x, abs2(test6), label=&#39;dz/2+lens+dz&#39;)</span>
+<span class="c1">#    plt.plot(x, abs2(test7), label=&#39;dz/2+lens+dz/2&#39;)</span>
+<span class="c1">#</span>
+<span class="c1">#    plt.legend()</span>
+<span class="c1">#    plt.show()</span>
+<span class="c1">#    plt.figure(&quot;Phase 3&quot;)</span>
+<span class="c1">#    plt.title(&quot;Phase: Approximation if uses loop over lens+dz&quot;)</span>
+<span class="c1">#    plt.xlim(-30, 30)</span>
+<span class="c1">#    plt.plot(x, np.angle(test6), label=&#39;dz/2+lens+dz&#39;)</span>
+<span class="c1">#    plt.plot(x, np.angle(test7), label=&#39;dz/2+lens+dz/2&#39;)</span>
+<span class="c1">#    plt.legend()</span>
+<span class="c1">#    plt.show()</span>
+
+
+<span class="k">def</span> <span class="nf">test_kerr</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;More test than example. Show different approximations for the BPM</span>
+<span class="sd">    implementation of the Kerr effect.&quot;&quot;&quot;</span>
+    <span class="n">no</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">lo</span> <span class="o">=</span> <span class="mf">1.5</span>
+    <span class="n">length_z</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">dist_z</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">dist_x</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">length_x</span> <span class="o">=</span> <span class="mi">400</span>
+
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span>
+              <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span>
+              <span class="n">length_x</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">))</span>
+
+    <span class="n">fwhm</span> <span class="o">=</span> <span class="mi">6</span>
+
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm</span><span class="p">)</span>
+    <span class="n">irrad</span> <span class="o">=</span> <span class="mf">260e13</span>  <span class="c1"># if too high, see big difference between method</span>
+    <span class="n">theta_ext</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">init_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">theta_ext</span><span class="p">,</span> <span class="n">irrad</span><span class="p">)</span>
+
+    <span class="c1"># Need to overwrite those variables due to changes</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">asin</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta_ext</span><span class="p">))</span> <span class="o">/</span> <span class="n">no</span><span class="p">)</span>  <span class="c1"># angle in the guide</span>
+    <span class="n">nu_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dist_x</span><span class="p">)</span>  <span class="c1"># max frequency due to sampling</span>
+    <span class="c1"># Spacial frequencies over x (1/µm)</span>
+    <span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">nu_max</span><span class="p">,</span>
+                     <span class="n">nu_max</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="n">nbr_x</span><span class="p">),</span>
+                     <span class="n">nbr_x</span><span class="p">)</span>
+    <span class="n">intermed</span> <span class="o">=</span> <span class="n">no</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">/</span> <span class="n">lo</span>
+    <span class="n">fr</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">nu</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">intermed</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+        <span class="n">intermed</span><span class="o">**</span><span class="mi">2</span>
+        <span class="o">-</span> <span class="n">nu</span><span class="o">**</span><span class="mi">2</span>
+        <span class="o">+</span> <span class="mi">0</span><span class="n">j</span><span class="p">))</span>
+
+    <span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">dist_z</span> <span class="o">*</span> <span class="n">fr</span><span class="p">))</span>
+    <span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">dist_z</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fr</span><span class="p">))</span>
+    <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn</span>
+    <span class="c1"># End overwrite</span>
+
+    <span class="n">kerr_loop</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">chi3</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="mf">1E-20</span>
+
+    <span class="n">nbr_step</span> <span class="o">=</span> <span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> dz/2+lens+dz/2&quot;</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_step</span><span class="p">):</span>
+        <span class="c1"># Linear propagation over dz/2</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+
+        <span class="c1"># Influence of the index modulation on the field</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">field</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:])</span>  <span class="c1"># No changes if</span>
+        <span class="c1"># no initial guide (exp=1)</span>
+
+        <span class="c1"># Linear propagation over dz/2</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+
+        <span class="n">cur_pow</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+
+    <span class="n">field_ref</span> <span class="o">=</span> <span class="n">field</span>
+    <span class="n">cur_ref</span> <span class="o">=</span> <span class="n">cur_pow</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> dz+kerr&quot;</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_step</span><span class="p">):</span>
+        <span class="c1"># Linear propagation over dz</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+
+        <span class="c1"># Influence of the index modulation on the field</span>
+        <span class="n">field_x</span> <span class="o">=</span> <span class="n">field</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="n">cur_pow</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># insensitive to correction loop</span>
+            <span class="n">prev_pow</span> <span class="o">=</span> <span class="n">cur_pow</span>
+            <span class="c1"># influence of the beam intensity on the index modulation</span>
+            <span class="n">dn_temp</span> <span class="o">=</span> <span class="n">dn</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">chi3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">no</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">prev_pow</span><span class="o">/</span><span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span><span class="p">)</span>
+            <span class="n">nl_mat</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn_temp</span>
+            <span class="c1"># influence of the index modulation on the field</span>
+            <span class="n">field_x</span> <span class="o">=</span> <span class="n">field</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">nl_mat</span><span class="p">)</span>  <span class="c1"># No changes for the pow</span>
+
+            <span class="n">cur_pow</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bpm</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">prev_pow</span><span class="p">,</span> <span class="n">cur_pow</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">field_x</span>
+
+    <span class="n">field_1</span> <span class="o">=</span> <span class="n">field</span>
+    <span class="n">cur_1</span> <span class="o">=</span> <span class="n">cur_pow</span>
+    <span class="n">dn_1</span> <span class="o">=</span> <span class="n">dn_temp</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> dz/2+kerr+dz/2&quot;</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_step</span><span class="p">):</span>
+        <span class="c1"># Linear propagation over dz/2</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field</span><span class="p">))</span>
+
+        <span class="c1"># Influence of the index modulation on the field</span>
+        <span class="n">field_x</span> <span class="o">=</span> <span class="n">field</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="c1"># Linear propagation over dz/2</span>
+        <span class="n">field_x</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field_x</span><span class="p">))</span>
+
+        <span class="n">cur_pow</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kerr_loop</span><span class="p">):</span>
+            <span class="n">prev_pow</span> <span class="o">=</span> <span class="n">cur_pow</span>
+            <span class="c1"># influence of the beam intensity on the index modulation</span>
+            <span class="n">dn_temp</span> <span class="o">=</span> <span class="n">dn</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">chi3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">no</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">prev_pow</span><span class="o">/</span><span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span><span class="p">)</span>
+            <span class="n">nl_mat</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn_temp</span>
+
+            <span class="c1"># influence of the index modulation on the field</span>
+            <span class="n">field_x</span> <span class="o">=</span> <span class="n">field</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">nl_mat</span><span class="p">)</span>
+            <span class="c1"># Linear propagation over dz/2</span>
+            <span class="n">field_x</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat_demi</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field_x</span><span class="p">))</span>
+
+            <span class="n">cur_pow</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bpm</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">prev_pow</span><span class="p">,</span> <span class="n">cur_pow</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">field_x</span>
+
+    <span class="n">field_2</span> <span class="o">=</span> <span class="n">field</span>
+    <span class="n">cur_2</span> <span class="o">=</span> <span class="n">cur_pow</span>
+    <span class="n">dn_2</span> <span class="o">=</span> <span class="n">dn_temp</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> kerr+dz&quot;</span><span class="p">)</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">field</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_step</span><span class="p">):</span>
+        <span class="c1"># Influence of the index modulation on the field</span>
+        <span class="n">field_x</span> <span class="o">=</span> <span class="n">field</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="c1"># Linear propagation over dz</span>
+        <span class="n">field_x</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field_x</span><span class="p">))</span>
+
+        <span class="n">cur_pow</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kerr_loop</span><span class="p">):</span>
+            <span class="n">prev_pow</span> <span class="o">=</span> <span class="n">cur_pow</span>
+            <span class="c1"># influence of the beam intensity on the index modulation</span>
+            <span class="n">dn_temp</span> <span class="o">=</span> <span class="n">dn</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">chi3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="n">no</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">prev_pow</span><span class="o">/</span><span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span><span class="p">)</span>
+            <span class="n">nl_mat</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="n">bpm</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn_temp</span>
+
+            <span class="c1"># influence of the index modulation on the field</span>
+            <span class="n">field_x</span> <span class="o">=</span> <span class="n">field</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">nl_mat</span><span class="p">)</span>
+            <span class="c1"># Linear propagation over dz</span>
+            <span class="n">field_x</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">bpm</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field_x</span><span class="p">))</span>
+
+            <span class="n">cur_pow</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bpm</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">prev_pow</span><span class="p">,</span> <span class="n">cur_pow</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">field_x</span>
+
+    <span class="n">field_3</span> <span class="o">=</span> <span class="n">field</span>
+    <span class="n">cur_3</span> <span class="o">=</span> <span class="n">cur_pow</span>
+    <span class="n">dn_3</span> <span class="o">=</span> <span class="n">dn_temp</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s2">&quot;Impact order kerr&quot;</span><span class="p">)</span>
+
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;phase: comparison&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;power: comparison&quot;</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">field_ref</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;no kerr&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">field_1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;dz+kerr&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">field_2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;dz/2+kerr+dz/2&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">field_3</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;kerr+dz&quot;</span><span class="p">)</span>
+
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cur_ref</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;no kerr&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cur_1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;dz+kerr&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cur_2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;dz/2+kerr+dz/2&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">cur_3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;kerr+dz&quot;</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">dn_ref</span> <span class="o">=</span> <span class="n">dn</span><span class="p">[</span><span class="n">nbr_step</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">num</span><span class="o">=</span><span class="s2">&quot;Impact on dn order kerr&quot;</span><span class="p">)</span>
+
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;dn: comparison&quot;</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn_ref</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;no kerr&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn_1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;dz+kerr&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn_2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;dz/2+kerr+dz/2&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn_3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;kerr+dz&quot;</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">show_grid</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Show the computation grid and the displayed grid&quot;&quot;&quot;</span>
+    <span class="n">length_z</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">dist_z</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">length_x</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">dist_x</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initial values&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;length_z=</span><span class="si">%f</span><span class="s2">, nbr_z=</span><span class="si">%f</span><span class="s2">, nbr_z_disp=</span><span class="si">%f</span><span class="s2">, length_x=</span><span class="si">%f</span><span class="s2">, nbr_x=</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">length_z</span><span class="p">,</span> <span class="n">length_z</span><span class="o">/</span><span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">length_x</span><span class="o">/</span><span class="n">dist_x</span><span class="p">))</span>
+
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Corrected values&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;length_z=</span><span class="si">%f</span><span class="s2">, nbr_z=</span><span class="si">%f</span><span class="s2">, nbr_z_disp=</span><span class="si">%f</span><span class="s2">, length_x=</span><span class="si">%f</span><span class="s2">, nbr_x=</span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">))</span>
+    <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">))</span>
+
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">)</span>
+    <span class="n">z_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">dn_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">xv1</span><span class="p">,</span> <span class="n">zv1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">xv2</span><span class="p">,</span> <span class="n">zv2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z_disp</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Computation grid&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;z (µm)&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv1</span><span class="p">,</span> <span class="n">zv1</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">dist_x</span><span class="p">,</span> <span class="mf">1.8</span><span class="o">*</span><span class="n">dist_z</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.8</span><span class="o">*</span><span class="n">dist_z</span><span class="p">),</span>
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;|-|&gt;&quot;</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s2">&quot;arc3&quot;</span><span class="p">,</span>
+                                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">))</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="n">dist_x</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.3</span><span class="o">*</span><span class="n">dist_z</span><span class="p">,</span> <span class="s2">&quot;dist_x&quot;</span><span class="p">,</span>
+             <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;va&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)})</span>
+
+    <span class="n">ax1</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2</span><span class="o">*</span><span class="n">dist_x</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">dist_z</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2</span><span class="o">*</span><span class="n">dist_x</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">dist_z</span><span class="p">),</span>
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;|-|&gt;&quot;</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s2">&quot;arc3&quot;</span><span class="p">,</span>
+                                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">))</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">dist_x</span><span class="p">,</span> <span class="mf">2.5</span><span class="o">*</span><span class="n">dist_z</span><span class="p">,</span> <span class="s2">&quot;dist_z&quot;</span><span class="p">,</span>
+             <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;va&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)})</span>
+
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Displayed grid&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x (µm)&quot;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv2</span><span class="p">,</span> <span class="n">zv2</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="n">dn_disp</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+    <span class="n">ax2</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">dist_x</span><span class="p">,</span> <span class="mf">1.85</span><span class="o">*</span><span class="n">bpm</span><span class="o">.</span><span class="n">pas</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.85</span><span class="o">*</span><span class="n">bpm</span><span class="o">.</span><span class="n">pas</span><span class="p">),</span>
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;|-|&gt;&quot;</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s2">&quot;arc3&quot;</span><span class="p">,</span>
+                                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="n">dist_x</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mf">1.6</span><span class="o">*</span><span class="n">bpm</span><span class="o">.</span><span class="n">pas</span><span class="p">,</span> <span class="s2">&quot;dist_x&quot;</span><span class="p">,</span>
+             <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;va&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)})</span>
+
+    <span class="n">ax2</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2</span><span class="o">*</span><span class="n">dist_x</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">bpm</span><span class="o">.</span><span class="n">pas</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2</span><span class="o">*</span><span class="n">dist_x</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">bpm</span><span class="o">.</span><span class="n">pas</span><span class="p">),</span>
+                 <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;|-|&gt;&quot;</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s2">&quot;arc3&quot;</span><span class="p">,</span>
+                                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">dist_x</span><span class="p">,</span> <span class="mf">2.5</span><span class="o">*</span><span class="n">bpm</span><span class="o">.</span><span class="n">pas</span><span class="p">,</span> <span class="s2">&quot;pas&quot;</span><span class="p">,</span>
+             <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="s1">&#39;fontsize&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;ha&#39;</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;va&#39;</span><span class="p">:</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)})</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#    plt.savefig(&quot;grid_definition.png&quot;, bbox=&quot;tight&quot;, dpi=250)</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="release_note.html" class="btn btn-neutral float-right" title="Release note" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="code_interface.html" class="btn btn-neutral float-left" title="beampy.interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020 Jonathan Peltier and Marcel Soubkovsky
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

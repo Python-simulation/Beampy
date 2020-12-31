@@ -1,0 +1,1167 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Beampy modules &mdash; beampy 1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Source codes" href="codes.html" />
+    <link rel="prev" title="Examples" href="examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> beampy
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Beampy modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#beampy-bpm">beampy.bpm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#beampy-interface">beampy.interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#beampy-user-interface">beampy.user_interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="codes.html">Source codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_note.html">Release note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">MIT License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">beampy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Beampy modules</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/beampy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="beampy-modules">
+<h1>Beampy modules<a class="headerlink" href="#beampy-modules" title="Permalink to this headline">¶</a></h1>
+<p>List of all the modules used in Beampy as of Dec 31, 2020 for the version 1.11</p>
+<p><a class="reference internal" href="codes.html#codes"><span class="std std-ref">Source codes</span></a></p>
+<div class="section" id="beampy-bpm">
+<h2>beampy.bpm<a class="headerlink" href="#beampy-bpm" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="code_bpm.html#code-bpm"><span class="std std-ref">beampy.bpm</span></a> code.</p>
+<span class="target" id="module-beampy.bpm"></span><p>The bpm module contain the Bpm class used to simulate the light propagation -
+within low refractive index variation
+and small angle (paraxial approximation) -
+using the Beam Propagation Method.</p>
+<p>This module was done by Jonathan Peltier during a master
+university course from the PAIP master of the université de Lorraine,
+under the directive of Pr. Nicolas Fressengeas.</p>
+<p>The bpm codes are mainly based on a compilation of MatLab codes initialy
+developed by Régis Grasser during his PhD thesis[2],
+and later modified at the FEMTO-ST institute of the Université de
+Franche-Comté and at the LMOPS laboratory [3] of the
+Université de Lorraine.</p>
+<p>[1] K. Okamoto, in Fundamentals of Optical Waveguides,
+2nd ed., edited by K. Okamoto (Academic, Burlington, 2006), pp. 329–397.</p>
+<p>[2] “Generation et propagation de reseaux periodiques de solitons spatiaux
+dans un milieu de kerr massif” PhD thesis, université de Franche-Comté 1998.</p>
+<p>[3] H. Oukraou et. al., Broadband photonic transport between waveguides by
+adiabatic elimination Phys. Rev. A, 97 023811 (2018).</p>
+<dl class="py class">
+<dt id="beampy.bpm.Bpm">
+<em class="property">class </em><code class="sig-prename descclassname">beampy.bpm.</code><code class="sig-name descname">Bpm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span></em>, <em class="sig-param"><span class="n">lo</span></em>, <em class="sig-param"><span class="n">length_z</span></em>, <em class="sig-param"><span class="n">dist_z</span></em>, <em class="sig-param"><span class="n">nbr_z_disp</span></em>, <em class="sig-param"><span class="n">length_x</span></em>, <em class="sig-param"><span class="n">dist_x</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Bpm class is used to simulate light propagation -
+within small refractive index variation guides
+and small angle of propagation (paraxial) -
+using the Beam Propagation Method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>no</strong> (<em>float</em>) – Refractive index of the cladding.</p></li>
+<li><p><strong>lo</strong> (<em>float</em>) – Wavelength of the beam in vaccum (µm).</p></li>
+<li><p><strong>length_z</strong> (<em>float</em>) – Size of the compute window over z (µm).</p></li>
+<li><p><strong>dist_z</strong> (<em>float</em>) – Step over z (µm)</p></li>
+<li><p><strong>nbr_z_disp</strong> (<em>int</em>) – Number of points to display over z.</p></li>
+<li><p><strong>length_x</strong> (<em>float</em>) – Size of the compute window over x (µm).</p></li>
+<li><p><strong>dist_x</strong> (<em>float</em>) – Step over x (µm)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.airy_light">
+<code class="sig-name descname">airy_light</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">lobe_size</span></em>, <em class="sig-param"><span class="n">airy_zero</span></em>, <em class="sig-param"><span class="n">offset_light</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.airy_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an Airy beam using scipy.special.airy(x).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lobe_size</strong> (<em>float</em>) – Size of the first lobe (µm).</p></li>
+<li><p><strong>airy_zero</strong> (<em>int</em>) – Cut the beam at the asked zero of the Airy function. n lobes will
+be displayed.</p></li>
+<li><p><strong>offset_light</strong> (<em>float</em><em>, </em><em>optional</em>) – Light offset from center in µm. 0 by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>field</strong> (<em>array</em>) – Amplitude values over x (µm).</p></li>
+<li><p><strong>airy_zero</strong> (<em>int</em>) – Number of lobes. Corrected if higher than the window size.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nbr_x, length_x, dist_x, x.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.all_modes">
+<code class="sig-name descname">all_modes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">delta_no</span></em>, <em class="sig-param"><span class="n">offset_light</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.all_modes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute all modes allowed by the guide and sum them into one field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>float</em>) – Waveguide width (µm) at 1/e^2 intensity.</p></li>
+<li><p><strong>delta_no</strong> (<em>float</em>) – Difference of refractive index between the core and the cladding.</p></li>
+<li><p><strong>offset_light</strong> (<em>float</em><em>, </em><em>optional</em>) – Light offset from center in µm. 0 by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>field</strong> (<em>array</em>) – Sum of all possibles fields in the guide.</p></li>
+<li><p><strong>h</strong> (<em>array, float</em>) – Transverse propagation constant over x in µm of all modes.</p></li>
+<li><p><strong>gamma</strong> (<em>array, float</em>) – Extinction coefficient over z in µm of all modes.</p></li>
+<li><p><strong>beta</strong> (<em>array, float</em>) – Longitudinal constant of propagation over z in µm of all modes.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nbr_x and the :meth`mode_light` method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.bpm_compute">
+<code class="sig-name descname">bpm_compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dn</span></em>, <em class="sig-param"><span class="n">n2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chi3</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kerr_loop</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">variance_check</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.bpm_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute BPM principle : free_propag over dz/2, index modulation,
+free_propag over dz/2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n2</strong> (<em>float</em><em>, </em><em>optional</em>) – Nonlinear refractive index responsable for the optical Kerr effect
+in m^2/W. None by default.</p></li>
+<li><p><strong>chi3</strong> (<em>float</em><em>, </em><em>optional</em>) – Value of the third term of the electric susceptibility tensor
+in m^2/V^2. None by default.</p></li>
+<li><p><strong>kerr</strong> (<em>bool</em><em>, </em><em>optional</em>) – Activate the kerr effect. False by default.</p></li>
+<li><p><strong>kerr_loop</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of corrective loops for the Kerr effect. 1 by default.</p></li>
+<li><p><strong>variance_check</strong> (<em>bool</em>) – Check if the kerr effect converge fast enought. False by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>current_power</strong> – Power after the propagation over dz.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method uses the <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a> class variables:
+nbr_lost, i, field, dist_z, dn, nl_mat, phase_mat, epnc,
+<a class="reference internal" href="#beampy.bpm.Bpm.kerr_effect" title="beampy.bpm.Bpm.kerr_effect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kerr_effect()</span></code></a>.</p>
+<p>This method change the values of:
+field, dn, nl_mat, current_power.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.check_modes">
+<code class="sig-name descname">check_modes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">delta_no</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.check_modes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the last possible mode number.
+Could be merged with <a class="reference internal" href="#beampy.bpm.Bpm.all_modes" title="beampy.bpm.Bpm.all_modes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">all_modes()</span></code></a> but would increase the needed
+time to compute just to display a number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>float</em>) – Waveguide width (µm) at 1/e^2 intensity.</p></li>
+<li><p><strong>delta_no</strong> (<em>float</em>) – Difference of refractive index between the core and the cladding.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>m</strong> – Number of the last possible mode for a squared guide.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the :meth`mode_light` method defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.create_curved_guides">
+<code class="sig-name descname">create_curved_guides</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shape</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">delta_no</span></em>, <em class="sig-param"><span class="n">curve</span></em>, <em class="sig-param"><span class="n">half_delay</span></em>, <em class="sig-param"><span class="n">distance_factor</span></em>, <em class="sig-param"><span class="n">offset_guide</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.create_curved_guides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create two curved guides and one linear guide on the center (STIRAP).</p>
+<p>The central positions over x and z are defined as follow:</p>
+<p>Left guide: <span class="math notranslate nohighlight">\(x_0-p_{min}-curve(z-length\_z/2-half\_delay)^2\)</span></p>
+<p>Right guide: <span class="math notranslate nohighlight">\(x_0+p_{min}+curve(z-length\_z/2+half\_delay)^2\)</span></p>
+<p>Central guide: <span class="math notranslate nohighlight">\(x_0\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>method</em>) – <code class="xref py py-meth docutils literal notranslate"><span class="pre">square()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">gauss()</span></code></p></li>
+<li><p><strong>width</strong> (<em>float</em>) – Waveguide width (µm) at 1/e^2 intensity.</p></li>
+<li><p><strong>delta_no</strong> (<em>float</em>) – Difference of refractive index between the core and the cladding.
+Can contain the losses throught the imaginary part.</p></li>
+<li><p><strong>curve</strong> (<em>float</em>) – curvature factor in <span class="math notranslate nohighlight">\(10^{-8} µm^{-2}\)</span>.</p></li>
+<li><p><strong>half_delay</strong> (<em>float</em>) – Half distance over z in µm bewteen the two external guides where
+they are the closest.
+In other words, the distance from the center and the minimum of one
+of the curved guides over z.</p></li>
+<li><p><strong>distance_factor</strong> (<em>float</em>) – Factor between the guide width and the minimal distance between the
+two guides =p_min/width.
+If distance_factor=1, the curved guides will touch the central
+guide (p_min=width).</p></li>
+<li><p><strong>offset_guide</strong> (<em>float</em><em>, </em><em>optional</em>) – Waveguide offset from the center (µm). 0 by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>peaks</strong> (<em>array</em>) – Central position of each guide as peaks[guide,z].</p></li>
+<li><p><strong>dn</strong> (<em>array</em>) – Difference of refractive index as dn[z,x]. Can contain the losses
+throught the imaginary part.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+length_z, nbr_z, nbr_x, x, dist_x.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.create_guides">
+<code class="sig-name descname">create_guides</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shape</span></em>, <em class="sig-param"><span class="n">delta_no</span></em>, <em class="sig-param"><span class="n">nbr_p</span></em>, <em class="sig-param"><span class="n">p</span></em>, <em class="sig-param"><span class="n">offset_guide</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">z</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.create_guides" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an array of guides over x using peaks positions and for a given
+shape.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<em>method</em>) – <a class="reference internal" href="#beampy.bpm.Bpm.squared_guide" title="beampy.bpm.Bpm.squared_guide"><code class="xref py py-meth docutils literal notranslate"><span class="pre">squared_guide()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.gauss_guide" title="beampy.bpm.Bpm.gauss_guide"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gauss_guide()</span></code></a> or any lambda function
+that takes one argument and return the relative refractive index
+for the input position.</p></li>
+<li><p><strong>delta_no</strong> (<em>float</em>) – Difference of refractive index between the core and the cladding.
+Can contain the losses throught the imaginary part.</p></li>
+<li><p><strong>nbr_p</strong> (<em>int</em>) – Number of guides.</p></li>
+<li><p><strong>p</strong> (<em>float</em>) – Distance between two guides center (µm).</p></li>
+<li><p><strong>offset_guide</strong> (<em>float</em><em>, </em><em>optional</em>) – Guide offset from the center (µm). 0 by default.</p></li>
+<li><p><strong>z</strong> (<em>list</em>) – list [start, end] defining the waveguide length. Default length=
+windows length.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>peaks</strong> (<em>array-like</em>) – Central position of each guide [guide,z].</p></li>
+<li><p><strong>dn</strong> (<em>array-like</em>) – Difference of refractive index [z,x]. Can contain the losses
+throught the imaginary part.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nbr_z, nbr_x, x, dist_x.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.create_x_z">
+<code class="sig-name descname">create_x_z</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.create_x_z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the x, z array and ajust the resolution variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>length_z</strong> (<em>float</em>) – Corrected value due to nbr_z being an int.</p></li>
+<li><p><strong>nbr_z</strong> (<em>int</em>) – Number of points computed over z.</p></li>
+<li><p><strong>nbr_z_disp</strong> (<em>int</em>) – Corrected value due to pas being an int.</p></li>
+<li><p><strong>length_x</strong> (<em>float</em>) – Corrected value due to nbr_x being an int.</p></li>
+<li><p><strong>nbr_x</strong> (<em>int</em>) – Number of point over x (µm).</p></li>
+<li><p><strong>x</strong> (<em>array</em>) – x values between [-length_x/2, length_x/2-dist_x] center on 0.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method creates the following variables within the class
+<a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:</p>
+<ul class="simple">
+<li><p>pas : Interval of computed points between each displayed points.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.gauss_guide">
+<code class="sig-name descname">gauss_guide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">gauss_pow</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.gauss_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lambda function than return a centered super-Gaussian shape.</p>
+<p><span class="math notranslate nohighlight">\(e^{-(x/w)^{2P}}\)</span></p>
+<p>The waist is defined as width/2 and correspond to the 1/e
+relative value.</p>
+<p>See <code class="xref py py-func docutils literal notranslate"><span class="pre">example_guides_x()</span></code> for more details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>float</em>) – Waveguide width (µm) at 1/e^2 intensity.</p></li>
+<li><p><strong>gauss_pow</strong> (<em>int</em><em>, </em><em>optional</em>) – Index of the super-gaussian guide with 1 being a regural gaussian
+guide and 4 being the conventionnal super-gaussian guide used to
+describe realistic waveguides.
+See on en.wikipedia.org/wiki/Gaussian_function
+#Higher-order_Gaussian_or_super-Gaussian_function.
+1 by Default.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.gauss_light">
+<code class="sig-name descname">gauss_light</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fwhm</span></em>, <em class="sig-param"><span class="n">offset_light</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.gauss_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a gaussien beam in amplitude.</p>
+<p><span class="math notranslate nohighlight">\(E = e^{-((x-x_0)/w)^{2P}}\)</span></p>
+<p>The waist is defined as fwhm/sqrt(2*log(2)) and correspond to the 1/e
+field value and 1/<span class="math notranslate nohighlight">\(e^2\)</span> intensity value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fwhm</strong> (<em>float</em>) – Full width at half maximum (for intensity not amplitude) (µm).</p></li>
+<li><p><strong>offset_light</strong> (<em>float</em><em>, </em><em>optional</em>) – Light offset from center in µm. 0 by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>field</strong> – Amplitude values over x in µm.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the x and dist_x variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.guide_position">
+<code class="sig-name descname">guide_position</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">peaks</span></em>, <em class="sig-param"><span class="n">guide</span></em>, <em class="sig-param"><span class="n">size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.guide_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the left and right position index over x of a given guide
+for each z.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>peaks</strong> (<em>array-like</em>) – Central position of each guide [guide,z].</p></li>
+<li><p><strong>guide</strong> (<em>int</em>) – Number of the guide.</p></li>
+<li><p><strong>size</strong> (<em>float</em>) – Width (µm).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>x_beg</strong> (<em>array</em>) – Left indices position of the selected guide over z.</p></li>
+<li><p><strong>x_end</strong> (<em>array</em>) – Right indices position of the selected guide over z.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nbr_z, x, length_x.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.init_field">
+<code class="sig-name descname">init_field</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">field</span></em>, <em class="sig-param"><span class="n">theta_ext</span></em>, <em class="sig-param"><span class="n">irrad</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.init_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize phase, field and power variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>array</em><em>, </em><em>array-like</em>) – Amplitude values for each beams over x (µm) [beam,E] or E</p></li>
+<li><p><strong>theta_ext</strong> (<em>float</em>) – Exterior inclinaison angle (°).</p></li>
+<li><p><strong>irrad</strong> (<em>array</em><em>, </em><em>array-like</em>) – Irradiance for each beam (<span class="math notranslate nohighlight">\(W/m^2\)</span>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>progress_pow</strong> – Intensity values over x (µm).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method creates the following variables within the class
+<a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:</p>
+<ul class="simple">
+<li><p>epnc: Convertion factor used to set unit of the field and irradiance.</p></li>
+<li><p>phase_mat: Free propagation in Fourier space over dz/2.</p></li>
+<li><p>current_power: Intensity for z=0.</p></li>
+<li><p>field: Field value with the unit.</p></li>
+</ul>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+no, x, dist_x, nbr_x, nbr_z_disp.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.kerr_effect">
+<code class="sig-name descname">kerr_effect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dn</span></em>, <em class="sig-param"><span class="n">n2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chi3</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kerr_loop</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">variance_check</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">field_start</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dn_start</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">phase_mat</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.kerr_effect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kerr effect: refractive index modulation by the light intensity.
+See: <a class="reference external" href="https://optiwave.com/optibpm-manuals/bpm-non-linear-bpm-algorithm/">https://optiwave.com/optibpm-manuals/bpm-non-linear-bpm-algorithm/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dn</strong> (<em>array</em>) – Difference of refractive index as dn[z,x]. Can contain the losses
+throught the imaginary part.</p></li>
+<li><p><strong>n2</strong> (<em>float</em><em>, </em><em>optional</em>) – Nonlinear refractive index responsable for the optical Kerr effect
+in m^2/W. None by default.</p></li>
+<li><p><strong>chi3</strong> (<em>float</em><em>, </em><em>optional</em>) – Value of the third term of the electric susceptibility tensor
+in m^2/V^2. None by default.</p></li>
+<li><p><strong>kerr_loop</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of corrective loops for the Kerr effect. 1 by default.</p></li>
+<li><p><strong>variance_check</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check if the kerr effect converge fast enought. False by default.</p></li>
+<li><p><strong>field_start</strong> (<em>array</em><em>, </em><em>optional</em>) – Field without kerr effect.
+If None were given, take the <a class="reference internal" href="#beampy.bpm.Bpm.main_compute" title="beampy.bpm.Bpm.main_compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">main_compute()</span></code></a> field.</p></li>
+<li><p><strong>dn_start</strong> (<em>array</em><em>, </em><em>optional</em>) – Refractive index without kerr effect.
+If None were given, take the <a class="reference internal" href="#beampy.bpm.Bpm.main_compute" title="beampy.bpm.Bpm.main_compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">main_compute()</span></code></a> dn.</p></li>
+<li><p><strong>phase_mat</strong> (<em>array</em><em>, </em><em>optional</em>) – Free propagation in Fourier space over dz/2.
+If None were given, take the <a class="reference internal" href="#beampy.bpm.Bpm.main_compute" title="beampy.bpm.Bpm.main_compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">main_compute()</span></code></a> phase_mat.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>dn</strong> (<em>array</em>) – Refractive index with kerr effect.</p></li>
+<li><p><strong>nl_mat</strong> (<em>array</em>) – refractive index modulation with kerr effect.</p></li>
+<li><p><strong>field_x</strong> (<em>array</em>) – Field with the kerr effect at the self.i step.</p></li>
+<li><p><strong>cur_pow</strong> (<em>array</em>) – Beam power with the kerr effect after the dz propagation.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+i, epnc, no, ko, dist_z and the <a class="reference internal" href="#beampy.bpm.Bpm.variance" title="beampy.bpm.Bpm.variance"><code class="xref py py-meth docutils literal notranslate"><span class="pre">variance()</span></code></a> method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.main_compute">
+<code class="sig-name descname">main_compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dn</span></em>, <em class="sig-param"><span class="n">n2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chi3</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kerr_loop</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">variance_check</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">disp_progress</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.main_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>main method used to compute propagation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n2</strong> (<em>float</em><em>, </em><em>optional</em>) – Nonlinear refractive index responsable for the optical Kerr effect
+in m^2/W. None by default.</p></li>
+<li><p><strong>chi3</strong> (<em>float</em><em>, </em><em>optional</em>) – Value of the third term of the electric susceptibility tensor
+in m^2/V^2. None by default.</p></li>
+<li><p><strong>kerr</strong> (<em>bool</em><em>, </em><em>optional</em>) – Activate the kerr effect. False by default.</p></li>
+<li><p><strong>kerr_loop</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of corrective loop for the Kerr effect. 1 by default.</p></li>
+<li><p><strong>variance_check</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check if the kerr effect converge fast enought. False by default.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Absorption per µm. 0 by default</p></li>
+<li><p><strong>lost_beg</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Left indices position of the selected waveguide over z.
+None by default.</p></li>
+<li><p><strong>lost_end</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Right indices position of the selected waveguide over z.
+None by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>progress_pow</strong> – Intensity values (<span class="math notranslate nohighlight">\(W/m^2\)</span>) over x (µm) and z (µm).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method creates the following variables within the class
+<a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nl_mat: Refractive index modulation.</p>
+<p>This method uses the <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a> class variables:
+phase_mat, field, i, nbr_z, pas, current_power, dist_z, length_z,
+nbr_lost, dn, nl_mat, epnc and uses the <a class="reference internal" href="#beampy.bpm.Bpm.bpm_compute" title="beampy.bpm.Bpm.bpm_compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">bpm_compute()</span></code></a>,
+<a class="reference internal" href="#beampy.bpm.Bpm.kerr_effect" title="beampy.bpm.Bpm.kerr_effect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kerr_effect()</span></code></a>.</p>
+<p>This method change the values of the <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a> class variables:
+field and if kerr, dn and nl_mat.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.mode_determ">
+<code class="sig-name descname">mode_determ</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">delta_no</span></em>, <em class="sig-param"><span class="n">mode</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.mode_determ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solve the transcendental equation tan=sqrt that give the modes
+allowed in a squared guide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>float</em>) – Waveguide width (µm) at 1/e^2 intensity.</p></li>
+<li><p><strong>delta_no</strong> (<em>float</em>) – Difference of refractive index between the core and the cladding.</p></li>
+<li><p><strong>mode</strong> (<em>int</em>) – Number of the searched mode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>h_m</strong> (<em>float</em>) – Transverse propagation constant over x (µm).</p></li>
+<li><p><strong>gamma_m</strong> (<em>float</em>) – Extinction coefficient over x (µm).</p></li>
+<li><p><strong>beta_m</strong> (<em>float</em>) – Longitudinal constant of propagation over z (µm).</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – if no mode exists.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+lo, no, ko.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.mode_light">
+<code class="sig-name descname">mode_light</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">delta_no</span></em>, <em class="sig-param"><span class="n">mode</span></em>, <em class="sig-param"><span class="n">offset_light</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.mode_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create light based on propagated mode inside a squared guide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>float</em>) – Waveguide width (µm) at 1/e^2 intensity.</p></li>
+<li><p><strong>delta_no</strong> (<em>float</em>) – Difference of refractive index between the core and the cladding.</p></li>
+<li><p><strong>mode</strong> (<em>int</em>) – Number of the searched mode.</p></li>
+<li><p><strong>offset_light</strong> (<em>float</em><em>, </em><em>optional</em>) – Light offset from center (µm). 0 by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>field</strong> (<em>array</em>) – Amplitude values over x (µm).</p></li>
+<li><p><strong>h_m</strong> (<em>float</em>) – Transverse propagation constant over x (µm).</p></li>
+<li><p><strong>gamma_m</strong> (<em>float</em>) – Extinction coefficient over x (µm).</p></li>
+<li><p><strong>beta_m</strong> (<em>float</em>) – Longitudinal constant of propagation over z (µm).</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nbr_x, x and the :meth`mode_determ` method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.power_guide">
+<code class="sig-name descname">power_guide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_beg</span></em>, <em class="sig-param"><span class="n">x_end</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.power_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the power over z in a given interval by integrating the beam
+irradiance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_beg</strong> (<em>array</em>) – Left indices position over z for a selected guide.</p></li>
+<li><p><strong>x_end</strong> (<em>array</em>) – Right indices position over z for a selected guide.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>P</strong> – Normalized power in the guide over z.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nbr_z_disp, progress_pow, pas.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.squared_guide">
+<code class="sig-name descname">squared_guide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.squared_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>A lambda function than returns a centered rectangular shape.</p>
+<p>return 1 if <span class="math notranslate nohighlight">\(x &gt;= -width/2\)</span> and <span class="math notranslate nohighlight">\(x &lt;= width/2\)</span>
+else return 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>width</strong> (<em>float</em>) – Waveguide width.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.squared_light">
+<code class="sig-name descname">squared_light</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fwhm</span></em>, <em class="sig-param"><span class="n">offset_light</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.squared_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a flat-top beam (squared).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fwhm</strong> (<em>float</em>) – Beam width in µm.</p></li>
+<li><p><strong>offset_light</strong> (<em>float</em><em>, </em><em>optional</em>) – Light offset from center in µm. 0 by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>field</strong> – Amplitude values over x in µm.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This methods uses the following variables defined in <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+nbr_x, x.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.bpm.Bpm.variance">
+<code class="sig-name descname">variance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">final</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.Bpm.variance" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function alerts the user when the kerr effect don’t converge fast
+enough.
+Raise a ValueError when the power standard deviation exceed
+<span class="math notranslate nohighlight">\(10^{-7}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>initial</strong> (<em>array</em>) – Power of the kerr effect looped n-1 time.</p></li>
+<li><p><strong>final</strong> (<em>array</em>) – Power of the kerr effect looped n time.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – when the power standard deviation exceed <span class="math notranslate nohighlight">\(10^{-7}\)</span>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="beampy.bpm.example_bpm">
+<code class="sig-prename descclassname">beampy.bpm.</code><code class="sig-name descname">example_bpm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.bpm.example_bpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Version allowing to compute BPM without the user interface.
+Used for quick test.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="beampy-interface">
+<h2>beampy.interface<a class="headerlink" href="#beampy-interface" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="code_interface.html#code-interface"><span class="std std-ref">beampy.interface</span></a> code.</p>
+<span class="target" id="module-beampy.interface"></span><dl class="py class">
+<dt id="beampy.interface.Ui_MainWindow">
+<em class="property">class </em><code class="sig-prename descclassname">beampy.interface.</code><code class="sig-name descname">Ui_MainWindow</code><a class="headerlink" href="#beampy.interface.Ui_MainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="beampy.interface.Ui_MainWindow.retranslateUi">
+<code class="sig-name descname">retranslateUi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">MainWindow</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.interface.Ui_MainWindow.retranslateUi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="beampy.interface.Ui_MainWindow.setupUi">
+<code class="sig-name descname">setupUi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">MainWindow</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.interface.Ui_MainWindow.setupUi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="beampy-user-interface">
+<h2>beampy.user_interface<a class="headerlink" href="#beampy-user-interface" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="code_user_interface.html#code-user-interface"><span class="std std-ref">beampy.user_interface</span></a> code.</p>
+<span class="target" id="module-beampy.user_interface"></span><p>The user_interface module is the main file of the beampy module.
+It contain the UserInterface class used to computed and displayed the bpm
+results onto the interface.</p>
+<p>This module was at first developed by Marcel Soubkovsky for the implementation
+of the array of guides, of one gaussian beam and of the plotting methods.
+Then, continued by Jonathan Peltier.</p>
+<dl class="py class">
+<dt id="beampy.user_interface.UserInterface">
+<em class="property">class </em><code class="sig-prename descclassname">beampy.user_interface.</code><code class="sig-name descname">UserInterface</code><a class="headerlink" href="#beampy.user_interface.UserInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QMainWindow</span></code>, <a class="reference internal" href="#beampy.interface.Ui_MainWindow" title="beampy.interface.Ui_MainWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">beampy.interface.Ui_MainWindow</span></code></a></p>
+<p>This class connect the <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a> class from the <a class="reference internal" href="#module-beampy.bpm" title="beampy.bpm"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bpm</span></code></a> module
+with the <a class="reference internal" href="#beampy.interface.Ui_MainWindow.setupUi" title="beampy.interface.Ui_MainWindow.setupUi"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setupUi()</span></code></a> method from the <a class="reference internal" href="#module-beampy.interface" title="beampy.interface"><code class="xref py py-mod docutils literal notranslate"><span class="pre">interface</span></code></a> module.
+The interface seems to close itself when openning from spyder 3.5.
+In that case, open the interface in an external console.</p>
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.addmpl">
+<code class="sig-name descname">addmpl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tab</span><span class="o">=</span><span class="default_value">'guide'</span></em>, <em class="sig-param"><span class="n">pow_index</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.addmpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the selected plots on the waveguide, light or compute window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tab</strong> (<em>str</em><em>, </em><em>optional</em>) – ‘guide’ or ‘light’.
+‘guide’ by default.</p></li>
+<li><p><strong>pow_index</strong> (<em>int</em><em>, </em><em>optional</em>) – Add the first waveguide and light step if 0 or the last step if -1.
+Also display the propagation over (x,z) and guide power if -1 is
+choosen.
+0 by default.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.calculate_guide">
+<code class="sig-name descname">calculate_guide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.calculate_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialized the <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a> class and creates the guides.</p>
+<p class="rubric">Notes</p>
+<p>Creats many variables, including :</p>
+<ul class="simple">
+<li><p>peaks : Central position of each waveguides [waveguide,z].</p></li>
+<li><p>dn : Difference of reefractive index [z,x].</p></li>
+</ul>
+<p>This method calls the following methods from <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:</p>
+<p><a class="reference internal" href="#beampy.bpm.Bpm.create_x_z" title="beampy.bpm.Bpm.create_x_z"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_x_z()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.squared_guide" title="beampy.bpm.Bpm.squared_guide"><code class="xref py py-meth docutils literal notranslate"><span class="pre">squared_guide()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.gauss_guide" title="beampy.bpm.Bpm.gauss_guide"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gauss_guide()</span></code></a>,
+<a class="reference internal" href="#beampy.bpm.Bpm.create_guides" title="beampy.bpm.Bpm.create_guides"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_guides()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.create_curved_guides" title="beampy.bpm.Bpm.create_curved_guides"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_curved_guides()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.calculate_light">
+<code class="sig-name descname">calculate_light</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.calculate_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the choosen beams.</p>
+<p class="rubric">Notes</p>
+<p>Creates the progress_pow variable.</p>
+<p>This method calls the following methods from the <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a> class:</p>
+<p><a class="reference internal" href="#beampy.bpm.Bpm.gauss_light" title="beampy.bpm.Bpm.gauss_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gauss_light()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.squared_light" title="beampy.bpm.Bpm.squared_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">squared_light()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.all_modes" title="beampy.bpm.Bpm.all_modes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">all_modes()</span></code></a>,
+<a class="reference internal" href="#beampy.bpm.Bpm.mode_light" title="beampy.bpm.Bpm.mode_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mode_light()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.airy_light" title="beampy.bpm.Bpm.airy_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">airy_light()</span></code></a>, <a class="reference internal" href="#beampy.bpm.Bpm.init_field" title="beampy.bpm.Bpm.init_field"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_field()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.calculate_propagation">
+<code class="sig-name descname">calculate_propagation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.calculate_propagation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the propagation based on the input light and guides shapes.</p>
+<p class="rubric">Notes</p>
+<p>Creates the progress_pow variable.</p>
+<p>Calls the following methods from <a class="reference internal" href="#beampy.bpm.Bpm" title="beampy.bpm.Bpm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code></a>:
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">losses_position()</span></code>, meth`.main_compute`.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.check_modes_display">
+<code class="sig-name descname">check_modes_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.check_modes_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display on the interface the last mode that can propagated into a
+squared waveguide.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.connect_buttons">
+<code class="sig-name descname">connect_buttons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.connect_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect the interface buttons to their corresponding functions:</p>
+<p><a class="reference internal" href="#beampy.user_interface.UserInterface.on_click_guide" title="beampy.user_interface.UserInterface.on_click_guide"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_click_guide()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">on_click_curved()</span></code>,
+<a class="reference internal" href="#beampy.user_interface.UserInterface.on_click_light" title="beampy.user_interface.UserInterface.on_click_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_click_light()</span></code></a>, <a class="reference internal" href="#beampy.user_interface.UserInterface.on_click_compute" title="beampy.user_interface.UserInterface.on_click_compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_click_compute()</span></code></a>,
+<a class="reference internal" href="#beampy.user_interface.UserInterface.on_click_create_light" title="beampy.user_interface.UserInterface.on_click_create_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_click_create_light()</span></code></a>, <a class="reference internal" href="#beampy.user_interface.UserInterface.on_click_delete_light" title="beampy.user_interface.UserInterface.on_click_delete_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_click_delete_light()</span></code></a>,
+<a class="reference internal" href="#beampy.user_interface.UserInterface.save_light" title="beampy.user_interface.UserInterface.save_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_light()</span></code></a>, <a class="reference internal" href="#beampy.user_interface.UserInterface.get_guide" title="beampy.user_interface.UserInterface.get_guide"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_guide()</span></code></a>,
+<a class="reference internal" href="#beampy.user_interface.UserInterface.get_light" title="beampy.user_interface.UserInterface.get_light"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_light()</span></code></a>, <a class="reference internal" href="#beampy.user_interface.UserInterface.get_compute" title="beampy.user_interface.UserInterface.get_compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_compute()</span></code></a>,
+<a class="reference internal" href="#beampy.user_interface.UserInterface.show_estimate_time" title="beampy.user_interface.UserInterface.show_estimate_time"><code class="xref py py-meth docutils literal notranslate"><span class="pre">show_estimate_time()</span></code></a>, <a class="reference internal" href="#beampy.user_interface.UserInterface.check_modes_display" title="beampy.user_interface.UserInterface.check_modes_display"><code class="xref py py-meth docutils literal notranslate"><span class="pre">check_modes_display()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.create_menu">
+<code class="sig-name descname">create_menu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.create_menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a menu to open, save a file, or exit the app.</p>
+<p class="rubric">Notes</p>
+<p>This method connect the following methods and function to the
+menu buttons:</p>
+<p><a class="reference internal" href="#beampy.user_interface.UserInterface.open_file_name" title="beampy.user_interface.UserInterface.open_file_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_file_name()</span></code></a>, <a class="reference internal" href="#beampy.user_interface.UserInterface.save_quick" title="beampy.user_interface.UserInterface.save_quick"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_quick()</span></code></a>, <a class="reference internal" href="#beampy.user_interface.UserInterface.save_file_name" title="beampy.user_interface.UserInterface.save_file_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_file_name()</span></code></a>,
+<a class="reference internal" href="#beampy.user_interface.open_doc" title="beampy.user_interface.open_doc"><code class="xref py py-func docutils literal notranslate"><span class="pre">open_doc()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.display_power">
+<code class="sig-name descname">display_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.display_power" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the power in each waveguide.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.find_guide_number">
+<code class="sig-name descname">find_guide_number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">guide_number</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.find_guide_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the waveguide group number for a given waveguide number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>guide_number</strong> (<em>int</em>) – Number of a waveguide</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>guide_group_number</strong> – Number of the waveguide group</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.get_compute">
+<code class="sig-name descname">get_compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.get_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the saved values of the compute variables onto the interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.get_guide">
+<code class="sig-name descname">get_guide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.get_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the saved values of the waveguide variables onto the interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.get_light">
+<code class="sig-name descname">get_light</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.get_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the saved values of the light variables onto the interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.main_compute">
+<code class="sig-name descname">main_compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dn</span></em>, <em class="sig-param"><span class="n">n2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chi3</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kerr_loop</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">variance_check</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">disp_progress</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.main_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>main method used to compute propagation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n2</strong> (<em>float</em><em>, </em><em>optional</em>) – Nonlinear refractive index responsable for the optical Kerr effect
+in m^2/W. None by default.</p></li>
+<li><p><strong>chi3</strong> (<em>float</em><em>, </em><em>optional</em>) – Value of the third term of the electric susceptibility tensor
+in m^2/V^2. None by default.</p></li>
+<li><p><strong>kerr</strong> (<em>bool</em><em>, </em><em>optional</em>) – Activate the kerr effect. False by default.</p></li>
+<li><p><strong>kerr_loop</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of corrective loop for the Kerr effect. 1 by default.</p></li>
+<li><p><strong>variance_check</strong> (<em>bool</em><em>, </em><em>optional</em>) – Check if the kerr effect converge fast enought. False by default.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Absorption per µm. 0 by default</p></li>
+<li><p><strong>lost_beg</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Left indices position of the selected waveguide over z.
+None by default.</p></li>
+<li><p><strong>lost_end</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Right indices position of the selected waveguide over z.
+None by default.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>progress_pow</strong> – Intensity values (<span class="math notranslate nohighlight">\(W/m^2\)</span>) over x (µm) and z (µm).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method creates the following variables within the class
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code>:
+nl_mat: Refractive index modulation.</p>
+<p>This method uses the <code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code> class variables:
+phase_mat, field, i, nbr_z, pas, current_power, dist_z, length_z,
+nbr_lost, dn, nl_mat, epnc and uses the <code class="xref py py-meth docutils literal notranslate"><span class="pre">bpm_compute()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">kerr_effect()</span></code>.</p>
+<p>This method change the values of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Bpm</span></code> class variables:
+field and if kerr, dn and nl_mat.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.on_click_compute">
+<code class="sig-name descname">on_click_compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.on_click_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the propagation using the waveguides and bemas informations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.on_click_create_guide">
+<code class="sig-name descname">on_click_create_guide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.on_click_create_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new waveguide with the displayed variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.on_click_create_light">
+<code class="sig-name descname">on_click_create_light</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.on_click_create_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new beam with the displayed variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.on_click_delete_guide">
+<code class="sig-name descname">on_click_delete_guide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.on_click_delete_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the current displayed waveguide and displayed the next one if
+exist else the previous one.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.on_click_delete_light">
+<code class="sig-name descname">on_click_delete_light</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.on_click_delete_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the current displayed beam and displayed the next one.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.on_click_guide">
+<code class="sig-name descname">on_click_guide</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.on_click_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and displayed the waguides.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.on_click_light">
+<code class="sig-name descname">on_click_light</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.on_click_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the light and display it with the input profil waveguides.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.open_file">
+<code class="sig-name descname">open_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.open_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set guides, beams and computes variables from a choosen file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Name of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.open_file_name">
+<code class="sig-name descname">open_file_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.open_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a dialog window to select the file to open, and call
+<a class="reference internal" href="#beampy.user_interface.UserInterface.open_file" title="beampy.user_interface.UserInterface.open_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open_file()</span></code></a> to open the file.</p>
+<p>Source: <a class="reference external" href="https://pythonspot.com/pyqt5-file-dialog/">https://pythonspot.com/pyqt5-file-dialog/</a></p>
+<p class="rubric">Notes</p>
+<p>This method has a try/except implemented to check if the openned file
+contains all the variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.rmmpl">
+<code class="sig-name descname">rmmpl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tab</span></em>, <em class="sig-param"><span class="n">pow_index</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.rmmpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the selected plots</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tab</strong> (<em>str</em>) – ‘guide’ or ‘light’.</p></li>
+<li><p><strong>pow_index</strong> (<em>int</em><em>, </em><em>optional</em>) – Remove the first light step if 0 or the last step if -1.
+0 by default.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.save_compute">
+<code class="sig-name descname">save_compute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.save_compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the interface variables into the compute variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.save_file">
+<code class="sig-name descname">save_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.save_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save guides, beams and computes variables into a choosen file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Name of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.save_file_name">
+<code class="sig-name descname">save_file_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.save_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open a dialog window to select the saved file name and call
+<a class="reference internal" href="#beampy.user_interface.UserInterface.save_file" title="beampy.user_interface.UserInterface.save_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_file()</span></code></a> to save the file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.save_guide">
+<code class="sig-name descname">save_guide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">guide_selec</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.save_guide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the interface variables into the guides variables.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.save_light">
+<code class="sig-name descname">save_light</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">beam_selec</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.save_light" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the interface variables into the lights variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>beam_selec</strong> (<em>int</em><em>, </em><em>bool</em><em>, </em><em>optional</em>) – Number of the beam to save into the variables.
+False by default to get the currently displayed beam.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.save_quick">
+<code class="sig-name descname">save_quick</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.save_quick" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a file is already selected and if so, save into it.
+Else, call the <a class="reference internal" href="#beampy.user_interface.UserInterface.save_file_name" title="beampy.user_interface.UserInterface.save_file_name"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save_file_name()</span></code></a> to ask a filename.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="beampy.user_interface.UserInterface.show_estimate_time">
+<code class="sig-name descname">show_estimate_time</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.UserInterface.show_estimate_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display - on the interface - the estimate time needed to compute the
+propagation, based on linearized experimental values.
+The estimation takes into account the looses, Kerr, and control
+parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="beampy.user_interface.open_app">
+<code class="sig-prename descclassname">beampy.user_interface.</code><code class="sig-name descname">open_app</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.open_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to open the app.
+Can be called directly from beampy.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="beampy.user_interface.open_doc">
+<code class="sig-prename descclassname">beampy.user_interface.</code><code class="sig-name descname">open_doc</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#beampy.user_interface.open_doc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that open the local html documentation - describing the beampy
+modules - if exist, or the online version otherwise.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="codes.html" class="btn btn-neutral float-right" title="Source codes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="examples.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020 Jonathan Peltier and Marcel Soubkovsky
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

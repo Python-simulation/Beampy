@@ -1,0 +1,1592 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>beampy.bpm &mdash; beampy 1.11 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="beampy.user_interface" href="code_user_interface.html" />
+    <link rel="prev" title="Source codes" href="codes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> beampy
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="interface.html">Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="beampy.html">Beampy modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="codes.html">Source codes</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">beampy.bpm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_user_interface.html">beampy.user_interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_interface.html">beampy.interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="code_example.html">beampy.examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release_note.html">Release note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">MIT License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact.html">Contact</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">beampy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="codes.html">Source codes</a> &raquo;</li>
+        
+      <li>beampy.bpm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/code_bpm.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="beampy-bpm">
+<span id="code-bpm"></span><h1>beampy.bpm<a class="headerlink" href="#beampy-bpm" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The bpm module contain the Bpm class used to simulate the light propagation -</span>
+<span class="sd">within low refractive index variation</span>
+<span class="sd">and small angle (paraxial approximation) -</span>
+<span class="sd">using the Beam Propagation Method.</span>
+
+<span class="sd">This module was done by Jonathan Peltier during a master</span>
+<span class="sd">university course from the PAIP master of the université de Lorraine,</span>
+<span class="sd">under the directive of Pr. Nicolas Fressengeas.</span>
+
+<span class="sd">The bpm codes are mainly based on a compilation of MatLab codes initialy</span>
+<span class="sd">developed by Régis Grasser during his PhD thesis[2],</span>
+<span class="sd">and later modified at the FEMTO-ST institute of the Université de</span>
+<span class="sd">Franche-Comté and at the LMOPS laboratory [3] of the</span>
+<span class="sd">Université de Lorraine.</span>
+
+<span class="sd">[1] K. Okamoto, in Fundamentals of Optical Waveguides,</span>
+<span class="sd">2nd ed., edited by K. Okamoto (Academic, Burlington, 2006), pp. 329–397.</span>
+
+<span class="sd">[2] &quot;Generation et propagation de reseaux periodiques de solitons spatiaux</span>
+<span class="sd">dans un milieu de kerr massif&quot; PhD thesis, université de Franche-Comté 1998.</span>
+
+<span class="sd">[3] H. Oukraou et. al., Broadband photonic transport between waveguides by</span>
+<span class="sd">adiabatic elimination Phys. Rev. A, 97 023811 (2018).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">ceil</span><span class="p">,</span> <span class="n">radians</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">acos</span><span class="p">,</span> <span class="n">asin</span><span class="p">,</span> <span class="n">exp</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">special</span>
+<span class="kn">from</span> <span class="nn">numpy.fft</span> <span class="kn">import</span> <span class="n">fft</span><span class="p">,</span> <span class="n">ifft</span><span class="p">,</span> <span class="n">fftshift</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>
+
+<span class="kn">import</span> <span class="nn">numba</span>
+
+
+<span class="nd">@numba</span><span class="o">.</span><span class="n">vectorize</span><span class="p">([</span><span class="n">numba</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">numba</span><span class="o">.</span><span class="n">complex128</span><span class="p">),</span>
+                  <span class="n">numba</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">numba</span><span class="o">.</span><span class="n">complex64</span><span class="p">)])</span>
+<span class="k">def</span> <span class="nf">abs2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Square modulus of x. Fastest way possible for a numpy array.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="o">**</span><span class="mi">2</span>
+
+
+<span class="k">class</span> <span class="nc">Bpm</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Bpm class is used to simulate light propagation -</span>
+<span class="sd">    within small refractive index variation guides</span>
+<span class="sd">    and small angle of propagation (paraxial) -</span>
+<span class="sd">    using the Beam Propagation Method.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    no : float</span>
+<span class="sd">        Refractive index of the cladding.</span>
+<span class="sd">    lo : float</span>
+<span class="sd">        Wavelength of the beam in vaccum (µm).</span>
+<span class="sd">    length_z : float</span>
+<span class="sd">        Size of the compute window over z (µm).</span>
+<span class="sd">    dist_z : float</span>
+<span class="sd">        Step over z (µm)</span>
+<span class="sd">    nbr_z_disp : int</span>
+<span class="sd">        Number of points to display over z.</span>
+<span class="sd">    length_x : float</span>
+<span class="sd">        Size of the compute window over x (µm).</span>
+<span class="sd">    dist_x : float</span>
+<span class="sd">        Step over x (µm)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span>
+                 <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span>
+                 <span class="n">length_x</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Bpm class is used to simulate light propagation -</span>
+<span class="sd">        within small refractive index variation guides</span>
+<span class="sd">        and small angle of propagation (paraxial) -</span>
+<span class="sd">        using the Beam Propagation Method.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        no : float</span>
+<span class="sd">            Refractive index of the cladding</span>
+<span class="sd">        lo : float</span>
+<span class="sd">            Wavelength of the beam in vaccum (µm).</span>
+<span class="sd">        length_z : float</span>
+<span class="sd">            Size of the compute window over z (µm).</span>
+<span class="sd">        dist_z : float</span>
+<span class="sd">            Step over z (µm).</span>
+<span class="sd">        nbr_z_disp : int</span>
+<span class="sd">            Number of points to display over z.</span>
+<span class="sd">        length_x : float</span>
+<span class="sd">            Size of the compute window over x (µm).</span>
+<span class="sd">        dist_x : float</span>
+<span class="sd">            Step over x (µm).</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method creates the following variables within the class</span>
+<span class="sd">        :class:`Bpm`:</span>
+
+<span class="sd">        - All input variables.</span>
+<span class="sd">        - ko: the free space vector (1/µm).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">=</span> <span class="n">no</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lo</span> <span class="o">=</span> <span class="n">lo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ko</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">lo</span>  <span class="c1"># linear wave vector in free space (1/µm)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span> <span class="o">=</span> <span class="n">length_z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">=</span> <span class="n">dist_z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="n">nbr_z_disp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span> <span class="o">=</span> <span class="n">dist_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span> <span class="o">=</span> <span class="n">length_x</span>
+
+    <span class="k">def</span> <span class="nf">create_x_z</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create the x, z array and ajust the resolution variables.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        length_z : float</span>
+<span class="sd">            Corrected value due to nbr_z being an int.</span>
+<span class="sd">        nbr_z : int</span>
+<span class="sd">            Number of points computed over z.</span>
+<span class="sd">        nbr_z_disp : int</span>
+<span class="sd">            Corrected value due to pas being an int.</span>
+<span class="sd">        length_x : float</span>
+<span class="sd">            Corrected value due to nbr_x being an int.</span>
+<span class="sd">        nbr_x : int</span>
+<span class="sd">            Number of point over x (µm).</span>
+<span class="sd">        x : array</span>
+<span class="sd">            x values between [-length_x/2, length_x/2-dist_x] center on 0.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method creates the following variables within the class</span>
+<span class="sd">        :class:`Bpm`:</span>
+
+<span class="sd">        - pas : Interval of computed points between each displayed points.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_z</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pas</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_z</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_z</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pas</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># add 1 for the initial field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># add 1 for the initial field</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_x</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)</span>  <span class="c1"># nbr points over x</span>
+
+        <span class="c1"># check if even number</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># check if multiple of 8: speeds up execution</span>
+        <span class="c1"># (was also needed for a obsolete feature)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span> <span class="o">%</span> <span class="mi">8</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span> <span class="o">+=</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">length_x</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">length_z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="c1"># Guides #</span>
+
+    <span class="k">def</span> <span class="nf">squared_guide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A lambda function than returns a centered rectangular shape.</span>
+
+<span class="sd">        return 1 if :math:`x &gt;= -width/2` and :math:`x &lt;= width/2`</span>
+<span class="sd">        else return 0.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        width : float</span>
+<span class="sd">            Waveguide width.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gauss_guide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">gauss_pow</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A lambda function than return a centered super-Gaussian shape.</span>
+
+<span class="sd">        :math:`e^{-(x/w)^{2P}}`</span>
+
+<span class="sd">        The waist is defined as width/2 and correspond to the 1/e</span>
+<span class="sd">        relative value.</span>
+
+<span class="sd">        See :func:`.example_guides_x` for more details.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        width : float</span>
+<span class="sd">            Waveguide width (µm) at 1/e^2 intensity.</span>
+<span class="sd">        gauss_pow : int, optional</span>
+<span class="sd">            Index of the super-gaussian guide with 1 being a regural gaussian</span>
+<span class="sd">            guide and 4 being the conventionnal super-gaussian guide used to</span>
+<span class="sd">            describe realistic waveguides.</span>
+<span class="sd">            See on en.wikipedia.org/wiki/Gaussian_function</span>
+<span class="sd">            #Higher-order_Gaussian_or_super-Gaussian_function.</span>
+<span class="sd">            1 by Default.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">width</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># width is diameter and w is radius</span>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="n">w</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">gauss_pow</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">create_guides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">nbr_p</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">offset_guide</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an array of guides over x using peaks positions and for a given</span>
+<span class="sd">        shape.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        shape : method</span>
+<span class="sd">            :meth:`squared_guide`, :meth:`gauss_guide` or any lambda function</span>
+<span class="sd">            that takes one argument and return the relative refractive index</span>
+<span class="sd">            for the input position.</span>
+<span class="sd">        delta_no : float</span>
+<span class="sd">            Difference of refractive index between the core and the cladding.</span>
+<span class="sd">            Can contain the losses throught the imaginary part.</span>
+<span class="sd">        nbr_p : int</span>
+<span class="sd">            Number of guides.</span>
+<span class="sd">        p : float</span>
+<span class="sd">            Distance between two guides center (µm).</span>
+<span class="sd">        offset_guide : float, optional</span>
+<span class="sd">            Guide offset from the center (µm). 0 by default.</span>
+<span class="sd">        z : list</span>
+<span class="sd">            list [start, end] defining the waveguide length. Default length=</span>
+<span class="sd">            windows length.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        peaks : array-like</span>
+<span class="sd">            Central position of each guide [guide,z].</span>
+<span class="sd">        dn : array-like</span>
+<span class="sd">            Difference of refractive index [z,x]. Can contain the losses</span>
+<span class="sd">            throught the imaginary part.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        nbr_z, nbr_x, x, dist_x.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">peaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">]</span><span class="o">*</span><span class="n">nbr_p</span><span class="p">)</span>
+        <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">))</span>
+        <span class="n">dn_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nbr_p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">]),</span> <span class="n">dn</span><span class="p">]</span>
+        <span class="n">peaks_z</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">nbr_p</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">nbr_p</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_p</span><span class="p">)</span>
+                   <span class="o">+</span> <span class="n">p</span><span class="o">/</span><span class="mi">2</span>
+                   <span class="o">+</span> <span class="n">offset_guide</span><span class="p">)</span>
+        <span class="n">dn_fix</span> <span class="o">=</span> <span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># guide shape center on 0</span>
+
+        <span class="c1"># Sum each identical guide with an offset defined by peaks_z</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_p</span><span class="p">):</span>
+            <span class="n">dn_z</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dn_fix</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">peaks_z</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># assert z[0] &gt;= 0 and z[1] &lt;= self.length_z and z[0] &lt;= z[1]</span>
+            <span class="k">if</span> <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning, the waveguide beginning occurs after the end.&quot;</span><span class="p">,</span>
+                      <span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;should be &lt;=&quot;</span><span class="p">,</span> <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span><span class="p">:</span>
+                <span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span>
+
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span><span class="p">)</span>
+
+        <span class="n">dn</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span> <span class="o">=</span> <span class="n">dn_z</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+            <span class="n">peaks</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">peaks_z</span>
+
+        <span class="n">dn</span> <span class="o">=</span> <span class="n">dn</span><span class="o">*</span><span class="n">delta_no</span>  <span class="c1"># give a value to the shape</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">create_curved_guides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">curve</span><span class="p">,</span> <span class="n">half_delay</span><span class="p">,</span>
+                             <span class="n">distance_factor</span><span class="p">,</span> <span class="n">offset_guide</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create two curved guides and one linear guide on the center (STIRAP).</span>
+
+<span class="sd">        The central positions over x and z are defined as follow:</span>
+
+<span class="sd">        Left guide: :math:`x_0-p_{min}-curve(z-length\_z/2-half\_delay)^2`</span>
+
+<span class="sd">        Right guide: :math:`x_0+p_{min}+curve(z-length\_z/2+half\_delay)^2`</span>
+
+<span class="sd">        Central guide: :math:`x_0`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        shape : method</span>
+<span class="sd">            :meth:`square` or :meth:`gauss`</span>
+<span class="sd">        width : float</span>
+<span class="sd">            Waveguide width (µm) at 1/e^2 intensity.</span>
+<span class="sd">        delta_no : float</span>
+<span class="sd">            Difference of refractive index between the core and the cladding.</span>
+<span class="sd">            Can contain the losses throught the imaginary part.</span>
+<span class="sd">        curve : float</span>
+<span class="sd">            curvature factor in :math:`10^{-8} µm^{-2}`.</span>
+<span class="sd">        half_delay : float</span>
+<span class="sd">            Half distance over z in µm bewteen the two external guides where</span>
+<span class="sd">            they are the closest.</span>
+<span class="sd">            In other words, the distance from the center and the minimum of one</span>
+<span class="sd">            of the curved guides over z.</span>
+<span class="sd">        distance_factor : float</span>
+<span class="sd">            Factor between the guide width and the minimal distance between the</span>
+<span class="sd">            two guides =p_min/width.</span>
+<span class="sd">            If distance_factor=1, the curved guides will touch the central</span>
+<span class="sd">            guide (p_min=width).</span>
+<span class="sd">        offset_guide : float, optional</span>
+<span class="sd">            Waveguide offset from the center (µm). 0 by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        peaks : array</span>
+<span class="sd">            Central position of each guide as peaks[guide,z].</span>
+<span class="sd">        dn : array</span>
+<span class="sd">            Difference of refractive index as dn[z,x]. Can contain the losses</span>
+<span class="sd">            throught the imaginary part.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        length_z, nbr_z, nbr_x, x, dist_x.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># all points over z</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">)</span>
+
+        <span class="c1"># left curved guide</span>
+        <span class="n">sa</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span> <span class="n">offset_guide</span>
+              <span class="o">+</span> <span class="n">curve</span><span class="o">*</span><span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="n">half_delay</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+              <span class="o">+</span> <span class="n">width</span><span class="o">*</span><span class="n">distance_factor</span><span class="p">)</span>
+
+        <span class="c1"># right curved guide</span>
+        <span class="n">sb</span> <span class="o">=</span> <span class="p">(</span><span class="n">offset_guide</span>
+              <span class="o">+</span> <span class="n">curve</span><span class="o">*</span><span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">half_delay</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+              <span class="o">+</span> <span class="n">width</span><span class="o">*</span><span class="n">distance_factor</span><span class="p">)</span>
+
+        <span class="n">peaks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="n">sa</span><span class="p">,</span>
+                          <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">offset_guide</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">),</span>
+                          <span class="n">sb</span><span class="p">])</span>
+
+        <span class="n">dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">))</span>
+        <span class="n">dn_fix</span> <span class="o">=</span> <span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>   <span class="c1"># guide shape center on 0</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">):</span>
+            <span class="n">dn</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dn_fix</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="o">-</span><span class="n">sa</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span> \
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dn_fix</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">offset_guide</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span> \
+                <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">dn_fix</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">sb</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span>
+
+        <span class="n">dn</span> <span class="o">=</span> <span class="n">dn</span> <span class="o">*</span> <span class="n">delta_no</span>  <span class="c1"># give a value to the shape</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span>
+
+    <span class="c1"># Light #</span>
+
+    <span class="k">def</span> <span class="nf">gauss_light</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fwhm</span><span class="p">,</span> <span class="n">offset_light</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a gaussien beam in amplitude.</span>
+
+<span class="sd">        :math:`E = e^{-((x-x_0)/w)^{2P}}`</span>
+
+<span class="sd">        The waist is defined as fwhm/sqrt(2*log(2)) and correspond to the 1/e</span>
+<span class="sd">        field value and 1/:math:`e^2` intensity value.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fwhm : float</span>
+<span class="sd">            Full width at half maximum (for intensity not amplitude) (µm).</span>
+<span class="sd">        offset_light : float, optional</span>
+<span class="sd">            Light offset from center in µm. 0 by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        field : array</span>
+<span class="sd">            Amplitude values over x in µm.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the x and dist_x variables defined in :class:`Bpm`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spot_size</span> <span class="o">=</span> <span class="n">fwhm</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>  <span class="c1"># such as I=1/e^2 in intensity</span>
+        <span class="k">if</span> <span class="n">spot_size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">spot_size</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">offset_light</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>  <span class="c1"># Avoid division by zero error</span>
+        <span class="k">return</span> <span class="n">field</span>
+
+    <span class="k">def</span> <span class="nf">squared_light</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fwhm</span><span class="p">,</span> <span class="n">offset_light</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a flat-top beam (squared).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fwhm : float</span>
+<span class="sd">            Beam width in µm.</span>
+<span class="sd">        offset_light : float, optional</span>
+<span class="sd">            Light offset from center in µm. 0 by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        field : array</span>
+<span class="sd">            Amplitude values over x in µm.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        nbr_x, x.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">fwhm</span><span class="o">/</span><span class="mi">2</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">fwhm</span><span class="o">/</span><span class="mi">2</span><span class="p">:</span>
+                <span class="n">field</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">field</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">offset_light</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">field</span>
+
+    <span class="k">def</span> <span class="nf">mode_determ</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Solve the transcendental equation tan=sqrt that give the modes</span>
+<span class="sd">        allowed in a squared guide.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        width : float</span>
+<span class="sd">            Waveguide width (µm) at 1/e^2 intensity.</span>
+<span class="sd">        delta_no : float</span>
+<span class="sd">            Difference of refractive index between the core and the cladding.</span>
+<span class="sd">        mode : int</span>
+<span class="sd">            Number of the searched mode.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        h_m : float</span>
+<span class="sd">            Transverse propagation constant over x (µm).</span>
+<span class="sd">        gamma_m : float</span>
+<span class="sd">            Extinction coefficient over x (µm).</span>
+<span class="sd">        beta_m : float</span>
+<span class="sd">            Longitudinal constant of propagation over z (µm).</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            if no mode exists.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        lo, no, ko.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">width</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no mode &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; existing&quot;</span><span class="p">)</span>
+
+        <span class="n">delta_no</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_no</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+        <span class="n">lim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lo</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">+</span> <span class="n">delta_no</span><span class="p">))</span> <span class="o">-</span> <span class="mf">1e-12</span>
+        <span class="n">theta_c</span> <span class="o">=</span> <span class="n">acos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">+</span> <span class="n">delta_no</span><span class="p">))</span>  <span class="c1"># Critical angle</span>
+        <span class="n">solu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
+            <span class="n">mode</span><span class="o">*</span><span class="n">lim</span> <span class="o">+</span> <span class="mf">0.000001</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">mode</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">lim</span><span class="p">,</span>
+            <span class="nb">round</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">lim</span> <span class="o">-</span> <span class="mf">0.000001</span><span class="p">)</span><span class="o">/</span><span class="mf">0.000001</span><span class="p">))</span>
+        <span class="n">lhs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span>
+            <span class="n">pi</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">+</span> <span class="n">delta_no</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">lo</span> <span class="o">*</span> <span class="n">solu</span>
+            <span class="o">-</span> <span class="n">mode</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">rhs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="mi">0</span><span class="n">j</span>  <span class="c1"># to avoid sqrt error when complexe</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">theta_c</span><span class="p">)</span> <span class="o">/</span> <span class="n">solu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">rhs</span> <span class="o">-</span> <span class="n">lhs</span>  <span class="c1"># 0 if left == right</span>
+        <span class="n">minimum</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>  <span class="c1"># return min value : where two equations~=</span>
+        <span class="n">i_min</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="n">minimum</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># min value index</span>
+
+        <span class="k">if</span> <span class="n">i_min</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;no mode &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; existing&quot;</span><span class="p">)</span>
+
+        <span class="n">sin_theta_m</span> <span class="o">=</span> <span class="n">solu</span><span class="p">[</span><span class="n">i_min</span><span class="p">]</span>
+        <span class="n">theta_m</span> <span class="o">=</span> <span class="n">asin</span><span class="p">(</span><span class="n">sin_theta_m</span><span class="p">)</span>  <span class="c1"># angle at which the mode propagate</span>
+
+        <span class="n">beta_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">+</span> <span class="n">delta_no</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta_m</span><span class="p">)</span>
+        <span class="n">h_m</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">+</span> <span class="n">delta_no</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">beta_m</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">gamma_m</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ko</span>
+                   <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">cos</span><span class="p">(</span><span class="n">theta_m</span><span class="p">)</span> <span class="o">/</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta_c</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">h_m</span><span class="p">,</span> <span class="n">gamma_m</span><span class="p">,</span> <span class="n">beta_m</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">mode_light</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">offset_light</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create light based on propagated mode inside a squared guide.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        width : float</span>
+<span class="sd">            Waveguide width (µm) at 1/e^2 intensity.</span>
+<span class="sd">        delta_no : float</span>
+<span class="sd">            Difference of refractive index between the core and the cladding.</span>
+<span class="sd">        mode : int</span>
+<span class="sd">            Number of the searched mode.</span>
+<span class="sd">        offset_light : float, optional</span>
+<span class="sd">            Light offset from center (µm). 0 by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        field : array</span>
+<span class="sd">            Amplitude values over x (µm).</span>
+<span class="sd">        h_m : float</span>
+<span class="sd">            Transverse propagation constant over x (µm).</span>
+<span class="sd">        gamma_m : float</span>
+<span class="sd">            Extinction coefficient over x (µm).</span>
+<span class="sd">        beta_m : float</span>
+<span class="sd">            Longitudinal constant of propagation over z (µm).</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        nbr_x, x and the :meth`mode_determ` method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">)</span>
+
+        <span class="p">[</span><span class="n">h_m</span><span class="p">,</span> <span class="n">gamma_m</span><span class="p">,</span> <span class="n">beta_m</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode_determ</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># if even mode</span>
+
+            <span class="n">b_b</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">h_m</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Continuity value where x=width/2</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">):</span>  <span class="c1"># Compute light based on h,gamma,beta</span>
+
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">:</span>  <span class="c1"># in core</span>
+                    <span class="n">field</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">h_m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># in cladding</span>
+                    <span class="n">field</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">b_b</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma_m</span> <span class="o">*</span> <span class="p">(</span>
+                        <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+                        <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># if odd mode</span>
+
+            <span class="n">c_c</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">h_m</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># Continuity value where x=width/2</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">):</span>  <span class="c1"># Compute light based on h,gamma,beta</span>
+
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">:</span>  <span class="c1"># in core</span>
+                    <span class="n">field</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">h_m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">:</span>  <span class="c1"># Right cladding</span>
+                    <span class="n">field</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_c</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">gamma_m</span> <span class="o">*</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                        <span class="o">-</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># Left cladding</span>
+                    <span class="n">field</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">c_c</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="n">gamma_m</span> <span class="o">*</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                        <span class="o">+</span> <span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">offset_light</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">field</span><span class="p">,</span> <span class="n">h_m</span><span class="p">,</span> <span class="n">gamma_m</span><span class="p">,</span> <span class="n">beta_m</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">all_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">offset_light</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute all modes allowed by the guide and sum them into one field.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        width : float</span>
+<span class="sd">            Waveguide width (µm) at 1/e^2 intensity.</span>
+<span class="sd">        delta_no : float</span>
+<span class="sd">            Difference of refractive index between the core and the cladding.</span>
+<span class="sd">        offset_light : float, optional</span>
+<span class="sd">            Light offset from center in µm. 0 by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        field : array</span>
+<span class="sd">            Sum of all possibles fields in the guide.</span>
+<span class="sd">        h : array, float</span>
+<span class="sd">            Transverse propagation constant over x in µm of all modes.</span>
+<span class="sd">        gamma : array, float</span>
+<span class="sd">            Extinction coefficient over z in µm of all modes.</span>
+<span class="sd">        beta : array, float</span>
+<span class="sd">            Longitudinal constant of propagation over z in µm of all modes.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        nbr_x and the :meth`mode_light` method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="p">[</span><span class="n">field_i</span><span class="p">,</span> <span class="n">h_m</span><span class="p">,</span> <span class="n">gamma_m</span><span class="p">,</span> <span class="n">beta_m</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode_light</span><span class="p">(</span>
+                    <span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">offset_light</span><span class="p">)</span>
+                <span class="n">field</span> <span class="o">=</span> <span class="n">field</span> <span class="o">+</span> <span class="n">field_i</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">h_m</span><span class="p">)</span>
+                <span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gamma</span><span class="p">,</span> <span class="n">gamma_m</span><span class="p">)</span>
+                <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">beta_m</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">field</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">beta</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">check_modes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the last possible mode number.</span>
+<span class="sd">        Could be merged with :meth:`all_modes` but would increase the needed</span>
+<span class="sd">        time to compute just to display a number.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        width : float</span>
+<span class="sd">            Waveguide width (µm) at 1/e^2 intensity.</span>
+<span class="sd">        delta_no : float</span>
+<span class="sd">            Difference of refractive index between the core and the cladding.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        m : int</span>
+<span class="sd">            Number of the last possible mode for a squared guide.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the :meth`mode_light` method defined in :class:`Bpm`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mode_light</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This guide can propagate up to the modes&quot;</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">airy_light</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lobe_size</span><span class="p">,</span> <span class="n">airy_zero</span><span class="p">,</span> <span class="n">offset_light</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an Airy beam using scipy.special.airy(x).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lobe_size : float</span>
+<span class="sd">            Size of the first lobe (µm).</span>
+<span class="sd">        airy_zero : int</span>
+<span class="sd">            Cut the beam at the asked zero of the Airy function. n lobes will</span>
+<span class="sd">            be displayed.</span>
+<span class="sd">        offset_light : float, optional</span>
+<span class="sd">            Light offset from center in µm. 0 by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        field : array</span>
+<span class="sd">            Amplitude values over x (µm).</span>
+<span class="sd">        airy_zero : int</span>
+<span class="sd">            Number of lobes. Corrected if higher than the window size.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        nbr_x, length_x, dist_x, x.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">lobe_size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">airy_zero</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">lobe_size</span> <span class="o">=</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">lobe_size</span><span class="p">)</span>
+
+        <span class="c1"># Position of the first zero and the asked one</span>
+        <span class="n">zero_pos</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">ai_zeros</span><span class="p">(</span><span class="n">airy_zero</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">first_zero</span> <span class="o">=</span> <span class="n">zero_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">last_zero</span> <span class="o">=</span> <span class="n">zero_pos</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Positions/size of the wanted beam</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="n">last_zero</span> <span class="o">*</span> <span class="n">lobe_size</span> <span class="o">/</span> <span class="n">first_zero</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">lobe_size</span> <span class="o">/</span> <span class="n">first_zero</span>  <span class="c1"># Airy=1e-10 at x=10</span>
+
+        <span class="c1"># Reduce the last zero number to stay in the window</span>
+        <span class="k">if</span> <span class="o">-</span><span class="n">left</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span><span class="p">:</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">zero_pos</span> <span class="o">*</span> <span class="n">lobe_size</span> <span class="o">/</span> <span class="n">first_zero</span>  <span class="c1"># All possibles left posi</span>
+            <span class="n">airy_zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">-</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Higher index</span>
+
+            <span class="k">if</span> <span class="n">airy_zero</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># interface don&#39;t allow this situation</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The first lobe is bigger than the windows size&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span>
+
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># take the higher lobe possible</span>
+                <span class="n">airy_zero</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">airy_zero</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="n">last_zero</span> <span class="o">=</span> <span class="n">zero_pos</span><span class="p">[</span><span class="n">airy_zero</span><span class="p">]</span>  <span class="c1"># Value of the last lobe</span>
+            <span class="n">airy_zero</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># +1 to return the zero number</span>
+
+            <span class="n">left</span> <span class="o">=</span> <span class="n">last_zero</span> <span class="o">*</span> <span class="n">lobe_size</span> <span class="o">/</span> <span class="n">first_zero</span>  <span class="c1"># Corrected left positio</span>
+
+        <span class="c1"># Number of points in the Airy window to match the full window</span>
+        <span class="n">nbr_point</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">left</span> <span class="o">-</span> <span class="n">right</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span>
+
+        <span class="c1"># Airy window size</span>
+        <span class="n">x_airy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">last_zero</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">nbr_point</span><span class="p">)</span>
+
+        <span class="c1"># Positions of the Airy and full window center</span>
+        <span class="n">center_airy</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x_airy</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Airy field</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">airy</span><span class="p">(</span><span class="n">x_airy</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># add last empty field to reach the windows size</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">field</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="n">field</span><span class="o">.</span><span class="n">size</span><span class="p">)))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">field</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># Cut if exceed windows size</span>
+
+        <span class="c1"># Recenter on 0</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">center</span> <span class="o">-</span> <span class="n">center_airy</span><span class="p">)))</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">offset_light</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)))</span>
+        <span class="n">field</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>  <span class="c1"># Normalized</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">field</span><span class="p">,</span> <span class="n">airy_zero</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">init_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">theta_ext</span><span class="p">,</span> <span class="n">irrad</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize phase, field and power variables.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        field : array, array-like</span>
+<span class="sd">            Amplitude values for each beams over x (µm) [beam,E] or E</span>
+<span class="sd">        theta_ext : float</span>
+<span class="sd">            Exterior inclinaison angle (°).</span>
+<span class="sd">        irrad : array, array-like</span>
+<span class="sd">            Irradiance for each beam (:math:`W/m^2`).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        progress_pow : array</span>
+<span class="sd">            Intensity values over x (µm).</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method creates the following variables within the class</span>
+<span class="sd">        :class:`Bpm`:</span>
+
+<span class="sd">        - epnc: Convertion factor used to set unit of the field and irradiance.</span>
+<span class="sd">        - phase_mat: Free propagation in Fourier space over dz/2.</span>
+<span class="sd">        - current_power: Intensity for z=0.</span>
+<span class="sd">        - field: Field value with the unit.</span>
+
+
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        no, x, dist_x, nbr_x, nbr_z_disp.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">theta_ext</span> <span class="o">&lt;=</span> <span class="mi">28</span>  <span class="c1"># paraxial approximation limitation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="c1"># see en.wiki: Gaussian_beam#Mathematical_form for intensity definition</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="mf">376.730313668</span>  <span class="c1"># Impedance of free space mu_0*c</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">epnc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">eta</span><span class="p">)</span>  <span class="c1"># used to converte E into I</span>
+        <span class="c1">#  unit(epnc)= W/V^2</span>
+
+        <span class="k">try</span><span class="p">:</span>  <span class="c1"># if multiple beams or one beam as [beam]</span>
+            <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Raise a IndexError if not</span>
+            <span class="n">nbr_light</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># [beam1(x),beam2,beam3] -&gt; 3</span>
+<span class="c1">#            Eo = sqrt(irrad[i] / self.epnc)  # Peak value of the field (V/m).</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_light</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">irrad</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">epnc</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># merge all beam into one</span>
+
+        <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>  <span class="c1"># if only one beam and not in form [beam]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">*=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">irrad</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">epnc</span><span class="p">)</span>
+
+<span class="c1">#        https://support.lumerical.com/hc/en-us/articles/</span>
+<span class="c1">#        360034382894-Understanding-injection-angles-in-broadband-simulations</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">asin</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">radians</span><span class="p">(</span><span class="n">theta_ext</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">no</span><span class="p">)</span>  <span class="c1"># angle in the guide</span>
+        <span class="n">ph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>  <span class="c1"># k projection over x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">ph</span><span class="p">)</span>  <span class="c1"># Initial phase due to angle</span>
+
+        <span class="n">nu_max</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="p">)</span>  <span class="c1"># max frequency due to sampling</span>
+        <span class="c1"># Spacial frequencies over x (1/µm)</span>
+        <span class="n">nu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">nu_max</span><span class="p">,</span>
+                         <span class="n">nu_max</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">),</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">)</span>
+        <span class="n">intermed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">lo</span>
+        <span class="c1"># Linear propagation phase</span>
+        <span class="n">fr</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">nu</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">intermed</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+            <span class="n">intermed</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">-</span> <span class="n">nu</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">+</span> <span class="mi">0</span><span class="n">j</span><span class="p">))</span>
+
+        <span class="c1"># Free space matrix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">=</span> <span class="n">fftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fr</span><span class="p">))</span>
+
+        <span class="c1"># Initial irradiance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_power</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_x</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">current_power</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">guide_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">peaks</span><span class="p">,</span> <span class="n">guide</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the left and right position index over x of a given guide</span>
+<span class="sd">        for each z.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        peaks : array-like</span>
+<span class="sd">            Central position of each guide [guide,z].</span>
+<span class="sd">        guide : int</span>
+<span class="sd">            Number of the guide.</span>
+<span class="sd">        size : float</span>
+<span class="sd">            Width (µm).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x_beg : array</span>
+<span class="sd">            Left indices position of the selected guide over z.</span>
+<span class="sd">        x_end : array</span>
+<span class="sd">            Right indices position of the selected guide over z.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        nbr_z, x, length_x.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x_beg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">)</span>
+        <span class="n">x_end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">peaks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">peaks</span><span class="p">[</span><span class="n">guide</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">pos_beg</span> <span class="o">=</span> <span class="p">(</span><span class="n">peaks</span><span class="p">[</span><span class="n">guide</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Left position</span>
+
+                <span class="c1"># If the position is out of boundery, change interval to</span>
+                <span class="c1"># (-length_x/2, length_x)</span>
+                <span class="k">if</span> <span class="n">pos_beg</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">pos_beg</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">pos_beg</span> <span class="o">=</span> <span class="n">pos_beg</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span>
+
+                <span class="c1"># If the pos_beg is between length_x/2 and length_x then change</span>
+                <span class="c1"># interval to (-length_x/2, length_x/2)</span>
+                <span class="k">if</span> <span class="n">pos_beg</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">pos_beg</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span>
+
+                <span class="c1"># Search the closest index value for this position</span>
+                <span class="n">x_beg</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">pos_beg</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+                <span class="n">pos_end</span> <span class="o">=</span> <span class="p">(</span><span class="n">peaks</span><span class="p">[</span><span class="n">guide</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">pos_end</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">pos_end</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">pos_end</span> <span class="o">=</span> <span class="n">pos_end</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span>
+
+                <span class="k">if</span> <span class="n">pos_end</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">pos_end</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_x</span>
+
+                <span class="n">x_end</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">pos_end</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x_beg</span><span class="p">,</span> <span class="n">x_end</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">power_guide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_beg</span><span class="p">,</span> <span class="n">x_end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return the power over z in a given interval by integrating the beam</span>
+<span class="sd">        irradiance.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x_beg : array</span>
+<span class="sd">            Left indices position over z for a selected guide.</span>
+<span class="sd">        x_end : array</span>
+<span class="sd">            Right indices position over z for a selected guide.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        P : array</span>
+<span class="sd">            Normalized power in the guide over z.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        nbr_z_disp, progress_pow, pas.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span><span class="p">)</span>
+        <span class="c1"># explaination: power[0] is input so take dn[0] but dn[0] is for propag</span>
+        <span class="c1"># from 0 to 1 unit so next power power[1] is also dn[0]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z_disp</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># -1 for beginning at 0 and -1 for final useless value</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_beg</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pas</span><span class="o">-</span><span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">x_beg</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">x_end</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">x_beg</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x_end</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+                <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">x_beg</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span><span class="n">x_end</span><span class="p">[</span><span class="n">index</span><span class="p">]],</span>
+                    <span class="n">dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span>
+
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># Take into account guides that crosses the window edges</span>
+                <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">x_beg</span><span class="p">[</span><span class="n">index</span><span class="p">]:],</span>
+                    <span class="n">dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span>
+                <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">x_end</span><span class="p">[</span><span class="n">index</span><span class="p">]],</span>
+                    <span class="n">dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span>
+
+        <span class="n">P</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_x</span><span class="o">*</span><span class="mf">1e-6</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">P</span>  <span class="c1"># f not normalized, unit: (W/m)</span>
+
+    <span class="k">def</span> <span class="nf">kerr_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chi3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kerr_loop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">variance_check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">field_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                    <span class="n">dn_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">phase_mat</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Kerr effect: refractive index modulation by the light intensity.</span>
+<span class="sd">        See: https://optiwave.com/optibpm-manuals/bpm-non-linear-bpm-algorithm/</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dn : array</span>
+<span class="sd">            Difference of refractive index as dn[z,x]. Can contain the losses</span>
+<span class="sd">            throught the imaginary part.</span>
+<span class="sd">        n2 : float, optional</span>
+<span class="sd">            Nonlinear refractive index responsable for the optical Kerr effect</span>
+<span class="sd">            in m^2/W. None by default.</span>
+<span class="sd">        chi3 : float, optional</span>
+<span class="sd">            Value of the third term of the electric susceptibility tensor</span>
+<span class="sd">            in m^2/V^2. None by default.</span>
+<span class="sd">        kerr_loop : int, optional</span>
+<span class="sd">            Number of corrective loops for the Kerr effect. 1 by default.</span>
+<span class="sd">        variance_check : bool, optional</span>
+<span class="sd">            Check if the kerr effect converge fast enought. False by default.</span>
+<span class="sd">        field_start : array, optional</span>
+<span class="sd">            Field without kerr effect.</span>
+<span class="sd">            If None were given, take the :meth:`main_compute` field.</span>
+<span class="sd">        dn_start : array, optional</span>
+<span class="sd">            Refractive index without kerr effect.</span>
+<span class="sd">            If None were given, take the :meth:`main_compute` dn.</span>
+<span class="sd">        phase_mat: array, optional</span>
+<span class="sd">            Free propagation in Fourier space over dz/2.</span>
+<span class="sd">            If None were given, take the :meth:`main_compute` phase_mat.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dn : array</span>
+<span class="sd">            Refractive index with kerr effect.</span>
+<span class="sd">        nl_mat : array</span>
+<span class="sd">            refractive index modulation with kerr effect.</span>
+<span class="sd">        field_x : array</span>
+<span class="sd">            Field with the kerr effect at the self.i step.</span>
+<span class="sd">        cur_pow : array</span>
+<span class="sd">            Beam power with the kerr effect after the dz propagation.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This methods uses the following variables defined in :class:`Bpm`:</span>
+<span class="sd">        i, epnc, no, ko, dist_z and the :meth:`variance` method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">n2</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">chi3</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="c1"># assert n2 is not None or chi3 is not None</span>
+        <span class="c1"># Set the default value if none were given</span>
+        <span class="n">dn_start</span> <span class="o">=</span> <span class="n">dn</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="k">if</span> <span class="n">dn_start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">dn_start</span>
+        <span class="n">nl_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn_start</span>
+        <span class="n">field_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="k">if</span> <span class="n">field_start</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">field_start</span>
+        <span class="n">phase_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">phase_mat</span> <span class="k">if</span> <span class="n">phase_mat</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">phase_mat</span>
+
+        <span class="c1"># Influence of the index modulation on the field</span>
+        <span class="n">field_x</span> <span class="o">=</span> <span class="n">field_start</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">nl_mat</span><span class="p">)</span>
+
+        <span class="c1"># Linear propagation over dz/2</span>
+        <span class="n">field_x</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field_x</span><span class="p">))</span>
+        <span class="n">cur_pow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kerr_loop</span><span class="p">):</span>
+            <span class="n">prev_pow</span> <span class="o">=</span> <span class="n">cur_pow</span>
+
+            <span class="c1"># influence of the beam intensity on the index modulation</span>
+            <span class="k">if</span> <span class="n">n2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># dn = dn1+dn2*I with I unit: W/m^2</span>
+                <span class="n">dn_kerr</span> <span class="o">=</span> <span class="n">dn_start</span> <span class="o">+</span> <span class="n">n2</span><span class="o">*</span><span class="n">prev_pow</span>
+
+            <span class="k">elif</span> <span class="n">chi3</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># dn = dn1+ 3chi3/8*no*|E|^2</span>
+                <span class="n">dn_kerr</span> <span class="o">=</span> <span class="n">dn_start</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">chi3</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">no</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">prev_pow</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">epnc</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dn_kerr</span> <span class="o">=</span> <span class="n">dn_start</span>  <span class="c1"># identical to no kerr effect but slower</span>
+
+            <span class="n">nl_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn_kerr</span>
+
+            <span class="c1"># influence of the index modulation on the field</span>
+            <span class="n">field_x</span> <span class="o">=</span> <span class="n">field_start</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">nl_mat</span><span class="p">)</span>
+
+            <span class="c1"># Linear propagation over dz/2</span>
+            <span class="n">field_x</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="n">field_x</span><span class="p">))</span>
+
+            <span class="c1"># power at pos z</span>
+            <span class="n">cur_pow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="n">field_x</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">variance_check</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variance</span><span class="p">(</span><span class="n">prev_pow</span><span class="p">,</span> <span class="n">cur_pow</span><span class="p">)</span>  <span class="c1"># Check if converge</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;for the step i=&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dn_kerr</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">no</span><span class="o">/</span><span class="mi">10</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Careful: index variation too high:&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;</span><span class="se">\t</span><span class="si">%.2f</span><span class="s2"> &gt; </span><span class="si">%f</span><span class="s2">/10&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dn_kerr</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">no</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">dn_kerr</span><span class="p">,</span> <span class="n">nl_mat</span><span class="p">,</span> <span class="n">field_x</span><span class="p">,</span> <span class="n">cur_pow</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">variance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial</span><span class="p">,</span> <span class="n">final</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function alerts the user when the kerr effect don&#39;t converge fast</span>
+<span class="sd">        enough.</span>
+<span class="sd">        Raise a ValueError when the power standard deviation exceed</span>
+<span class="sd">        :math:`10^{-7}`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        initial : array</span>
+<span class="sd">            Power of the kerr effect looped n-1 time.</span>
+<span class="sd">        final : array</span>
+<span class="sd">            Power of the kerr effect looped n time.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            when the power standard deviation exceed :math:`10^{-7}`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">finish_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">final</span><span class="p">)</span>
+        <span class="n">nl_control_amp</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">finish_sum</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">final</span><span class="p">,</span> <span class="n">initial</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">final</span><span class="p">,</span> <span class="n">initial</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">nl_control_amp</span> <span class="o">&gt;</span> <span class="mf">1e-7</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Warning: solution doesn&#39;t converge &quot;</span> <span class="o">+</span> \
+                <span class="s2">&quot;for a deviation of &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nl_control_amp</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">bpm_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chi3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kerr_loop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">variance_check</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute BPM principle : free_propag over dz/2, index modulation,</span>
+<span class="sd">        free_propag over dz/2.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n2 : float, optional</span>
+<span class="sd">            Nonlinear refractive index responsable for the optical Kerr effect</span>
+<span class="sd">            in m^2/W. None by default.</span>
+<span class="sd">        chi3 : float, optional</span>
+<span class="sd">            Value of the third term of the electric susceptibility tensor</span>
+<span class="sd">            in m^2/V^2. None by default.</span>
+<span class="sd">        kerr : bool, optional</span>
+<span class="sd">            Activate the kerr effect. False by default.</span>
+<span class="sd">        kerr_loop : int, optional</span>
+<span class="sd">            Number of corrective loops for the Kerr effect. 1 by default.</span>
+<span class="sd">        variance_check : bool</span>
+<span class="sd">            Check if the kerr effect converge fast enought. False by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        current_power : array</span>
+<span class="sd">            Power after the propagation over dz.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        This method uses the :class:`Bpm` class variables:</span>
+<span class="sd">        nbr_lost, i, field, dist_z, dn, nl_mat, phase_mat, epnc,</span>
+<span class="sd">        :meth:`kerr_effect`.</span>
+
+<span class="sd">        This method change the values of:</span>
+<span class="sd">        field, dn, nl_mat, current_power.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Linear propagation over dz/2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">n2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">chi3</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">dn</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span>
+             <span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_power</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kerr_effect</span><span class="p">(</span>
+                 <span class="n">dn</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="n">n2</span><span class="p">,</span> <span class="n">chi3</span><span class="o">=</span><span class="n">chi3</span><span class="p">,</span> <span class="n">kerr_loop</span><span class="o">=</span><span class="n">kerr_loop</span><span class="p">,</span>
+                 <span class="n">variance_check</span><span class="o">=</span><span class="n">variance_check</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Influence of the index modulation on the field (contain losses)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nl_mat</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+
+            <span class="c1"># Linear propagation over dz/2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phase_mat</span> <span class="o">*</span> <span class="n">fft</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">))</span>
+
+            <span class="c1"># power at z</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_power</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">epnc</span> <span class="o">*</span> <span class="n">abs2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
+
+        <span class="c1"># useless but act as a reminder for what the the method does</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_power</span>
+
+    <span class="k">def</span> <span class="nf">main_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chi3</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kerr_loop</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                     <span class="n">variance_check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">disp_progress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        main method used to compute propagation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n2 : float, optional</span>
+<span class="sd">            Nonlinear refractive index responsable for the optical Kerr effect</span>
+<span class="sd">            in m^2/W. None by default.</span>
+<span class="sd">        chi3 : float, optional</span>
+<span class="sd">            Value of the third term of the electric susceptibility tensor</span>
+<span class="sd">            in m^2/V^2. None by default.</span>
+<span class="sd">        kerr : bool, optional</span>
+<span class="sd">            Activate the kerr effect. False by default.</span>
+<span class="sd">        kerr_loop : int, optional</span>
+<span class="sd">            Number of corrective loop for the Kerr effect. 1 by default.</span>
+<span class="sd">        variance_check : bool, optional</span>
+<span class="sd">            Check if the kerr effect converge fast enought. False by default.</span>
+<span class="sd">        alpha : float, optional</span>
+<span class="sd">            Absorption per µm. 0 by default</span>
+<span class="sd">        lost_beg : array-like, optional</span>
+<span class="sd">            Left indices position of the selected waveguide over z.</span>
+<span class="sd">            None by default.</span>
+<span class="sd">        lost_end : array-like, optional</span>
+<span class="sd">            Right indices position of the selected waveguide over z.</span>
+<span class="sd">            None by default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        progress_pow : array</span>
+<span class="sd">            Intensity values (:math:`W/m^2`) over x (µm) and z (µm).</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+
+<span class="sd">        This method creates the following variables within the class</span>
+<span class="sd">        :class:`Bpm`:</span>
+<span class="sd">        nl_mat: Refractive index modulation.</span>
+
+<span class="sd">        This method uses the :class:`Bpm` class variables:</span>
+<span class="sd">        phase_mat, field, i, nbr_z, pas, current_power, dist_z, length_z,</span>
+<span class="sd">        nbr_lost, dn, nl_mat, epnc and uses the :meth:`bpm_compute`,</span>
+<span class="sd">        :meth:`kerr_effect`.</span>
+
+<span class="sd">        This method change the values of the :class:`Bpm` class variables:</span>
+<span class="sd">        field and if kerr, dn and nl_mat.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Refractive index modulation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nl_mat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ko</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span> <span class="o">*</span> <span class="n">dn</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1">#  from i=0 to i=final-1 because don&#39;t use last dn</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="c1"># Compute non-linear and linear propagation for every z</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bpm_compute</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span> <span class="n">n2</span><span class="o">=</span><span class="n">n2</span><span class="p">,</span> <span class="n">chi3</span><span class="o">=</span><span class="n">chi3</span><span class="p">,</span> <span class="n">kerr_loop</span><span class="o">=</span><span class="n">kerr_loop</span><span class="p">,</span>
+                             <span class="n">variance_check</span><span class="o">=</span><span class="n">variance_check</span><span class="p">)</span>
+
+            <span class="c1"># Display condition: if i+1 is a multiple of pas: i+1 % pas = 0</span>
+            <span class="c1"># = False, so must use if not to have True</span>
+            <span class="c1"># last condition to have last point if not a multiple of pas</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">pas</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">current_power</span><span class="p">])</span>
+
+                <span class="k">if</span> <span class="n">disp_progress</span><span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">dist_z</span><span class="o">/</span><span class="mf">1e3</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_z</span><span class="o">/</span><span class="mf">1e3</span><span class="p">,</span> <span class="s1">&#39;mm&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">progress_pow</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">example_bpm</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Version allowing to compute BPM without the user interface.</span>
+<span class="sd">    Used for quick test.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lo</span> <span class="o">=</span> <span class="mf">1.5</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">no</span> <span class="o">=</span> <span class="mf">2.14</span>
+    <span class="c1"># losses = 0.8/1e3</span>
+    <span class="c1"># no_imag = 1.9e-4</span>
+    <span class="c1"># no_imag = losses/(2*pi/lo)</span>
+    <span class="n">delta_no</span> <span class="o">=</span> <span class="mf">0.001</span>  <span class="c1"># + 1j*no_imag</span>
+    <span class="n">length_z</span> <span class="o">=</span> <span class="mi">2000</span>
+    <span class="n">dist_z</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">nbr_z_disp</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="n">dist_x</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">length_x</span> <span class="o">=</span> <span class="mi">500</span>
+
+    <span class="n">bpm</span> <span class="o">=</span> <span class="n">Bpm</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span>
+              <span class="n">length_z</span><span class="p">,</span> <span class="n">dist_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span>
+              <span class="n">length_x</span><span class="p">,</span> <span class="n">dist_x</span><span class="p">)</span>
+
+    <span class="p">[</span><span class="n">length_z</span><span class="p">,</span> <span class="n">nbr_z</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="p">,</span> <span class="n">length_x</span><span class="p">,</span> <span class="n">nbr_x</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_x_z</span><span class="p">()</span>
+
+<span class="c1">#    shape = bpm.squared_guide(width)</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_guide</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">nbr_p</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">13</span>
+    <span class="n">offset_guide</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="p">[</span><span class="n">peaks</span><span class="p">,</span> <span class="n">dn</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">create_guides</span><span class="p">(</span>
+        <span class="n">shape</span><span class="p">,</span> <span class="n">delta_no</span><span class="p">,</span> <span class="n">nbr_p</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">offset_guide</span><span class="o">=</span><span class="n">offset_guide</span><span class="p">)</span>
+<span class="c1">#    curve = 40 * 1E-8</span>
+<span class="c1">#    half_delay = 1000</span>
+<span class="c1">#    distance_factor = 1.2</span>
+<span class="c1">#    [peaks, dn] = bpm.create_curved_guides(shape, width, delta_no,</span>
+<span class="c1">#                                           curve, half_delay,</span>
+<span class="c1">#                                           distance_factor,</span>
+<span class="c1">#                                           offset_guide=offset_guide)</span>
+
+    <span class="n">z_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length_z</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">xv</span><span class="p">,</span> <span class="n">zv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z_disp</span><span class="p">)</span>
+    <span class="n">dn_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nbr_z</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">nbr_z_disp</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1">#    plt.figure()</span>
+<span class="c1">#    for i in range(nbr_z_disp+1):</span>
+<span class="c1">#        plt.plot(x,dn[i,:])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Refractive index over (x,z)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x (µm)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;z (mm)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span>
+                   <span class="n">zv</span><span class="p">,</span>
+                   <span class="n">dn</span><span class="p">[</span><span class="n">dn_disp</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span>
+                   <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ax1 = plt.subplot()</span>
+    <span class="c1"># ax1.set_title(&quot;Losses map&quot;)</span>
+    <span class="c1"># ax1.set_xlabel(&#39;x (µm)&#39;)</span>
+    <span class="c1"># ax1.set_ylabel(&#39;z (mm)&#39;)</span>
+    <span class="c1"># ax1.pcolormesh(xv, zv, dn[dn_disp].imag)</span>
+
+    <span class="n">fwhm</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">offset_light</span> <span class="o">=</span> <span class="n">peaks</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># If guide exists</span>
+    <span class="n">offset_light</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Else</span>
+
+    <span class="n">nbr_light</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">field</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nbr_x</span><span class="p">)]</span> <span class="o">*</span> <span class="n">nbr_light</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbr_light</span><span class="p">):</span>
+        <span class="n">field_i</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">gauss_light</span><span class="p">(</span><span class="n">fwhm</span><span class="p">,</span> <span class="n">offset_light</span><span class="o">=</span><span class="n">offset_light</span><span class="p">)</span>
+
+    <span class="c1">#    field_i = bpm.squared_light(fwhm, offset_light=offset_light)</span>
+
+<span class="c1">#            [field_i, h, gamma, beta] = bpm.all_modes(</span>
+<span class="c1">#                width, delta_no</span>
+<span class="c1">#                offset_light=offset_light)</span>
+
+<span class="c1">#        mode = 0</span>
+<span class="c1">#            [field_i, h, gamma, beta] = bpm.mode_light(</span>
+<span class="c1">#                width, delta_no,</span>
+<span class="c1">#                mode, offset_light=offset_light)</span>
+
+        <span class="n">field</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_i</span>
+
+    <span class="n">irrad</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1E13</span><span class="p">]</span><span class="o">*</span><span class="n">nbr_light</span>
+    <span class="n">theta_ext</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">init_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">theta_ext</span><span class="p">,</span> <span class="n">irrad</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_show_plot</span><span class="p">(</span><span class="n">pow_index</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pow_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Light injection into a guide&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Light at the end of guides&quot;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x (µm)&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">tl</span> <span class="ow">in</span> <span class="n">ax1</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">():</span>
+            <span class="n">tl</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tl</span> <span class="ow">in</span> <span class="n">ax2</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">():</span>
+            <span class="n">tl</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;#1f77b4&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\Delta_n$&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Irradiance ($GW.cm^{-2}$)&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nbr_p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">nbr_p</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">nbr_p</span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">verts</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span>
+                     <span class="o">*</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="n">pow_index</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">real</span><span class="p">),</span>
+                     <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)]</span>
+            <span class="n">poly</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;0.9&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;0.5&#39;</span><span class="p">)</span>
+            <span class="n">ax1</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>
+                     <span class="nb">max</span><span class="p">(</span><span class="n">dn</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span><span class="o">*</span><span class="mf">1.1</span> <span class="o">+</span> <span class="mf">1E-20</span>
+                     <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">progress_pow</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span>  <span class="mf">1.1e-13</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="n">progress_pow</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dn</span><span class="p">[</span><span class="n">pow_index</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">1e-13</span><span class="o">*</span><span class="n">progress_pow</span><span class="p">[</span><span class="n">pow_index</span><span class="p">],</span> <span class="s1">&#39;#1f77b4&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">pow_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;May need to close the graph to continue.&quot;</span><span class="p">)</span>
+    <span class="n">_show_plot</span><span class="p">(</span><span class="n">pow_index</span><span class="p">)</span>
+
+    <span class="n">kerr_loop</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">variance_check</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="c1">#    n2 = 1e-16</span>
+<span class="c1">#    chi3 = 10 * 1E-22</span>
+    <span class="n">n2</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">chi3</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="n">kerr</span> <span class="o">=</span> <span class="n">n2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">chi3</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="n">estimation</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span>
+        <span class="mf">8.8</span> <span class="o">/</span> <span class="mf">5e7</span> <span class="o">*</span> <span class="n">nbr_z</span> <span class="o">*</span> <span class="n">nbr_x</span>  <span class="c1"># without kerr</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.72</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">kerr</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">kerr_loop</span><span class="p">))</span>  <span class="c1"># with kerr</span>
+        <span class="o">+</span> <span class="mf">3.8e-8</span><span class="o">*</span><span class="n">nbr_z</span><span class="o">*</span><span class="n">nbr_x</span><span class="o">*</span><span class="nb">float</span><span class="p">(</span><span class="n">variance_check</span><span class="p">),</span>  <span class="c1"># control</span>
+        <span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time estimate:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">estimation</span><span class="p">))</span>
+
+    <span class="n">debut</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+    <span class="p">[</span><span class="n">progress_pow</span><span class="p">]</span> <span class="o">=</span> <span class="n">bpm</span><span class="o">.</span><span class="n">main_compute</span><span class="p">(</span>
+        <span class="n">dn</span><span class="p">,</span>
+        <span class="n">n2</span><span class="o">=</span><span class="n">n2</span><span class="p">,</span> <span class="n">chi3</span><span class="o">=</span><span class="n">chi3</span><span class="p">,</span> <span class="n">kerr_loop</span><span class="o">=</span><span class="n">kerr_loop</span><span class="p">,</span>
+        <span class="n">variance_check</span><span class="o">=</span><span class="n">variance_check</span><span class="p">,</span> <span class="n">disp_progress</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">fin</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time elapsed:&#39;</span><span class="p">,</span> <span class="n">fin</span><span class="o">-</span><span class="n">debut</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Light propagation into guides&quot;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x (µm)&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;z (mm)&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">nbr_p</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">nbr_p</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">nbr_p</span><span class="o">*</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xv</span><span class="p">,</span> <span class="n">zv</span><span class="p">,</span> <span class="mf">1e-13</span><span class="o">*</span><span class="n">progress_pow</span><span class="p">)</span>
+
+    <span class="n">pow_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;May need to close the graphs to continue.&quot;</span><span class="p">)</span>
+    <span class="n">_show_plot</span><span class="p">(</span><span class="n">pow_index</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;version without the user interface, note that user_interface.py&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;calls the Bpm class and performs the same calculations&quot;</span><span class="p">)</span>
+
+    <span class="n">choice</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Start ?: &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">choice</span> <span class="o">!=</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+        <span class="n">example_bpm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code_user_interface.html" class="btn btn-neutral float-right" title="beampy.user_interface" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="codes.html" class="btn btn-neutral float-left" title="Source codes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020 Jonathan Peltier and Marcel Soubkovsky
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
