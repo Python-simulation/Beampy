@@ -25,13 +25,22 @@ adiabatic elimination Phys. Rev. A, 97 023811 (2018).
 """
 
 from math import pi, ceil, radians, sqrt, log, sin, cos, acos, asin, exp
+import time
 from scipy import special
 from numpy.fft import fft, ifft, fftshift
 import numpy as np
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
-import time
+
+import numba
+
+
+@numba.vectorize([numba.float64(numba.complex128),
+                  numba.float32(numba.complex64)])
+def abs2(x):
+    """Square modulus of x. Fastest way possible for a numpy array."""
+    return x.real**2 + x.imag**2
 
 
 class Bpm():
@@ -45,6 +54,8 @@ class Bpm():
     ----------
     no : float
         Refractive index of the cladding.
+    lo : float
+        Wavelength of the beam in vaccum (µm).
     length_z : float
         Size of the compute window over z (µm).
     dist_z : float
@@ -57,7 +68,7 @@ class Bpm():
         Step over x (µm)
     """
 
-    def __init__(self, no,
+    def __init__(self, no, lo,
                  length_z, dist_z, nbr_z_disp,
                  length_x, dist_x):
         """
@@ -70,6 +81,8 @@ class Bpm():
         ----------
         no : float
             Refractive index of the cladding
+        lo : float
+            Wavelength of the beam in vaccum (µm).
         length_z : float
             Size of the compute window over z (µm).
         dist_z : float
@@ -80,8 +93,18 @@ class Bpm():
             Size of the compute window over x (µm).
         dist_x : float
             Step over x (µm).
+
+        Notes
+        -----
+        This method creates the following variables within the class
+        :class:`Bpm`:
+
+        - All input variables.
+        - ko: the free space vector (1/µm).
         """
         self.no = no
+        self.lo = lo
+        self.ko = 2*pi / self.lo  # linear wave vector in free space (1/µm)
         self.length_z = length_z
         self.dist_z = dist_z
         self.nbr_z_disp = nbr_z_disp
@@ -156,13 +179,9 @@ class Bpm():
         Parameters
         ----------
         width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
-
-        Notes
-        -----
-        This methods uses the width variable defined in :class:`Bpm`.
+            Waveguide width.
         """
-        return lambda t: (t >= -width/2) & (t <= width/2)
+        return lambda x: (x >= -width/2) & (x <= width/2)
 
     def gauss_guide(self, width, gauss_pow=1):
         """
@@ -178,7 +197,7 @@ class Bpm():
         Parameters
         ----------
         width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+            Waveguide width (µm) at 1/e^2 intensity.
         gauss_pow : int, optional
             Index of the super-gaussian guide with 1 being a regural gaussian
             guide and 4 being the conventionnal super-gaussian guide used to
@@ -188,9 +207,9 @@ class Bpm():
             1 by Default.
         """
         if width == 0:
-            return lambda t: 0
-        w = width / 2  # want diameter at 1/e =width so 2*w=width
-        return lambda t: np.exp(-(t / w)**(2*gauss_pow))
+            return lambda x: 0
+        w = width / 2  # width is diameter and w is radius
+        return lambda x: np.exp(-(x / w)**(2*gauss_pow))
 
     def create_guides(self, shape, delta_no, nbr_p, p, offset_guide=0, z=0):
         """
@@ -205,29 +224,36 @@ class Bpm():
             for the input position.
         delta_no : float
             Difference of refractive index between the core and the cladding.
+            Can contain the losses throught the imaginary part.
         nbr_p : int
             Number of guides.
         p : float
             Distance between two guides center (µm).
         offset_guide : float, optional
             Guide offset from the center (µm). 0 by default.
+        z : list
+            list [start, end] defining the waveguide length. Default length=
+            windows length.
 
         Returns
         -------
         peaks : array-like
             Central position of each guide [guide,z].
         dn : array-like
-            Difference of reefractive index [z,x].
+            Difference of refractive index [z,x]. Can contain the losses
+            throught the imaginary part.
 
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
         nbr_z, nbr_x, x, dist_x.
         """
-        peaks = np.zeros((nbr_p, self.nbr_z))
+        peaks = np.array([[None]*self.nbr_z]*nbr_p)
         dn = np.zeros((self.nbr_z, self.nbr_x))
         dn_z = np.zeros(self.nbr_x)
 
+        if nbr_p == 0:
+            return [np.array([[None]*self.nbr_z]), dn]
         peaks_z = (p*np.linspace(-nbr_p/2, nbr_p/2-1, nbr_p)
                    + p/2
                    + offset_guide)
@@ -237,13 +263,25 @@ class Bpm():
         for i in range(nbr_p):
             dn_z += np.roll(dn_fix, int(round(peaks_z[i] / self.dist_x)))
 
-        # only necessary because this program can have curved guides
-        # TODO: implement z start end
-        dn[:] = dn_z
-        for i in range(self.nbr_z):
+        if z == 0:
+            start = 0
+            end = self.nbr_z
+        else:
+            # assert z[0] >= 0 and z[1] <= self.length_z and z[0] <= z[1]
+            if z[0] > z[1]:
+                print("Warning, the waveguide beginning occurs after the end.",
+                      z[0], "should be <=", z[1])
+            if z[1] > self.length_z:
+                z[1] = self.length_z
+
+            start = int(z[0]/self.dist_z)
+            end = int(z[1]/self.dist_z)
+
+        dn[start:end] = dn_z
+        for i in range(start, end):
             peaks[:, i] = peaks_z
 
-        dn = dn * delta_no  # give a value to the shape
+        dn = dn*delta_no  # give a value to the shape
         return [peaks, dn]
 
     def create_curved_guides(self, shape, width, delta_no, curve, half_delay,
@@ -264,9 +302,10 @@ class Bpm():
         shape : method
             :meth:`square` or :meth:`gauss`
         width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+            Waveguide width (µm) at 1/e^2 intensity.
         delta_no : float
             Difference of refractive index between the core and the cladding.
+            Can contain the losses throught the imaginary part.
         curve : float
             curvature factor in :math:`10^{-8} µm^{-2}`.
         half_delay : float
@@ -280,19 +319,20 @@ class Bpm():
             If distance_factor=1, the curved guides will touch the central
             guide (p_min=width).
         offset_guide : float, optional
-            Guide offset from the center (µm). 0 by default.
+            Waveguide offset from the center (µm). 0 by default.
 
         Returns
         -------
         peaks : array
             Central position of each guide as peaks[guide,z].
         dn : array
-            Difference of reefractive index as dn[z,x].
+            Difference of refractive index as dn[z,x]. Can contain the losses
+            throught the imaginary part.
 
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
-        length_z, nbr_z, width, nbr_x, x, dist_x.
+        length_z, nbr_z, nbr_x, x, dist_x.
         """
         # all points over z
         z = np.linspace(0, self.length_z, self.nbr_z)
@@ -364,7 +404,7 @@ class Bpm():
         Parameters
         ----------
         fwhm : float
-            Width in µm.
+            Beam width in µm.
         offset_light : float, optional
             Light offset from center in µm. 0 by default.
 
@@ -397,7 +437,7 @@ class Bpm():
         Parameters
         ----------
         width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+            Waveguide width (µm) at 1/e^2 intensity.
         delta_no : float
             Difference of refractive index between the core and the cladding.
         mode : int
@@ -423,7 +463,11 @@ class Bpm():
         lo, no, ko.
         """
         width = float(width)
-        delta_no = float(delta_no)
+
+        if width == 0:
+            raise ValueError("no mode " + str(mode) + " existing")
+
+        delta_no = float(delta_no.real)
         lim = self.lo/(2 * width * (self.no + delta_no)) - 1e-12
         theta_c = acos(self.no / (self.no + delta_no))  # Critical angle
         solu = np.linspace(
@@ -454,20 +498,18 @@ class Bpm():
 
         return [h_m, gamma_m, beta_m]
 
-    def mode_light(self, width, delta_no, mode, lo, offset_light=0):
+    def mode_light(self, width, delta_no, mode, offset_light=0):
         """
         Create light based on propagated mode inside a squared guide.
 
         Parameters
         ----------
         width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
+            Waveguide width (µm) at 1/e^2 intensity.
         delta_no : float
             Difference of refractive index between the core and the cladding.
         mode : int
             Number of the searched mode.
-        lo : float
-            Wavelength of the beam in vaccum (µm).
         offset_light : float, optional
             Light offset from center (µm). 0 by default.
 
@@ -486,12 +528,7 @@ class Bpm():
         -----
         This methods uses the following variables defined in :class:`Bpm`:
         nbr_x, x and the :meth`mode_determ` method.
-
-        This method create the following variables in :class:`Bpm`:
-        lo, ko.
         """
-        self.lo = lo
-        self.ko = 2 * pi / self.lo  # linear wave vector in free space (1/µm)
         field = np.zeros(self.nbr_x)
 
         [h_m, gamma_m, beta_m] = self.mode_determ(width, delta_no, mode)
@@ -532,16 +569,16 @@ class Bpm():
 
         return [field, h_m, gamma_m, beta_m]
 
-    def all_modes(self, width, delta_no, lo, offset_light=0):
+    def all_modes(self, width, delta_no, offset_light=0):
         """
         Compute all modes allowed by the guide and sum them into one field.
 
         Parameters
         ----------
         width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
-        lo : float
-            Wavelength of the beam in vaccum in µm.
+            Waveguide width (µm) at 1/e^2 intensity.
+        delta_no : float
+            Difference of refractive index between the core and the cladding.
         offset_light : float, optional
             Light offset from center in µm. 0 by default.
 
@@ -570,7 +607,7 @@ class Bpm():
         while True:
             try:
                 [field_i, h_m, gamma_m, beta_m] = self.mode_light(
-                    width, delta_no, i, lo, offset_light)
+                    width, delta_no, i, offset_light)
                 field = field + field_i
                 h = np.append(h, h_m)
                 gamma = np.append(gamma, gamma_m)
@@ -581,7 +618,7 @@ class Bpm():
 
         return [field, h, gamma, beta]
 
-    def check_modes(self, width, delta_no, lo):
+    def check_modes(self, width, delta_no):
         """
         Return the last possible mode number.
         Could be merged with :meth:`all_modes` but would increase the needed
@@ -590,9 +627,9 @@ class Bpm():
         Parameters
         ----------
         width : float
-            Guide width defined as the diameter (µm) at 1/e^2 intensity.
-        lo : float
-            Wavelength of the beam in vaccum (µm).
+            Waveguide width (µm) at 1/e^2 intensity.
+        delta_no : float
+            Difference of refractive index between the core and the cladding.
 
         Returns
         -------
@@ -603,11 +640,11 @@ class Bpm():
         -----
         This methods uses the :meth`mode_light` method defined in :class:`Bpm`.
         """
-        i = 1
+        i = 0
 
         while True:
             try:
-                self.mode_light(width, delta_no, i, lo)
+                self.mode_light(width, delta_no, i)
                 i += 1
             except ValueError:
                 print("This guide can propagate up to the modes", i-1)
@@ -694,11 +731,11 @@ class Bpm():
         field = np.roll(field, int(round(center - center_airy)))
 
         field = np.roll(field, int(round(offset_light / self.dist_x)))
-        field /= max(field)  # Normalized
+        field /= np.max(field)  # Normalized
 
         return [field, airy_zero]
 
-    def init_field(self, dn, field, theta_ext, irrad, lo):
+    def init_field(self, field, theta_ext, irrad):
         """
         Initialize phase, field and power variables.
 
@@ -709,9 +746,7 @@ class Bpm():
         theta_ext : float
             Exterior inclinaison angle (°).
         irrad : array, array-like
-            Irradiance or power for each beam (:math:`W/m^2`).
-        lo : float
-            Wavelenght (µm).
+            Irradiance for each beam (:math:`W/m^2`).
 
         Returns
         -------
@@ -724,28 +759,25 @@ class Bpm():
         :class:`Bpm`:
 
         - epnc: Convertion factor used to set unit of the field and irradiance.
-        - nl_mat: Refractive index modulation.
         - phase_mat: Free propagation in Fourier space over dz/2.
         - current_power: Intensity for z=0.
         - field: Field value with the unit.
-        - ko: the free space vector (1/µm).
-        - lo: Wavelenght (µm).
+
 
         This methods uses the following variables defined in :class:`Bpm`:
         no, x, dist_x, nbr_x, nbr_z_disp.
         """
-        self.lo = lo
+        assert theta_ext <= 28  # paraxial approximation limitation
         self.field = field.astype(complex)
         # see en.wiki: Gaussian_beam#Mathematical_form for intensity definition
-        Zo = 376.730313668  # Impedance of free space mu_0*c
-        self.epnc = self.no / Zo / 2  # = 1 / (2 eta) used to converte E into I
+        eta = 376.730313668  # Impedance of free space mu_0*c
+        self.epnc = self.no / (2*eta)  # used to converte E into I
         #  unit(epnc)= W/V^2
 
         try:  # if multiple beams or one beam as [beam]
             _ = self.field.shape[1]  # Raise a IndexError if not
-            nbr_light = self.field.shape[0]  # [beam1,beam2,beam3] -> 3
+            nbr_light = self.field.shape[0]  # [beam1(x),beam2,beam3] -> 3
 #            Eo = sqrt(irrad[i] / self.epnc)  # Peak value of the field (V/m).
-
             for i in range(nbr_light):
                 self.field[i] *= sqrt(irrad[i] / self.epnc)
 
@@ -756,7 +788,6 @@ class Bpm():
 
 #        https://support.lumerical.com/hc/en-us/articles/
 #        360034382894-Understanding-injection-angles-in-broadband-simulations
-        self.ko = 2 * pi / self.lo  # linear wave vector in free space (1/µm)
         theta = asin(sin(radians(theta_ext)) / self.no)  # angle in the guide
         ph = self.no * self.ko * sin(theta) * self.x  # k projection over x
         self.field *= np.exp(1j * ph)  # Initial phase due to angle
@@ -776,12 +807,8 @@ class Bpm():
         # Free space matrix
         self.phase_mat = fftshift(np.exp(-1j * self.dist_z / 2 * fr))
 
-        # Refractive index modulation
-        self.nl_mat = self.ko * self.dist_z * dn
-
         # Initial irradiance
-        self.current_power = self.epnc * (
-            self.field * self.field.conjugate()).real
+        self.current_power = self.epnc * abs2(self.field)
 
         self.progress_pow = np.zeros([self.nbr_z_disp, self.nbr_x])
         self.progress_pow[0, :] = np.array([self.current_power])
@@ -795,6 +822,8 @@ class Bpm():
 
         Parameters
         ----------
+        peaks : array-like
+            Central position of each guide [guide,z].
         guide : int
             Number of the guide.
         size : float
@@ -810,15 +839,16 @@ class Bpm():
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
-        nbr_z, peaks, x, length_x.
+        nbr_z, x, length_x.
         """
-        x_beg = np.zeros(self.nbr_z, dtype=int)  # Note: don't use x_end=x_beg
-        x_end = np.zeros(self.nbr_z, dtype=int)  # Because id would be ==
+        x_beg = np.array([None]*self.nbr_z)
+        x_end = np.array([None]*self.nbr_z)
 
         if peaks.shape[0] != 0:
 
             for j in range(self.nbr_z):
-
+                if peaks[guide, j] is None:
+                    continue
                 pos_beg = (peaks[guide, j] - size/2)  # Left position
 
                 # If the position is out of boundery, change interval to
@@ -843,13 +873,12 @@ class Bpm():
                     pos_end -= self.length_x
 
                 x_end[j] = np.where(self.x >= pos_end)[0][0]
-
         return [x_beg, x_end]
 
     def power_guide(self, x_beg, x_end):
         """
-        return the approximative power over z in a given guide.
-        A better method would be to deconvolve the beams.
+        return the power over z in a given interval by integrating the beam
+        irradiance.
 
         Parameters
         ----------
@@ -861,72 +890,62 @@ class Bpm():
         Returns
         -------
         P : array
-            Power in the guide over z.
+            Normalized power in the guide over z.
 
         Notes
         -----
         This methods uses the following variables defined in :class:`Bpm`:
-        nbr_z_disp, progress_pow.
+        nbr_z_disp, progress_pow, pas.
         """
         P = np.zeros(self.nbr_z_disp)
-
+        # explaination: power[0] is input so take dn[0] but dn[0] is for propag
+        # from 0 to 1 unit so next power power[1] is also dn[0]
         for i in range(self.nbr_z_disp):
+            if i == 0:
+                index = 0
+            elif i == self.nbr_z_disp-1:
+                # -1 for beginning at 0 and -1 for final useless value
+                index = len(x_beg)-2
+            else:
+                index = i*self.pas-1
 
-            if x_beg[i] <= x_end[i]:
-                P[i] = np.trapz(self.progress_pow[i, x_beg[i]:x_end[i]])
+            if x_beg[index] is None or x_end[index] is None:
+                continue
+
+            if x_beg[index] <= x_end[index]:
+                P[i] = np.trapz(
+                    self.progress_pow[i, x_beg[index]:x_end[index]],
+                    dx=self.dist_x*1e-6)
 
             else:  # Take into account guides that crosses the window edges
-                P[i] = np.trapz(self.progress_pow[i, x_beg[i]:])
-                P[i] += np.trapz(self.progress_pow[i, :x_end[i]])
+                P[i] = np.trapz(
+                    self.progress_pow[i, x_beg[index]:],
+                    dx=self.dist_x*1e-6)
+                P[i] += np.trapz(
+                    self.progress_pow[i, :x_end[index]],
+                    dx=self.dist_x*1e-6)
 
-        P /= np.trapz(self.progress_pow[0, ], axis=0)
-        return P
+        P /= np.trapz(self.progress_pow[0], dx=self.dist_x*1e-6)
+        return P  # f not normalized, unit: (W/m)
 
-    def losses_position(self, peaks, guide_lost, width_lost):
-        """
-        Return the left and right position (x) index of a given area
-        over z [x,z].
-
-        Parameters
-        ----------
-        guide_lost : array
-            Number of each guide where looses occurs.
-        width_lost : array
-            Half width in µm for each guide.
-
-        Returns
-        -------
-        lost_beg : array-like
-            Left indices position of the selected guides over z.
-        lost_end : array-like
-            Right indices position of the selected guides over z.
-
-        Notes
-        -----
-        This methods uses the nbr_z variables defined in :class:`Bpm` and
-        the :meth:`guide_position` method.
-        It also creates the nbr_lost variable shared with :class:`Bpm`.
-        """
-        self.nbr_lost = guide_lost.size
-        lost_beg = np.zeros((self.nbr_z, self.nbr_lost), dtype=int)
-        lost_end = np.zeros((self.nbr_z, self.nbr_lost), dtype=int)
-        for j, n in enumerate(guide_lost):
-            [lost_beg[:, j],
-             lost_end[:, j]] = self.guide_position(peaks, n, width_lost[j])
-
-        return [lost_beg, lost_end]
-
-    def kerr_effect(self, dn, chi3=1e-19, kerr_loop=1, variance_check=False,
-                    field_start=None, dn_start=None, phase_mat=None):
+    def kerr_effect(self, dn, n2=None, chi3=None, kerr_loop=1,
+                    variance_check=False, field_start=None,
+                    dn_start=None, phase_mat=None):
         """
         Kerr effect: refractive index modulation by the light intensity.
         See: https://optiwave.com/optibpm-manuals/bpm-non-linear-bpm-algorithm/
 
         Parameters
         ----------
+        dn : array
+            Difference of refractive index as dn[z,x]. Can contain the losses
+            throught the imaginary part.
+        n2 : float, optional
+            Nonlinear refractive index responsable for the optical Kerr effect
+            in m^2/W. None by default.
         chi3 : float, optional
-            Value of the third term of the electric susceptibility tensor.
-            Equals to :math:`10^{-19} m^2/V^2` by default.
+            Value of the third term of the electric susceptibility tensor
+            in m^2/V^2. None by default.
         kerr_loop : int, optional
             Number of corrective loops for the Kerr effect. 1 by default.
         variance_check : bool, optional
@@ -957,6 +976,8 @@ class Bpm():
         This methods uses the following variables defined in :class:`Bpm`:
         i, epnc, no, ko, dist_z and the :meth:`variance` method.
         """
+        assert n2 is None or chi3 is None
+        # assert n2 is not None or chi3 is not None
         # Set the default value if none were given
         dn_start = dn[self.i, :] if dn_start is None else dn_start
         nl_mat = self.ko * self.dist_z * dn_start
@@ -968,16 +989,21 @@ class Bpm():
 
         # Linear propagation over dz/2
         field_x = ifft(phase_mat * fft(field_x))
-
-        cur_pow = self.epnc * (field_x * field_x.conjugate()).real
+        cur_pow = self.epnc * abs2(field_x)
 
         for _ in range(kerr_loop):
             prev_pow = cur_pow
 
             # influence of the beam intensity on the index modulation
-            # dn = dn1+dn2*I with dn2 unit: m^2/W
-            dn = dn_start + (3 * chi3 / 8 / self.no * prev_pow)
-            nl_mat = self.ko * self.dist_z * dn
+            if n2 is not None:  # dn = dn1+dn2*I with I unit: W/m^2
+                dn_kerr = dn_start + n2*prev_pow
+
+            elif chi3 is not None:  # dn = dn1+ 3chi3/8*no*|E|^2
+                dn_kerr = dn_start + (3*chi3)/(8*self.no)*(prev_pow/self.epnc)
+            else:
+                dn_kerr = dn_start  # identical to no kerr effect but slower
+
+            nl_mat = self.ko * self.dist_z * dn_kerr
 
             # influence of the index modulation on the field
             field_x = field_start * np.exp(1j * nl_mat)
@@ -985,28 +1011,26 @@ class Bpm():
             # Linear propagation over dz/2
             field_x = ifft(phase_mat * fft(field_x))
 
-            # power at z
-            cur_pow = self.epnc * (field_x * field_x.conjugate()).real
+            # power at pos z
+            cur_pow = self.epnc * abs2(field_x)
 
         if variance_check:
-
             try:
                 self.variance(prev_pow, cur_pow)  # Check if converge
-
             except ValueError as ex:
                 print(ex)
                 print("for the step i=", self.i)
 
-            if max(dn) > self.no/10:
-                print("Warning: Index variation too high:")
-                print(round(max(dn), 2), ">", self.no, "/10")
+            if np.max(dn_kerr) > self.no/10:
+                print("Careful: index variation too high:",
+                      "\t%.2f > %f/10" % (np.max(dn_kerr), self.no), sep="\n")
 
-        return [dn, nl_mat, field_x, cur_pow]
+        return [dn_kerr, nl_mat, field_x, cur_pow]
 
     def variance(self, initial, final):
         """
-        This method alerts the user when the kerr effect don't converge fast
-        enought.
+        This function alerts the user when the kerr effect don't converge fast
+        enough.
         Raise a ValueError when the power standard deviation exceed
         :math:`10^{-7}`.
 
@@ -1022,82 +1046,36 @@ class Bpm():
         ValueError
             when the power standard deviation exceed :math:`10^{-7}`.
         """
-        finish_sum = sum(final)
-        self.nl_control_amp = 1 / finish_sum * sqrt(abs(
-            sum((final - initial)**2) - (sum(final - initial))**2))
+        finish_sum = np.sum(final)
+        nl_control_amp = 1/finish_sum * np.sqrt(np.abs(
+            np.sum(np.subtract(final, initial)**2)
+            - np.sum(np.subtract(final, initial))**2))
 
-        if self.nl_control_amp > 1e-7:
-            message = "Warning: don't converge fast enough " + \
-                "for a deviation of " + str(self.nl_control_amp)
+        if nl_control_amp > 1e-7:
+            message = "Warning: solution doesn't converge " + \
+                "for a deviation of " + str(nl_control_amp)
             raise ValueError(message)
 
-    def absorption(self, alpha, lost_beg, lost_end):
-        """
-        Absorption into a guide or several guides.
-
-        :math:`e^{-\\alpha * dz}`
-
-        Parameters
-        ----------
-        alpha : float
-            Absorption per µm.
-        lost_beg : array-like
-            Left indices position of the selected guides over z.
-        lost_end : array-like
-            Right indices position of the selected guides over z.
-
-        Returns
-        -------
-        field : array
-            Amplitude values over x in µm after looses.
-
-        Notes
-        -----
-        This methods uses the following variables defined in :class:`Bpm`:
-        nbr_lost, i, field, dist_z, nbr_x.
-        """
-        # TODO: implement nbr_lost into the interface
-        for n in range(self.nbr_lost):
-
-            if lost_beg[self.i, n] <= lost_end[self.i, n]:  # Normal case
-                a, b = lost_beg[self.i, n], lost_end[self.i, n]+1
-                self.field[a:b] *= exp(-alpha*self.dist_z)
-
-            else:  # Take into account guide crossing the window edges
-                a, b = lost_beg[self.i, n], self.nbr_x
-                self.field[a:b] *= exp(-alpha*self.dist_z)
-
-                a, b = 0, lost_end[self.i, n]+1
-                self.field[a:b] *= exp(-alpha*self.dist_z)
-
-        return self.field
-
-    def bpm_compute(self, dn, chi3=1e-19, kerr=False, kerr_loop=1,
-                    variance_check=False,
-                    alpha=0, lost_beg=None, lost_end=None):
+    def bpm_compute(self, dn, n2=None, chi3=None, kerr_loop=1,
+                    variance_check=False):
         """
         Compute BPM principle : free_propag over dz/2, index modulation,
         free_propag over dz/2.
 
         Parameters
         ----------
+        n2 : float, optional
+            Nonlinear refractive index responsable for the optical Kerr effect
+            in m^2/W. None by default.
         chi3 : float, optional
-            Value of the effective third term of the electric susceptibility
-            tensor. Equals to :math:`10^{-19} m^2/V^2` by default.
+            Value of the third term of the electric susceptibility tensor
+            in m^2/V^2. None by default.
         kerr : bool, optional
             Activate the kerr effect. False by default.
         kerr_loop : int, optional
             Number of corrective loops for the Kerr effect. 1 by default.
         variance_check : bool
             Check if the kerr effect converge fast enought. False by default.
-        alpha : float, optional
-            Absorption per µm. 0 by default.
-        lost_beg : array-like, optional
-            Left indices position of the selected guides over z.
-            None by default.
-        lost_end : array-like, optional
-            Right indices position of the selected guides over z.
-            None by default.
 
         Returns
         -------
@@ -1107,7 +1085,8 @@ class Bpm():
         Notes
         -----
         This method uses the :class:`Bpm` class variables:
-        nbr_lost, i, field, dist_z, dn, nl_mat, phase_mat, epnc.
+        nbr_lost, i, field, dist_z, dn, nl_mat, phase_mat, epnc,
+        :meth:`kerr_effect`.
 
         This method change the values of:
         field, dn, nl_mat, current_power.
@@ -1115,40 +1094,37 @@ class Bpm():
         # Linear propagation over dz/2
         self.field = ifft(self.phase_mat * fft(self.field))
 
-        # Absorption into a guide
-        if alpha != 0:
-            self.field = self.absorption(alpha, lost_beg, lost_end)
-
-        if kerr:
+        if n2 is not None or chi3 is not None:
             [dn[self.i, :], self.nl_mat[self.i, :],
              self.field, self.current_power] = self.kerr_effect(
-                 dn, chi3=chi3, kerr_loop=kerr_loop,
+                 dn, n2=n2, chi3=chi3, kerr_loop=kerr_loop,
                  variance_check=variance_check)
         else:
-            # Influence of the index modulation on the field
+            # Influence of the index modulation on the field (contain losses)
             self.field *= np.exp(1j * self.nl_mat[self.i, :])
 
             # Linear propagation over dz/2
             self.field = ifft(self.phase_mat * fft(self.field))
 
             # power at z
-            self.current_power = self.epnc * (
-                self.field * self.field.conjugate()).real
+            self.current_power = self.epnc * abs2(self.field)
 
         # useless but act as a reminder for what the the method does
         return self.current_power
 
-    def main_compute(self, dn, chi3=1e-19, kerr=False, kerr_loop=1,
-                     variance_check=False,
-                     alpha=0, lost_beg=None, lost_end=None):
+    def main_compute(self, dn, n2=None, chi3=None, kerr_loop=1,
+                     variance_check=False, disp_progress=True):
         """
         main method used to compute propagation.
 
         Parameters
         ----------
+        n2 : float, optional
+            Nonlinear refractive index responsable for the optical Kerr effect
+            in m^2/W. None by default.
         chi3 : float, optional
-            Value of the third term of the electric susceptibility tensor.
-            Equals to :math:`10^{-19} m^2/V^2` by default.
+            Value of the third term of the electric susceptibility tensor
+            in m^2/V^2. None by default.
         kerr : bool, optional
             Activate the kerr effect. False by default.
         kerr_loop : int, optional
@@ -1158,10 +1134,10 @@ class Bpm():
         alpha : float, optional
             Absorption per µm. 0 by default
         lost_beg : array-like, optional
-            Left indices position of the selecteds guide over z.
+            Left indices position of the selected waveguide over z.
             None by default.
         lost_end : array-like, optional
-            Right indices position of the selecteds guide over z.
+            Right indices position of the selected waveguide over z.
             None by default.
 
         Returns
@@ -1171,7 +1147,12 @@ class Bpm():
 
         Notes
         -----
-        This methood uses the :class:`Bpm` class variables:
+
+        This method creates the following variables within the class
+        :class:`Bpm`:
+        nl_mat: Refractive index modulation.
+
+        This method uses the :class:`Bpm` class variables:
         phase_mat, field, i, nbr_z, pas, current_power, dist_z, length_z,
         nbr_lost, dn, nl_mat, epnc and uses the :meth:`bpm_compute`,
         :meth:`kerr_effect`.
@@ -1179,17 +1160,17 @@ class Bpm():
         This method change the values of the :class:`Bpm` class variables:
         field and if kerr, dn and nl_mat.
         """
+        # Refractive index modulation
+        self.nl_mat = self.ko * self.dist_z * dn
+
         index = 0
         self.i = 0
         #  from i=0 to i=final-1 because don't use last dn
-        for i in range(0, self.nbr_z-1):
+        for i in range(self.nbr_z-1):
             self.i = i
             # Compute non-linear and linear propagation for every z
-            self.bpm_compute(
-                dn,
-                chi3=chi3, kerr=kerr, kerr_loop=kerr_loop,
-                variance_check=variance_check, alpha=alpha,
-                lost_beg=lost_beg, lost_end=lost_end)
+            self.bpm_compute(dn, n2=n2, chi3=chi3, kerr_loop=kerr_loop,
+                             variance_check=variance_check)
 
             # Display condition: if i+1 is a multiple of pas: i+1 % pas = 0
             # = False, so must use if not to have True
@@ -1198,7 +1179,9 @@ class Bpm():
                 index += 1
                 self.progress_pow[index, :] = np.array([self.current_power])
 
-                print((self.i+1)*self.dist_z/1e3, "/", self.length_z/1e3, 'mm')
+                if disp_progress:
+                    current = (self.i+1)*self.dist_z/1e3
+                    print(current, "/", self.length_z/1e3, 'mm')
 
         return [self.progress_pow]
 
@@ -1208,16 +1191,20 @@ def example_bpm():
     Version allowing to compute BPM without the user interface.
     Used for quick test.
     """
+    lo = 1.5
     width = 6
     no = 2.14
-    delta_no = 0.001
-    length_z = 10000
+    # losses = 0.8/1e3
+    # no_imag = 1.9e-4
+    # no_imag = losses/(2*pi/lo)
+    delta_no = 0.001  # + 1j*no_imag
+    length_z = 2000
     dist_z = 1
     nbr_z_disp = 200
     dist_x = 0.1
     length_x = 500
 
-    bpm = Bpm(no,
+    bpm = Bpm(no, lo,
               length_z, dist_z, nbr_z_disp,
               length_x, dist_x)
 
@@ -1249,14 +1236,24 @@ def example_bpm():
 #        plt.plot(x,dn[i,:])
 
     plt.figure()
+    plt.title("Refractive index over (x,z)")
+    plt.xlabel('x (µm)')
+    plt.ylabel('z (mm)')
     plt.pcolormesh(xv,
                    zv,
-                   dn[dn_disp],
+                   dn[dn_disp].real,
                    cmap='gray')
-    fwhm = 6
-    offset_light = peaks[1, 0]  # If guide exists
-#        offset_light = 0  # Else
-    lo = 1.5
+
+    # ax1 = plt.subplot()
+    # ax1.set_title("Losses map")
+    # ax1.set_xlabel('x (µm)')
+    # ax1.set_ylabel('z (mm)')
+    # ax1.pcolormesh(xv, zv, dn[dn_disp].imag)
+
+    fwhm = 8
+    offset_light = peaks[0, 0]  # If guide exists
+    offset_light = 0  # Else
+
     nbr_light = 1
     field = np.array([np.zeros(nbr_x)] * nbr_light)
     for i in range(nbr_light):
@@ -1266,18 +1263,18 @@ def example_bpm():
 
 #            [field_i, h, gamma, beta] = bpm.all_modes(
 #                width, delta_no
-#                lo, offset_light=offset_light)
+#                offset_light=offset_light)
 
 #        mode = 0
 #            [field_i, h, gamma, beta] = bpm.mode_light(
 #                width, delta_no,
-#                mode, lo, offset_light=offset_light)
+#                mode, offset_light=offset_light)
 
         field[i] = field_i
 
-    irrad = [1 * 1E13]*nbr_light
+    irrad = [1E13]*nbr_light
     theta_ext = 0
-    [progress_pow] = bpm.init_field(dn, field, theta_ext, irrad, lo)
+    [progress_pow] = bpm.init_field(field, theta_ext, irrad)
 
     def _show_plot(pow_index):
         plt.figure()
@@ -1298,64 +1295,48 @@ def example_bpm():
         if nbr_p != 0 and p != 0:
             ax1.set_xlim(-nbr_p*p, nbr_p*p)
             verts = [(x[0], 0),
-                     *zip(x, dn[pow_index, :]),
-                     (x[-1], 0)
-                     ]
+                     *zip(x, dn[pow_index, :].real),
+                     (x[-1], 0)]
             poly = Polygon(verts, facecolor='0.9', edgecolor='0.5')
             ax1.add_patch(poly)
         ax1.set_ylim(0,
-                     max(dn[0, :])*1.1 + 1E-20
+                     max(dn[0, :].real)*1.1 + 1E-20
                      )
         if max(progress_pow[0]) != 0:
-            ax2.set_ylim(0,
-                         1e-13 * max(progress_pow[0]) * 1.1)
+            ax2.set_ylim(0,  1.1e-13*max(progress_pow[0]))
 
-        ax1.plot(x, dn[pow_index], 'k')
+        ax1.plot(x, dn[pow_index].real, 'k')
         ax2.plot(x, 1e-13*progress_pow[pow_index], '#1f77b4')
         plt.show()
 
     pow_index = 0
-    print("close the graph to continue")
+    print("May need to close the graph to continue.")
     _show_plot(pow_index)
 
-    kerr = False
-    kerr_loop = 10
+    kerr_loop = 5
     variance_check = False
-    chi3 = 10 * 1E-20
+#    n2 = 1e-16
+#    chi3 = 10 * 1E-22
+    n2 = None
+    chi3 = None
 
-    lost_check = 0
-    guide_lost = 1
-    width_lost = width
-    alpha = 0.8
-
-    if lost_check:
-        guide_lost = np.array([guide_lost], dtype=int)
-        width_lost = np.array([width_lost])
-        alpha = alpha/1000
-        [lost_beg, lost_end] = bpm.losses_position(
-            peaks, guide_lost, width_lost)
-    else:
-        alpha = 0
-        lost_beg = 0
-        lost_end = 0
+    kerr = n2 is not None or chi3 is not None
 
     estimation = round(
         8.8 / 5e7 * nbr_z * nbr_x  # without kerr
         * (1 + 0.72*float(kerr)*(kerr_loop))  # with kerr
-        + 3.8/5e6*nbr_z*nbr_x*float(variance_check)  # control
-        + 9/1e7*nbr_z*width_lost/dist_x*lost_check,
-        1)  # looses
+        + 3.8e-8*nbr_z*nbr_x*float(variance_check),  # control
+        1)
 
     print("Time estimate:", str(estimation))
 
     debut = time.process_time()
     [progress_pow] = bpm.main_compute(
         dn,
-        chi3=chi3, kerr=kerr, kerr_loop=kerr_loop,
-        variance_check=variance_check, alpha=alpha,
-        lost_beg=lost_beg, lost_end=lost_end)
+        n2=n2, chi3=chi3, kerr_loop=kerr_loop,
+        variance_check=variance_check, disp_progress=False)
     fin = time.process_time()
-    print('temps : ', fin-debut)
+    print('time elapsed:', fin-debut)
 
     plt.figure()
     ax1 = plt.subplot(111)
@@ -1367,7 +1348,7 @@ def example_bpm():
     ax1.pcolormesh(xv, zv, 1e-13*progress_pow)
 
     pow_index = -2
-    print("close the graphs to continue")
+    print("May need to close the graphs to continue.")
     _show_plot(pow_index)
     print("Finished")
 

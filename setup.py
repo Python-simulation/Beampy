@@ -19,7 +19,7 @@ setuptools.setup(
     author_email="jonathanp57@outlook.fr",
     license="MIT License",
     description="""Beampy is a python package - with an user interface -
-    allowing to propagate beams in differents guides using the
+    allowing to propagate beams in differents waveguides using the
     Beam Propagation Method (BPM)""",
     long_description=long_description,
     long_description_content_type='text/x-rst',
@@ -42,5 +42,7 @@ setuptools.setup(
             "numpy>=1.16",
             "PyQt5>=5.13",
             "matplotlib>=3.1",
+            "scipy>=1.1",
+            "numba>=0.38",
         ],
 )

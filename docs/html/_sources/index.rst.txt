@@ -2,8 +2,8 @@
 
 For more informations, see the
 :download:`detailed user guide <../docs/Beampy_guide.pdf>`
-describing Beampy and explaining the choices made.
-
+describing Beampy and explaining the choices made
+(not updated and not finished).
 
 Overview
 ========
@@ -14,14 +14,13 @@ examples are accessible bellow:
 .. toctree::
    :maxdepth: 2
    
-   beampy
    interface
-   results
    examples
+   beampy
+   codes
+   release_note
    LICENSE
    contact
-   codes
-
 
 Indices and tables
 ==================

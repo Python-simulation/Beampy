@@ -16,8 +16,8 @@ Modules include:
         defines the :class:`beampy.interface.setupUi` class.
         And also define the unused :class:`retranslateUi`
 
-This project was done by Jonathan Peltier and Marcel Soubkovsky during a master
-university course from the PAIP master of the université de Lorraine,
+This project was initiate by Jonathan Peltier and Marcel Soubkovsky during
+a master university course from the PAIP master of the université de Lorraine,
 under the directive of Pr. Nicolas Fressengeas.
 
 The bpm codes are mainly based on a compilation of MatLab codes initialy
@@ -29,24 +29,21 @@ from beampy.user_interface import (open_app, open_doc)  # was accessible with
 # module
 from beampy import examples
 
-__version__ = "1.1"
+__version__ = "1.11"
 
 
 def help():
     print("Use the open_app function to launch the beampy app.")
     print("Possible way to do so: beampy.open_app(),")
-    print("beampy.user_interface.open_app().")
     print("Or open the user_interface.py")
-    print("or __init__.py file from the beampy module")
     print("\n")
     print("For more help, open the documentation with:")
     print("beampy.open_doc() or")
-    print("with beampy.user_interface.open_doc()")
     print("\n")
     print("Examples can be found using beampy.examples")
-    print("and the example name, for example: .example_beams()")
+    print("and the example name, for example: beampy.examples.gaussian_beam()")
     print("\n")
-    print("All the documentation can be found on the site:")
+    print("All the documentation can be found on the website:")
     print("https://beampy.readthedocs.io")
 
 

@@ -11,11 +11,11 @@ The light propagation is done by the bpm module.
 An user interface - done using Qt desginer - allows to control the parameters
 and display the results.
 
-This project was done by Jonathan Peltier and Marcel Soubkovsky during a master
-university course from the PAIP master of the université de Lorraine,
+This project was initiate by Jonathan Peltier and Marcel Soubkovsky during a
+master university course from the PAIP master of the université de Lorraine,
 under the directive of Pr. Nicolas Fressengeas.
 
-The bpm codes are mainly based on a compilation of MatLab codes initialy
+The bpm core codes are mainly based on a compilation of MatLab codes initialy
 developed by Régis Grasser during his PhD thesis [#thesis]_,
 and later modified at the FEMTO-ST institute of the Université de
 Franche-Comté and at the LMOPS laboratory [#lmops]_ of the
@@ -43,7 +43,8 @@ The online documentation can be found at
 The source code of the whole project can be found at
 `<https://github.com/Python-simulation/Beampy/>`_.
 
-The PyPI repository can be found at `<https://pypi.org/project/beampy/>`_.
+The PyPI repository can be found at
+`<https://pypi.org/project/beampy/>`_.
 
 
 Installation
